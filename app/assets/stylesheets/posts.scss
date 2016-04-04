@@ -1,0 +1,69 @@
+// Place all the styles related to the posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.titulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.header {
+  background-color: #daeaff;
+  height: 120px;
+  font-size: 18px;
+  font-weight: bold;
+
+  .brasao {
+    display: inline;
+    text-align: right;
+    line-height: 120px;
+    right: -120px;
+
+    img {
+      height: 80px;
+    }
+  }
+
+  .texto {
+    display: inline;
+    line-height: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  .ufu {
+    display: inline;
+    line-height: 120px;
+    left: -120px;
+
+    img {
+      height: 80px;
+    }
+  }
+}
+
+.lista {
+  .primeiro {
+    font-weight: bold;
+  }
+
+  li:nth-child(2n+1) {
+    background-color: #e9e9e9;
+  }
+}
+
+.abertas {
+  .primeiro {
+    background-color: #55ff55;
+  }
+}
+
+.footer {
+  background-color: #daeaff;
+  /*height: 30px;*/
+  line-height: 30px;
+  text-align: center;
+}
