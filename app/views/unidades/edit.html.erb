@@ -1,10 +1,6 @@
-<% provide(:title, "Editando unidade ##{@unidade.sigla}") %>
-
 <div class="container">
 
-  <h3><%= yield(:title) %></h3>
-
-  <%= simple_form_for @unidade do |f| %>
+  <%= simple_form_for @unidade, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 
     <%= f.input :sigla %>
@@ -12,7 +8,7 @@
     <%= f.input :diretor %>
     <%= f.input :email, hint: "E-mail de contato da unidade" %>
 
-    <button type="submit" class="btn btn-success">Criar</button>
+    <button type="submit" class="btn btn-success">Salvar</button>
   <% end %>
 
 </div>

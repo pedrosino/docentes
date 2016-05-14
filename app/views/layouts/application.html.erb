@@ -8,12 +8,7 @@
 </head>
 <body>
 <%= render 'layouts/header' %>
-<%if notice %>
-  <p class="alert alert-info"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert alert-danger"><%= alert %></p>
-<% end %>
+<%= render 'layouts/flash' %>
 <%= yield %>
 
 <%= render 'layouts/footer' %>

@@ -10,44 +10,37 @@
 }
 
 .header {
-  background-color: $state-info-bg;
-  height: 90px;
-  font-size: 18px;
-  font-weight: bold;
+  background-color: #1659bf;/*$state-info-bg;*/
+  height: 150px;
+  color: #fff;
 
-  .brasao {
-    display: inline;
-    text-align: right;
-    line-height: 90px;
-    right: -120px;
+  .span-ufu {
+    font-size: 16px;
+  }
 
-    img {
-      height: 80px;
-    }
+  .span-title {
+    font-size: 30px;
+    display: block;
+    font-weight: bold;
+    padding: 5px 0;
+  }
+
+  a {
+    color: #fff;
   }
 
   .texto {
     display: inline;
-    line-height: 20px;
+    /*line-height: 20px;*/
     padding-top: 15px;
     padding-bottom: 15px;
-    text-align: center;
-  }
-
-  .ufu {
-    display: inline;
-    line-height: 90px;
-    left: -120px;
-
-    img {
-      height: 80px;
-    }
+    /*text-align: center;*/
+    left: 20px;
   }
 
   .login {
-    background-color: inherit;
-    border-top: 1px solid #009;
-    font-size: 12px;
+    border-top: 1px solid #fff;
+    font-size: 14px;
     text-align: right;
   }
 }
@@ -90,4 +83,5 @@
   background-color: $state-info-bg;
   line-height: 30px;
   text-align: center;
+  margin-top: 10px;
 }

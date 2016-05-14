@@ -14,12 +14,12 @@
 ActiveRecord::Schema.define(version: 20160514140531) do
 
   create_table "unidades", force: :cascade do |t|
-    t.text     "sigla",      limit: 65535
-    t.text     "nome",       limit: 65535
-    t.text     "email",      limit: 65535
-    t.text     "diretor",    limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "sigla",      limit: 5
+    t.string   "nome",       limit: 255
+    t.string   "email",      limit: 255
+    t.string   "diretor",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -8,6 +8,7 @@
         <th>Nome</th>
         <th>Diretor(a)</th>
         <th>E-mail</th>
+        <th></th>
       </tr>
     </thead>
 
@@ -18,8 +19,12 @@
           <td><%= unidade.nome %></td>
           <td><%= unidade.diretor %></td>
           <td><%= unidade.email %></td>
+          <td>
+            <%= link_to button_tag("Editar", type: "button", class: "btn btn-primary"), edit_unidade_path(unidade) %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <%= link_to button_tag("Nova Unidade", type: "button", class: "btn btn-success"), new_unidade_path %>
 </div>
