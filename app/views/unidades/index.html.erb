@@ -1,0 +1,25 @@
+<div class="container">
+  <h4>Unidades Acadêmicas e Unidades Especiais de Ensino</h4>
+
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Sigla</th>
+        <th>Nome</th>
+        <th>Diretor(a)</th>
+        <th>E-mail</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @unidades.each do |unidade| %>
+        <tr>
+          <td><%= unidade.sigla %></td>
+          <td><%= unidade.nome %></td>
+          <td><%= unidade.diretor %></td>
+          <td><%= unidade.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

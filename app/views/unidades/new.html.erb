@@ -1,0 +1,11 @@
+<% provide(:title, 'Cadastrar Unidade') %>
+
+<div class="container">
+  <h1><%= yield(:title) %></h1>
+
+  <%= simple_form_for @unidade do |f| %>
+    <%= f.input :sigla, required: true, autofocus: true %>
+
+    <button type="submit" class="btn btn-success">Criar</button>
+  <% end %>
+</div>
