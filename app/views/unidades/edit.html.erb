@@ -8,6 +8,7 @@
     <%= f.input :diretor %>
     <%= f.input :email, hint: "E-mail de contato da unidade" %>
 
+    <%= link_to icon("arrow-left", "Voltar"), unidades_path, class: "btn btn-warning" %>
     <button type="submit" class="btn btn-success">Salvar</button>
   <% end %>
 
