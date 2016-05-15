@@ -1,0 +1,95 @@
+// Estilos gerais da página.
+
+.titulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.header {
+  background-color: #1659bf;/*$state-info-bg;*/
+  height: 150px;
+  color: #fff;
+
+  .span-ufu {
+    font-size: 16px;
+  }
+
+  .span-title {
+    font-size: 30px;
+    display: block;
+    font-weight: bold;
+    padding: 5px 0;
+  }
+
+  a {
+    color: #fff;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  .texto {
+    display: inline;
+    /*line-height: 20px;*/
+    padding-top: 15px;
+    padding-bottom: 15px;
+    /*text-align: center;*/
+    left: 20px;
+  }
+
+  .login {
+    border-top: 1px solid #fff;
+    font-size: 14px;
+    text-align: right;
+  }
+
+  .nav {
+    a {
+      padding: 10px;
+    }
+  }
+}
+
+.lista {
+  .primeiro {
+    font-weight: bold;
+  }
+
+  li:nth-child(2n+1) {
+    background-color: #e9e9e9;
+  }
+
+  &.abertas {
+    .primeiro {
+      background-color: $state-success-bg;
+    }
+  }
+
+  &.encerradas {
+    .primeiro {
+      background-color: $state-danger-bg;
+    }
+  }
+
+  &.resultados {
+    .primeiro {
+      background-color: $state-warning-bg;
+    }
+  }
+}
+
+.abertas {
+  .primeiro {
+    background-color: #55ff55;
+  }
+}
+
+.footer {
+  background-color: $state-info-bg;
+  line-height: 30px;
+  text-align: center;
+  margin-top: 10px;
+}

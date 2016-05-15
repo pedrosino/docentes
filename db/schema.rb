@@ -11,7 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160514140531) do
+ActiveRecord::Schema.define(version: 20160515151852) do
+
+  create_table "areas", force: :cascade do |t|
+    t.integer  "unidade_id",       limit: 4
+    t.string   "campus",           limit: 255
+    t.string   "nome",             limit: 255
+    t.string   "subarea",          limit: 255
+    t.text     "qualificacao",     limit: 65535
+    t.string   "regime",           limit: 255
+    t.integer  "vagas",            limit: 4
+    t.boolean  "prorrogar"
+    t.text     "qualif_prorrogar", limit: 65535
+    t.datetime "data_prova"
+    t.string   "tipo",             limit: 255
+    t.string   "edital",           limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "areas", ["unidade_id"], name: "fk_rails_7e4c0346f5", using: :btree
 
   create_table "unidades", force: :cascade do |t|
     t.string   "sigla",      limit: 5
@@ -42,4 +61,5 @@ ActiveRecord::Schema.define(version: 20160514140531) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "areas", "unidades"
 end

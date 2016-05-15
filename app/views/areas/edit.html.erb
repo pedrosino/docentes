@@ -1,0 +1,21 @@
+<div class="container">
+
+  <%= simple_form_for @area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.input :tipo %>
+    <%= f.input :nome %>
+    <%= f.input :subarea %>
+    <%= f.input :campus %>
+    <%= f.input :qualificacao %>
+    <%= f.input :regime %>
+    <%= f.input :vagas %>
+    <%= f.input :prorrogacao %>
+    <%= f.input :qualif_prorr %>
+    <%= f.input :data_prova %>
+
+    <%= link_to icon("arrow-left", "Voltar"), unidades_path, class: "btn btn-warning" %>
+    <button type="submit" class="btn btn-success">Salvar</button>
+  <% end %>
+
+</div>

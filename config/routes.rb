@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :unidades, only: [:index, :edit, :new, :create, :update]
 
+  resources :areas, only: [:index, :new, :edit, :create, :update]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
