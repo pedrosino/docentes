@@ -16,6 +16,6 @@ class CreateAreas < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :areas, :unidades
+    add_column :users, :unidade_id, :integer, null: true
   end
 end

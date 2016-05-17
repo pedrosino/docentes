@@ -14,11 +14,15 @@ class AreasController < ApplicationController
     @area = Area.new(area_params)
     if @area.save
       flash[:success] = "Criado com sucesso."
-      redirect_to edit_area_path(@unidade)
+      redirect_to edit_area_path(@area)
     else
       flash[:danger] = "Falha na criação."
       render :new
     end
+  end
+
+  def edit
+    @area = Area.find(params[:id])
   end
 
   def update

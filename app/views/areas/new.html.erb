@@ -4,7 +4,7 @@
   <h3><%= yield(:title) %></h3>
 
   <%= simple_form_for @area do |f| %>
-    <%= f.input :nome, required: true, autofocus: true %>
+    <%= f.input :tipo, required: true, autofocus: true, as: :select, collection: ["Concurso Público","Processo Seletivo Simplificado"] %>
 
     <button type="submit" class="btn btn-success">Criar</button>
   <% end %>

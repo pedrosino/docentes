@@ -30,8 +30,6 @@ ActiveRecord::Schema.define(version: 20160515151852) do
     t.datetime "updated_at",                     null: false
   end
 
-  add_index "areas", ["unidade_id"], name: "fk_rails_7e4c0346f5", using: :btree
-
   create_table "unidades", force: :cascade do |t|
     t.string   "sigla",      limit: 5
     t.string   "nome",       limit: 255
@@ -56,10 +54,10 @@ ActiveRecord::Schema.define(version: 20160515151852) do
     t.datetime "updated_at",                                        null: false
     t.text     "nome",                   limit: 65535,              null: false
     t.string   "tipo",                   limit: 255
+    t.integer  "unidade_id",             limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "areas", "unidades"
 end
