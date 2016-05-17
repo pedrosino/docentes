@@ -29,6 +29,6 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade, :nome, :subarea, :tipo, :campus, :qualificacao, :regime, :vagas, :prorrogacao, :qualif_prorr, :data_prova)
+    area_params = params.require(:area).permit(:unidade, :nome, :subarea, :tipo, :campus, :qualificacao, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova)
   end
 end

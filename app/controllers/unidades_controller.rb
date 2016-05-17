@@ -1,6 +1,6 @@
 class UnidadesController < ApplicationController
   before_action :authenticate_user!
-  #before_action -> { redirect_unless_user(:pode_publicar_edital?) }
+  # before_action redirect_unless
 
   def index
     @unidades = Unidade.all
