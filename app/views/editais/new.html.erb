@@ -5,7 +5,7 @@
 
   <%= simple_form_for @edital do |f| %>
     <%= f.input :tipo, required: true, autofocus: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
-    <%= f.input :numero %>
+    <%= f.input :numero, required: true %>
 
     <button type="submit" class="btn btn-success">Criar</button>
   <% end %>
