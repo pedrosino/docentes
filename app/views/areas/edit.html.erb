@@ -11,7 +11,7 @@
     <%= f.input :regime, as: :select, collection: [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]].map{|regime| [regime[0], regime[1]]} %>
     <%= f.input :vagas %>
     <%= f.input :prorrogar %>
-    <%= f.input :qualif_prorrogar %>
+    <%= f.input :qualif_prorrogar, disabled: true %>
     <%= f.input :data_prova %>
 
     <%= link_to icon("arrow-left", "Voltar"), areas_path, class: "btn btn-warning" %>
