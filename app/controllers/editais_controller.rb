@@ -15,7 +15,7 @@ class EditaisController < ApplicationController
     @edital = Editai.new(edital_params)
     if @edital.save
       flash[:success] = "Criado com successo."
-      redirect_to edit_edital_path(@edital)
+      redirect_to edit_editai_path(@edital)
     else
       flash[:danger] = "Falha no cadastro."
       render :new
@@ -30,7 +30,7 @@ class EditaisController < ApplicationController
     @edital = Editai.find(params[:id])
     if @edital.update_attributes(edital_params)
       flash[:success] = "Salvo com sucesso!"
-      redirect_to edit_edital_path(@edital)
+      redirect_to edit_editai_path(@edital)
     else
       flash[:danger] = "Falha ao salvar."
       render :edit
@@ -38,6 +38,6 @@ class EditaisController < ApplicationController
   end
 
   def edital_params
-    edital_params = params.require(:edital).permit(:numero, :tipo, :data, :comeca_inscricao, :termina_inscricao)
+    edital_params = params.require(:editai).permit(:numero, :tipo, :data, :comeca_inscricao, :termina_inscricao)
   end
 end

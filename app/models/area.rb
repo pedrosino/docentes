@@ -1,6 +1,7 @@
 class Area < ActiveRecord::Base
 
   belongs_to :unidade
+  belongs_to :editai
 
   validates :vagas, presence: true
 
