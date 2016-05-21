@@ -1,6 +1,6 @@
 class Area < ActiveRecord::Base
 
-  #belongs_to :unidades
+  belongs_to :unidade
 
   validate :tipo_do_edital
   def tipo_do_edital

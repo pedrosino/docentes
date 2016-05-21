@@ -6,9 +6,9 @@
       <thead>
         <tr>
           <th>Unidade</th>
-          <th>Tipo</th>
           <th>Área</th>
           <th>Subárea</th>
+          <th>Tipo</th>
           <th></th>
         </tr>
       </thead>
@@ -16,10 +16,10 @@
       <tbody>
       <% @areas.each do |area| %>
         <tr>
-          <td><%= area.unidade_id %></td>
-          <td><%= area.tipo %></td>
+          <td><%= area.unidade.sigla %></td>
           <td><%= area.nome %></td>
           <td><%= area.subarea %></td>
+          <td><%= area.tipo %></td>
           <td>
             <%= link_to edit_area_path(area), class: "btn btn-primary" do %>
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar
