@@ -1,5 +1,7 @@
 class Unidade < ActiveRecord::Base
 
+  has_many :areas
+
   validate :tamanho_da_sigla
   def tamanho_da_sigla
     if sigla.length > 5

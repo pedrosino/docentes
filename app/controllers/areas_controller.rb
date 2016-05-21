@@ -6,7 +6,7 @@ class AreasController < ApplicationController
     if current_user.tipo == 'p'
       @areas = Area.all
     else
-      @areas = Area.find_by_unidade_id(current_user.unidade_id)
+      @areas = Area.where(unidade_id: current_user.unidade_id)
     end
   end
 
@@ -41,6 +41,6 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade, :nome, :subarea, :tipo, :campus, :qualificacao, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova)
+    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :tipo, :campus, :qualificacao, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :responsavel, :situacao)
   end
 end

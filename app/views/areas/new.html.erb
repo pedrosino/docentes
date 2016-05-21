@@ -8,7 +8,7 @@
     <% if current_user.tipo == 'p' %>
       <%= f.input :unidade_id, as: :select, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
     <% else %>
-      <%= f.input :unidade_id, required: true, readonly: true %>
+      <%= f.input :unidade_id, required: true, as: :hidden, input_html: { value: current_user.unidade_id } %>
     <% end %>
 
     <button type="submit" class="btn btn-success">Criar</button>
