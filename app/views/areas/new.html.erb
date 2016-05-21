@@ -4,7 +4,7 @@
   <h3><%= yield(:title) %></h3>
 
   <%= simple_form_for @area do |f| %>
-    <%= f.input :tipo, required: true, autofocus: true, as: :select, collection: ["Concurso Público","Processo Seletivo Simplificado"] %>
+    <%= f.input :tipo, required: true, autofocus: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
     <% if current_user.tipo == 'p' %>
       <%= f.input :unidade_id, as: :select, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
     <% else %>

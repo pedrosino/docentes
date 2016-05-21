@@ -3,7 +3,7 @@
   <%= simple_form_for @area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 
-    <%= f.input :tipo, as: :select, collection: ["Concurso Público","Processo Seletivo Simplificado"] %>
+    <%= f.input :tipo, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
     <%= f.input :nome %>
     <%= f.input :subarea %>
     <%= f.input :campus %>
