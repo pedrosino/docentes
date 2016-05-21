@@ -11,28 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521010321) do
+ActiveRecord::Schema.define(version: 20160521213147) do
 
   create_table "areas", force: :cascade do |t|
-    t.integer  "unidade_id",       limit: 4
-    t.string   "campus",           limit: 255
-    t.string   "nome",             limit: 255
-    t.string   "subarea",          limit: 255
-    t.text     "qualificacao",     limit: 65535
-    t.string   "regime",           limit: 255
-    t.integer  "vagas",            limit: 4
+    t.integer  "unidade_id",          limit: 4
+    t.string   "campus",              limit: 255
+    t.string   "nome",                limit: 255
+    t.string   "subarea",             limit: 255
+    t.text     "qualificacao",        limit: 65535
+    t.string   "regime",              limit: 255
+    t.integer  "vagas",               limit: 4
     t.boolean  "prorrogar"
-    t.text     "qualif_prorrogar", limit: 65535
+    t.text     "qualif_prorrogar",    limit: 65535
     t.datetime "data_prova"
-    t.string   "tipo",             limit: 255
-    t.string   "edital",           limit: 255
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.string   "responsavel",      limit: 255
-    t.string   "situacao",         limit: 255
+    t.string   "tipo",                limit: 255
+    t.string   "edital",              limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "responsavel",         limit: 255
+    t.string   "situacao",            limit: 255
+    t.text     "disciplinas",         limit: 65535
+    t.boolean  "prova_didatica"
+    t.boolean  "prova_procedimental"
   end
 
   add_index "areas", ["unidade_id"], name: "fk_rails_7e4c0346f5", using: :btree
+
+  create_table "editais", force: :cascade do |t|
+    t.string   "numero",            limit: 255
+    t.string   "data",              limit: 255
+    t.datetime "comeca_inscricao"
+    t.datetime "termina_inscricao"
+    t.string   "tipo",              limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "unidades", force: :cascade do |t|
     t.string   "sigla",      limit: 5
@@ -41,6 +54,7 @@ ActiveRecord::Schema.define(version: 20160521010321) do
     t.string   "diretor",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "telefone",   limit: 255
   end
 
   create_table "users", force: :cascade do |t|
