@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     tipo == 'a'
   end
 
-  def pode_publicar_edital?
+  def pode_criar_edital?
     tipo == 'p' || admin?
   end
 

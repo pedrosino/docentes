@@ -13,9 +13,10 @@ class UnidadesController < ApplicationController
   def create
     @unidade = Unidade.new(unidade_params)
     if @unidade.save
-      flash[:success] = "Criado com sucesso"
+      flash[:success] = "Criado com sucesso."
       redirect_to edit_unidade_path(@unidade)
     else
+      flash[:success] = "Falha no cadastro."
       render :new
     end
   end
@@ -36,6 +37,6 @@ class UnidadesController < ApplicationController
   end
 
   def unidade_params
-    unidade_params = params.require(:unidade).permit(:sigla, :nome, :diretor, :email)
+    unidade_params = params.require(:unidade).permit(:sigla, :nome, :diretor, :email, :telefone)
   end
 end

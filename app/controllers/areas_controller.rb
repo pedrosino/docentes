@@ -20,7 +20,7 @@ class AreasController < ApplicationController
       flash[:success] = "Criado com sucesso."
       redirect_to edit_area_path(@area)
     else
-      flash[:danger] = "Falha na criação."
+      flash[:danger] = "Falha no cadastro."
       render :new
     end
   end
@@ -41,6 +41,6 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :tipo, :campus, :qualificacao, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :responsavel, :situacao)
+    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao)
   end
 end
