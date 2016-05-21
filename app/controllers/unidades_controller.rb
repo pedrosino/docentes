@@ -1,6 +1,6 @@
 class UnidadesController < ApplicationController
   before_action :authenticate_user!
-  # before_action redirect_unless
+  before_action -> { redireciona_usuario(:pode_criar_unidade?) }
 
   def index
     @unidades = Unidade.all

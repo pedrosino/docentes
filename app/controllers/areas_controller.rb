@@ -1,5 +1,6 @@
 class AreasController < ApplicationController
   before_action :authenticate_user!
+  before_action -> { redireciona_usuario(:pode_criar_area?) }
 
   def index
     #@areas = Area.find_by_unidade(current_user.unidade)
