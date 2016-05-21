@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521213147) do
+ActiveRecord::Schema.define(version: 20160521220733) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",          limit: 4
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160521213147) do
     t.text     "qualif_prorrogar",    limit: 65535
     t.datetime "data_prova"
     t.string   "tipo",                limit: 255
-    t.string   "edital",              limit: 255
+    t.string   "editai_id",           limit: 255
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "responsavel",         limit: 255

@@ -1,0 +1,13 @@
+<div class="container">
+
+  <%= simple_form_for @edital, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.input :tipo, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
+    <%= f.input :numero %>
+
+    <%= link_to icon("arrow-left", "Voltar"), editais_path, class: "btn btn-warning" %>
+    <button type="submit" class="btn btn-success">Salvar</button>
+  <% end %>
+
+</div>
