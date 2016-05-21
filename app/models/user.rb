@@ -8,15 +8,27 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_user
 
+  def admin?
+    tipo == 'a'
+  end
+
   def pode_publicar_edital?
-    tipo == 'p'
+    tipo == 'p' || admin?
   end
 
   def pode_publicar_normas?
-    tipo == 'p' || tipo == 'u'
+    tipo == 'p' || tipo == 'u'|| admin?
   end
 
   def pode_publicar_resultado?
-    tipo == 'p' || tipo = 'd'
+    tipo == 'p' || tipo = 'd'|| admin?
+  end
+
+  def pode_criar_area?
+    tipo == 'p' || tipo == 'u'|| admin?
+  end
+
+  def pode_criar_unidade?
+    tipo == 'p'|| admin?
   end
 end

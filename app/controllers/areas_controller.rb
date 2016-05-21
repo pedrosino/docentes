@@ -3,8 +3,11 @@ class AreasController < ApplicationController
   before_action -> { redireciona_usuario(:pode_criar_area?) }
 
   def index
-    #@areas = Area.find_by_unidade(current_user.unidade)
-    @areas = Area.all
+    if current_user.tipo == 'p'
+      @areas = Area.all
+    else
+      @areas = Area.find_by_unidade_id(current_user.unidade_id)
+    end
   end
 
   def new
@@ -27,6 +30,14 @@ class AreasController < ApplicationController
   end
 
   def update
+    @area = Area.find(params[:id])
+    if @area.update_attributes(area_params)
+      flash[:success] = "Salvo com sucesso!"
+      redirect_to edit_area_path(@area)
+    else
+      flash[:danger] = "Falha ao salvar."
+      render :edit
+    end
   end
 
   def area_params
