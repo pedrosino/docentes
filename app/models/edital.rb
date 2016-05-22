@@ -1,4 +1,4 @@
-class Editai < ActiveRecord::Base
+class Edital < ActiveRecord::Base
 
   has_many :areas
 

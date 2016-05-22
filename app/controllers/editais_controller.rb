@@ -5,15 +5,15 @@ class EditaisController < ApplicationController
   respond_to :docx
 
   def index
-    @editais = Editai.all
+    @editais = Edital.all
   end
 
   def new
-    @edital = Editai.new
+    @edital = Edital.new
   end
 
   def create
-    @edital = Editai.new(edital_params)
+    @edital = Edital.new(edital_params)
     if @edital.save
       flash[:success] = "Criado com successo."
       redirect_to edit_edital_path(@edital)
@@ -24,11 +24,11 @@ class EditaisController < ApplicationController
   end
 
   def edit
-    @edital = Editai.find(params[:id])
+    @edital = Edital.find(params[:id])
   end
 
   def update
-    @edital = Editai.find(params[:id])
+    @edital = Edital.find(params[:id])
     if @edital.update_attributes(edital_params)
       flash[:success] = "Salvo com sucesso!"
       redirect_to edit_edital_path(@edital)
@@ -39,7 +39,7 @@ class EditaisController < ApplicationController
   end
 
   def word
-    @edital = Editai.find(params[:id])
+    @edital = Edital.find(params[:id])
     respond_to do |format|
       format.docx do
         render docx: 'edital_word', filename: 'Edital.docx'
