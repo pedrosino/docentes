@@ -29,6 +29,11 @@ gem 'devise'
 gem 'mysql2'
 gem 'font-awesome-sass'
 
+# https://github.com/karnov/htmltoword
+############ IMPORTANTE ##############
+## Acrescentar format :docx na rota ##
+gem 'htmltoword'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

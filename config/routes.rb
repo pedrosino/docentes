@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :areas, only: [:index, :new, :edit, :create, :update]
 
   resources :editais, only: [:index, :new, :edit, :create, :update]
+  get 'editais/:id/word' => 'editais#word', format: 'docx', as: 'edital_word'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
