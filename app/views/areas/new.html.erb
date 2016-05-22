@@ -11,6 +11,9 @@
       <%= f.input :unidade_id, required: true, as: :hidden, input_html: { value: current_user.unidade_id } %>
     <% end %>
 
-    <button type="submit" class="btn btn-success">Criar</button>
+    <button type="submit" class="btn btn-success">Avançar</button>
+    <%= link_to areas_path, class: "btn btn-danger" do %>
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+    <% end %>
   <% end %>
 </div>
