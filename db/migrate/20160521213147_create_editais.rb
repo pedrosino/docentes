@@ -6,6 +6,7 @@ class CreateEditais < ActiveRecord::Migration
       t.datetime :comeca_inscricao
       t.datetime :termina_inscricao
       t.string :tipo
+      t.datetime :publicacao
 
       t.timestamps null: false
     end
