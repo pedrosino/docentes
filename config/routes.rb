@@ -6,11 +6,11 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'posts#index'
 
-  resources :unidades, only: [:index, :edit, :new, :create, :update]
+  resources :unidades, only: [:index, :edit, :new, :create, :update, :destroy]
 
-  resources :areas, only: [:index, :new, :edit, :create, :update]
+  resources :areas, only: [:index, :new, :edit, :create, :update, :destroy]
 
-  resources :editais, only: [:index, :new, :edit, :create, :update]
+  resources :editais, only: [:index, :new, :edit, :create, :update, :destroy]
   get 'editais/:id/word' => 'editais#word', format: 'docx', as: 'edital_word'
 
   # Example of regular route:

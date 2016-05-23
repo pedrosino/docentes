@@ -40,6 +40,17 @@ class AreasController < ApplicationController
     end
   end
 
+  def destroy
+    @area = Area.find(params[:id])
+    if @area.destroy
+      flash[:success] = "Área excluída."
+      redirect_to areas_path
+    else
+      flash[:warning] = "Falha na exclusão."
+      render :edit
+    end
+  end
+
   def area_params
     area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao)
   end

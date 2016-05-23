@@ -11,7 +11,10 @@
     <%= f.input :publicacao %>
 
     <%= link_to icon("arrow-left", "Voltar"), editais_path, class: "btn btn-warning" %>
-    <button type="submit" class="btn btn-success">Salvar</button>
+    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+    <%= link_to @edital, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+    <% end %>
   <% end %>
 
 </div>

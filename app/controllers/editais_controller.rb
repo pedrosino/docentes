@@ -38,6 +38,17 @@ class EditaisController < ApplicationController
     end
   end
 
+  def destroy
+    @edital = Edital.find(params[:id])
+    if @edital.destroy
+      flash[:success] = "Edital excluído."
+      redirect_to editais_path
+    else
+      flash[:warning] = "Falha na exclusão."
+      render :edit
+    end
+  end
+
   def word
     @edital = Edital.find(params[:id])
     respond_to do |format|

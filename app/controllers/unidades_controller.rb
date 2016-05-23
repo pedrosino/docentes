@@ -36,6 +36,17 @@ class UnidadesController < ApplicationController
     end
   end
 
+  def destroy
+    @unidade = Unidade.find(params[:id])
+    if @unidade.destroy
+      flash[:success] = "Unidade excluída."
+      redirect_to areas_path
+    else
+      flash[:warning] = "Falha na exclusão."
+      render :edit
+    end
+  end
+
   def unidade_params
     unidade_params = params.require(:unidade).permit(:sigla, :nome, :diretor, :email, :telefone)
   end

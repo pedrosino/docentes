@@ -3,7 +3,7 @@ class Area < ActiveRecord::Base
   belongs_to :unidade
   belongs_to :edital
 
-  validates :vagas, presence: true
+  validates :vagas, presence: true, on: :update
 
   validate :tipo_do_edital
   def tipo_do_edital
@@ -19,7 +19,7 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :concurso_tem_prova_didatica
+  validate :concurso_tem_prova_didatica, on: :update
   def concurso_tem_prova_didatica
     if tipo == 'concurso' && !prova_didatica
       errors.add(:prova_didatica, "é obrigatória em concurso público")
