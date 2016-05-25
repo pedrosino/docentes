@@ -64,10 +64,14 @@ class EditaisController < ApplicationController
         # Replace
         doc.replace("$numero$", @edital.numero)
         doc.replace("$data$", @edital.data)
-        doc.replace("$tipo$", @edital.tipo)
+        doc.replace("$tipo$", @edital.tipo == 'concurso' ? "CONCURSO PÚBLICO" : "PROCESSO SELETIVO SIMPLIFICADO")
+        doc.replace("$area$", @edital.areas.first.nome)
+        doc.replace("$vagas$", @edital.areas.first.vagas)
+        doc.replace("$qualificacao$", @edital.areas.first.qualificacao)
+        doc.replace("$regime$", @edital.areas.first.regime)
 
         # Write the document back to a temporary file
-        tmp_file = Tempfile.new('word_tempate', "#{Rails.root}/tmp")
+        tmp_file = Tempfile.new('word_template', "#{Rails.root}/tmp")
         doc.commit(tmp_file.path)
 
         # Respond to the request by sending the temp file
@@ -77,6 +81,6 @@ class EditaisController < ApplicationController
   end
 
   def edital_params
-    edital_params = params.require(:edital).permit(:numero, :tipo, :data, :comeca_inscricao, :termina_inscricao)
+    edital_params = params.require(:edital).permit(:numero, :tipo, :data, :comeca_inscricao, :termina_inscricao, :publicacao)
   end
 end

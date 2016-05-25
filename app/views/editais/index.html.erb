@@ -19,7 +19,7 @@
           <td><%= edital.numero %></td>
           <td><%= edital.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
           <td>
-            <%= edital.areas.to_sentence if edital.areas %>
+            <%= edital.areas.map(&:nome).to_sentence if edital.areas %>
           </td>
           <td></td>
           <td>
