@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/pedrosino/docx_replace.git
+  revision: f66480cdfc6405c75dd4dfbabfc4f0a7aa3b27e4
+  specs:
+    docx_replace (1.0.3)
+      rubyzip (~> 1.1, >= 1.1.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -181,6 +188,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise
+  docx_replace!
   font-awesome-sass
   htmltoword
   jbuilder (~> 2.0)

@@ -51,9 +51,27 @@ class EditaisController < ApplicationController
 
   def word
     @edital = Edital.find(params[:id])
+    # respond_to do |format|
+    #   format.docx do
+    #     render docx: 'edital_word', filename: 'Edital.docx'
+    #   end
+    # end
+
     respond_to do |format|
       format.docx do
-        render docx: 'edital_word', filename: 'Edital.docx'
+        doc = DocxReplace::Doc.new("#{Rails.root}/lib/docx_templates/my_template.docx", "#{Rails.root}/tmp")
+
+        # Replace
+        doc.replace("$numero$", @edital.numero)
+        doc.replace("$data$", @edital.data)
+        doc.replace("$tipo$", @edital.tipo)
+
+        # Write the document back to a temporary file
+        tmp_file = Tempfile.new('word_tempate', "#{Rails.root}/tmp")
+        doc.commit(tmp_file.path)
+
+        # Respond to the request by sending the temp file
+        send_file tmp_file.path, filename: "edital_#{@edital.id}_report.docx", disposition: 'attachment'
       end
     end
   end
