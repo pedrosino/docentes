@@ -4,7 +4,7 @@ class Criterio < ActiveRecord::Base
 
   validates :nome, presence: true
   validates :descricao, presence: true
-  validates :valor, presence: true, value:
+  validates :valor, presence: true, numericality: { less_than_or_equal_to: 100 }
 
   validate :tipo_prova
   def tipo_prova
