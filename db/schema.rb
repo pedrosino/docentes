@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521220733) do
+ActiveRecord::Schema.define(version: 20160526143051) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",          limit: 4
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20160521220733) do
 
   add_index "areas", ["unidade_id"], name: "fk_rails_7e4c0346f5", using: :btree
 
+  create_table "criterios", force: :cascade do |t|
+    t.string   "nome",       limit: 255
+    t.text     "descricao",  limit: 65535
+    t.string   "tipo_prova", limit: 255
+    t.float    "valor",      limit: 24
+    t.integer  "area_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "editais", force: :cascade do |t|
     t.string   "numero",            limit: 255
     t.string   "data",              limit: 255
@@ -46,6 +56,17 @@ ActiveRecord::Schema.define(version: 20160521220733) do
     t.datetime "publicacao"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "titulos", force: :cascade do |t|
+    t.text     "descricao",      limit: 65535
+    t.float    "valor",          limit: 24
+    t.float    "maximo",         limit: 24
+    t.string   "tipo",           limit: 255
+    t.string   "unidade_medida", limit: 255
+    t.integer  "area_id",        limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "unidades", force: :cascade do |t|

@@ -4,7 +4,7 @@ class CreateTitulos < ActiveRecord::Migration
       t.text :descricao
       t.float :valor
       t.float :maximo
-      t.tipo :string
+      t.string :tipo
       t.string :unidade_medida
       t.integer :area_id
 

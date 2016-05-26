@@ -2,8 +2,8 @@ class Criterio < ActiveRecord::Base
 
   belongs_to :area
 
-  validates :nome, presence: true, on: :update
-  validates :descricao, presence: true, on: :update
+  validates :nome, presence: true
+  validates :descricao, presence: true
   validates :valor, presence: true, value:
 
   validate :tipo_prova
