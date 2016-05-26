@@ -1,3 +1,11 @@
 // Place all the styles related to the areas controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* Todos invisíveis no início */
+.prova-escrita,
+.prova-didatica,
+.prova-procedimental,
+.titulos {
+  display: none;
+}
