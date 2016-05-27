@@ -6,8 +6,8 @@ class Criterio < ActiveRecord::Base
   validates :descricao, presence: true
   validates :valor, presence: true, numericality: { less_than_or_equal_to: 100 }
 
-  validate :tipo_prova
-  def tipo_prova
+  validate :tipo_prova_correto
+  def tipo_prova_correto
     if tipo_prova && !['escrita','didatica','procedimental'].include?(tipo_prova)
       errors.add(:tipo_prova, "inválido!")
     end

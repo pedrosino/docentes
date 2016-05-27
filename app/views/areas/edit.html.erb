@@ -4,28 +4,104 @@
     <%= render 'shared/error_messages', object: f.object %>
 
     <div class="bloco-inicial">
-      <%= f.input :tipo, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
-      <%= f.input :nome %>
+      <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
+      <%= f.input :nome, required: true %>
       <%= f.input :subarea %>
-      <%= f.input :campus %>
-      <%= f.input :qualificacao %>
-      <%= f.input :regime, as: :select, collection: [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]].map{|regime| [regime[0], regime[1]]} %>
-      <%= f.input :vagas %>
+      <%= f.input :campus, required: true, collection: ["Educação Física","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
+      <%= f.input :qualificacao, required: true %>
+      <%= f.input :regime, required: true, as: :select, collection: [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]].map{|regime| [regime[0], regime[1]]} %>
+      <%= f.input :vagas, required: true %>
       <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
       <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
     </div>
 
     <div class="prova-escrita">
-      <%#= sub-form %>
-      Prova escrita
+      <h3>Prova Escrita</h3>
+      <div class="panel panel-default escrita">
+        <div class="panel-heading">
+          Critérios de correção da Prova Escrita
+        </div>
+        <div class="panel-body">
+          <table class="table criterios criterios-escrita">
+            <thead>
+              <tr>
+                <td class="borda">Critério</td>
+                <td class="borda">Descrição</td>
+                <td class="borda">Valor</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :criterios, @area.criterios.where(tipo_prova: 'escrita') do |options_form| %>
+                <%= render 'criterio_fields', f: options_form, tipo: "escrita" %>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div class="links">
+            <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'escrita' } }, data: { association_insertion_node: '.criterios-escrita', association_insertion_method: 'append' } %>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="prova-didatica">
-      Prova didática
-    </div>
+      <%= f.input :prova_didatica, label: "Haverá prova didática pedagógica?" %>
+      <h3>Prova Didática</h3>
+      <div class="panel panel-default didatica">
+        <div class="panel-heading">
+          Critérios de correção da Prova Didática Pedagógica
+        </div>
+        <div class="panel-body">
+          <table class="table criterios criterios-didatica">
+            <thead>
+              <tr>
+                <td class="borda">Critério</td>
+                <td class="borda">Descrição</td>
+                <td class="borda">Valor</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :criterios, @area.criterios.where(tipo_prova: 'didatica') do |options_form| %>
+                <%= render 'criterio_fields', f: options_form, tipo: "didatica" %>
+              <% end %>
+            </tbody>
+          </table>
 
-    <div class="prova-procedimental">
-      Prova procedimental
+          <div class="links">
+            <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'didatica' } }, data: { association_insertion_node: '.criterios-didatica', association_insertion_method: 'append' } %>
+          </div>
+        </div>
+      </div>
+
+      <%= f.input :prova_procedimental, label: "Haverá prova didática procedimental?" %>
+      <div class="panel panel-default procedimental">
+        <div class="panel-heading">
+          Critérios de correção da Prova Didática Procedimental
+        </div>
+        <div class="panel-body">
+          <table class="table criterios criterios-procedimental">
+            <thead>
+              <tr>
+                <td class="borda">Critério</td>
+                <td class="borda">Descrição</td>
+                <td class="borda">Valor</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :criterios, @area.criterios.where(tipo_prova: 'procedimental') do |options_form| %>
+                <%= render 'criterio_fields', f: options_form, tipo: "procedimental" %>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div class="links">
+            <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'procedimental' } }, data: { association_insertion_node: '.criterios-procedimental', association_insertion_method: 'append' } %>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="titulos">
@@ -33,7 +109,7 @@
     </div>
 
     <%= link_to icon("arrow-left", "Cancelar"), areas_path, class: "btn btn-warning" %>
-    <!--button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button-->
+    <button type="submit" class="btn btn-success" id="salvar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
     <button type="button" class="btn btn-primary" id="avancar">Avançar</button>
     <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
@@ -43,9 +119,30 @@
 </div>
 <script type="text/javascript">
 window.fase = 1;
+
+function ativa_didatica() {
+  if($("#area_prova_didatica").is(":checked")) {
+    $(".panel.didatica").show();
+  } else {
+    $(".panel.didatica").hide();
+  }
+}
+
+function ativa_procedimental() {
+  if($("#area_prova_procedimental").is(":checked")) {
+    $(".panel.procedimental").show();
+  } else {
+    $(".panel.procedimental").hide();
+  }
+}
+
 $(function(){
   var qual = $("#area_qualif_prorrogar").parent("div");
   qual.hide();
+  $("#salvar").hide();
+
+  ativa_didatica();
+  ativa_procedimental();
 
   $("#area_prorrogar").change(function(){
     if($(this).is(":checked")) {
@@ -59,8 +156,17 @@ $(function(){
   $("#avancar").click(function(){
     switch(window.fase) {
       case 1: $(".bloco-inicial").hide(); $(".prova-escrita").show(); window.fase = 2; break;
-      case 2: $(".prova-escrita").hide(); window.fase = 3; break;
+      case 2: $(".prova-escrita").hide(); $(".prova-didatica").show(); window.fase = 3; break;
+      case 3: $(".prova-didatica").hide(); $(".titulos").show(); $("#salvar").show(); $("#avancar").hide(); window.fase = 4; break;
     }
+  });
+
+  $("#area_prova_didatica").change(function(){
+    ativa_didatica();
+  });
+
+  $("#area_prova_procedimental").change(function(){
+    ativa_procedimental();
   });
 });
 </script>

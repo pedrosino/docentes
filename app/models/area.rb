@@ -3,6 +3,9 @@ class Area < ActiveRecord::Base
   belongs_to :unidade
   belongs_to :edital
 
+  has_many :criterios
+  has_many :titulos
+
   validates :vagas, presence: true, on: :update
 
   validate :tipo_do_edital
@@ -25,4 +28,7 @@ class Area < ActiveRecord::Base
       errors.add(:prova_didatica, "é obrigatória em concurso público")
     end
   end
+
+  accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
 end

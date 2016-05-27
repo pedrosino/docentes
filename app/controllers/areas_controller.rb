@@ -16,6 +16,10 @@ class AreasController < ApplicationController
 
   def create
     @area = Area.new(area_params)
+    # No concurso público a prova didática (pedagógica) é obrigatória
+    if @area.tipo == 'concurso'
+      @area.prova_didatica = true
+    end
     if @area.save
       flash[:success] = "Criado com sucesso."
       redirect_to edit_area_path(@area)
@@ -52,6 +56,7 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao)
+    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao,
+      criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy], titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
   end
 end

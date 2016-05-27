@@ -1,0 +1,7 @@
+<tr class="nested-fields">
+  <td class="criterio borda"><%= f.text_field :nome, required: true, class: "form-control" %></td>
+  <td class="descricao borda"><%= f.text_area :descricao, required: true, class: "form-control" %></td>
+  <td class="valor borda"><%= f.text_field :valor, require: true, class: "form-control", locale: "br" %></td>
+  <td><%= link_to_remove_association button_tag(icon("times", "Remover"), type: "button", class: "btn btn-danger"), f %></td>
+<%= f.hidden_field :tipo_prova, value: tipo %>
+</tr>
