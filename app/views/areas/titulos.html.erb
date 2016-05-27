@@ -33,7 +33,7 @@
           </table>
 
           <div class="links">
-            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades' } }, data: { association_insertion_node: '.atividades', association_insertion_method: 'append' } %>
+            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades' } }, data: { association_insertion_node: '.table.atividades', association_insertion_method: 'append' } %>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
           </table>
 
           <div class="links">
-            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao' } }, data: { association_insertion_node: '.producao', association_insertion_method: 'append' } %>
+            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao' } }, data: { association_insertion_node: '.table.producao', association_insertion_method: 'append' } %>
           </div>
         </div>
       </div>

@@ -92,12 +92,12 @@ onPage('areas didatica, areas update', function(){
 onPage('areas titulos, areas update', function(){
   $("#salvar").click(function(e){
     var validado_atividades = true;
-    if (!verifica_soma($(".atividades"),"valor", $("maximo-atividades"))) {
+    if (!verifica_soma($(".table.atividades"),"maximo", $("input[name='maximo-atividades']").val())) {
       validado_atividades = false;
     }
 
     var validado_producao = true;
-    if (!verifica_soma($(".producao"),"valor", $("maximo-producao"))) {
+    if (!verifica_soma($(".table.producao"),"maximo", $("input[name='maximo-producao']").val())) {
       validado_producao = false;
     }
 
