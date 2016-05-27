@@ -1,0 +1,30 @@
+<div class="container">
+
+  <%= simple_form_for @area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.input :proximo, as: :hidden, input_html: { value: "escrita" } %>
+
+    <div class="bloco-inicial">
+      <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
+      <%= f.input :nome, required: true %>
+      <%= f.input :subarea %>
+      <%= f.input :campus, required: true, collection: ["Educação Física","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
+      <%= f.input :qualificacao, required: true %>
+      <%= f.input :regime, required: true, as: :select, collection: [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]].map{|regime| [regime[0], regime[1]]} %>
+      <%= f.input :vagas, required: true %>
+      <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
+      <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
+    </div>
+
+    <%= link_to icon("arrow-left", "Cancelar"), areas_path, class: "btn btn-warning" %>
+    <button type="submit" class="btn btn-success" id="salvar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Avançar</button>
+    <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+    <% end %>
+  <% end %>
+
+</div>
+<script type="text/javascript">
+window.fase = 1;
+</script>

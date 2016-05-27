@@ -1,0 +1,81 @@
+<div class="container">
+
+  <%= simple_form_for @area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.input :proximo, as: :hidden, input_html: { value: "acabou" } %>
+    <%= hidden_field_tag "maximo-atividades", @area.tipo == 'concurso' ? 20 : 45 %>
+    <%= hidden_field_tag "maximo-producao", @area.tipo == 'concurso' ? 80 : 45 %>
+
+    <div class="titulos">
+      <h3>Análise de Títulos</h3>
+      <div class="panel panel-default atividades">
+        <div class="panel-heading">
+          Valoração das atividades didáticas e/ou profissionais nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 20 : 45 %> pontos</strong>
+        </div>
+        <div class="panel-body">
+        <div class="mensagem-erro"></div>
+          <table class="table titulos atividades">
+            <thead>
+              <tr>
+                <td class="borda">Descrição</td>
+                <td class="borda">Unidade de medida</td>
+                <td class="borda">Pontuação individual</td>
+                <td class="borda">Pontuação máxima</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :titulos, @area.titulos.where(tipo: 'atividades') do |options_form| %>
+                <%= render 'titulo_fields', f: options_form, tipo: "atividades" %>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div class="links">
+            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades' } }, data: { association_insertion_node: '.atividades', association_insertion_method: 'append' } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default producao">
+        <div class="panel-heading">
+          Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 80 : 45 %> pontos</strong>
+        </div>
+        <div class="panel-body">
+        <div class="mensagem-erro"></div>
+          <table class="table titulos producao">
+            <thead>
+              <tr>
+                <td class="borda">Descrição</td>
+                <td class="borda">Unidade de medida</td>
+                <td class="borda">Pontuação individual</td>
+                <td class="borda">Pontuação máxima</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :titulos, @area.titulos.where(tipo: 'producao') do |options_form| %>
+                <%= render 'titulo_fields', f: options_form, tipo: "producao" %>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div class="links">
+            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao' } }, data: { association_insertion_node: '.producao', association_insertion_method: 'append' } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= link_to icon("arrow-left", "Cancelar"), areas_path, class: "btn btn-warning" %>
+    <button type="submit" class="btn btn-success" id="salvar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+    <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+    <% end %>
+  <% end %>
+
+</div>
+<script type="text/javascript">
+window.fase = 1;
+</script>

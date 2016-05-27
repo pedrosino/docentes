@@ -23,16 +23,11 @@ function verifica_soma($objeto, $tipo, $total) {
   return (soma == $total);
 }
 
-onPage('areas edit, areas update', function() {
-  $(function(){
-    var qual = $("#area_qualif_prorrogar").parent("div");
-    qual.hide();
-    $("#salvar").hide();
+onPage('areas inicial, areas update', function(){
+  var qual = $("#area_qualif_prorrogar").parent("div");
+  qual.hide();
 
-    ativa_didatica();
-    ativa_procedimental();
-
-    $("#area_prorrogar").change(function(){
+  $("#area_prorrogar").change(function(){
       if($(this).is(":checked")) {
         qual.show();
         qual.prop("disabled", "");
@@ -40,74 +35,79 @@ onPage('areas edit, areas update', function() {
         qual.hide();
       }
     });
+});
 
-    // O formulário é dividido em fases. Primeiro as informações básicas, depois a prova escrita,
-    // depois a prova didática, depois a análise de títulos. Em cada fase é feita uma validação
-    // do que foi preenchido. O formulário só avança se estiver tudo certo.
-    $("#avancar").click(function(){
-      // Primeiro clique -> após preencher informações iniciais.
-      // Verificar se todos os necessários foram preenchidos.
-      // (usar required)
-      if(window.fase == 1) {
-        $(".bloco-inicial").hide();
-        $(".prova-escrita").show();
-        window.fase = 2;
-      // Segundo clique -> após preencher critérios da prova escrita.
-      // Verificar se os critérios somam 100 pontos.
-      } else if(window.fase == 2) {
-        if (verifica_soma($(".criterios-escrita"),"valor", 100)) {
-          $(".prova-escrita").hide();
-          $(".prova-didatica").show();
-          window.fase = 3;
-          $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
-        } else {
-          $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").addClass('alert alert-danger').
-          html("A soma dos critérios não atinge 100 pontos!");
-        }
-      // Terceiro clique -> após preencher a prova didática.
-      // Em concurso público a prova didática é obrigatória.
-      // Pode haver também prova didática procedimental, tanto nos concursos quanto nos processos seletivos.
-      // Caso a prova esteja marcada, os critérios devem somar 100 pontos.
-      } else if(window.fase == 3) {
-        var validado_didatica = true;
-        if ($("#area_prova_didatica").is(":checked")) {
-          if (!verifica_soma($(".criterios-didatica"),"valor", 100)) {
-            validado_didatica = false;
-          }
-        }
+onPage('areas escrita, areas escrita', function(){
+  $("#salvar").click(function(){
+    if (verifica_soma($(".criterios-escrita"),"valor", 100)) {
+      $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
+    } else {
+      $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").addClass('alert alert-danger').
+      html("A soma dos critérios não atinge 100 pontos!");
+      return false;
+    }
+  });
+});
 
-        var validado_procedimental = true;
-        if ($("#area_prova_procedimental").is(":checked")) {
-          if (!verifica_soma($(".criterios-procedimental"),"valor", 100)) {
-            validado_procedimental = false;
-          }
-        }
+onPage('areas didatica, areas update', function(){
+  // Verifica ao carregar a página também
+  ativa_didatica();
+  ativa_procedimental();
 
-        if (validado_didatica) {
-          if (validado_procedimental) {
-            $(".prova-didatica").hide();
-            $(".titulos").show();
-            $("#salvar").show();
-            $("#avancar").hide();
-            window.fase = 4;
-          }
-        } else {
-          if (!validado_procedimental) {
-            $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
-          }
-          if (!validado_didatica) {
-          $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
-          }
-        }
+  // Ao mudar o valor do checkbox, esconde ou mostra as tabelas
+  $("#area_prova_didatica").change(function(){
+    ativa_didatica();
+  });
+
+  $("#area_prova_procedimental").change(function(){
+    ativa_procedimental();
+  });
+
+  $("#salvar").click(function(){
+    var validado_didatica = true;
+    if ($("#area_prova_didatica").is(":checked")) {
+      if (!verifica_soma($(".criterios-didatica"),"valor", 100)) {
+        validado_didatica = false;
       }
-    });
+    }
 
-    $("#area_prova_didatica").change(function(){
-      ativa_didatica();
-    });
+    var validado_procedimental = true;
+    if ($("#area_prova_procedimental").is(":checked")) {
+      if (!verifica_soma($(".criterios-procedimental"),"valor", 100)) {
+        validado_procedimental = false;
+      }
+    }
 
-    $("#area_prova_procedimental").change(function(){
-      ativa_procedimental();
-    });
+    if (!validado_procedimental) {
+      $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
+      return false;
+    }
+    if (!validado_didatica) {
+      $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
+      return false;
+    }
+  });
+});
+
+onPage('areas titulos, areas update', function(){
+  $("#salvar").click(function(e){
+    var validado_atividades = true;
+    if (!verifica_soma($(".atividades"),"valor", $("maximo-atividades"))) {
+      validado_atividades = false;
+    }
+
+    var validado_producao = true;
+    if (!verifica_soma($(".producao"),"valor", $("maximo-producao"))) {
+      validado_producao = false;
+    }
+
+    if (!validado_atividades) {
+      $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
+      e.preventDefault();
+    }
+    if (!validado_producao) {
+      $(".panel.panel-default.producao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
+      e.preventDefault();
+    }
   });
 });
