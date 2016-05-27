@@ -37,6 +37,7 @@
               <% end %>
             </tbody>
           </table>
+          <div class="mensagem-erro"></div>
 
           <div class="links">
             <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'escrita' } }, data: { association_insertion_node: '.criterios-escrita', association_insertion_method: 'append' } %>
@@ -69,6 +70,7 @@
               <% end %>
             </tbody>
           </table>
+          <div class="mensagem-erro"></div>
 
           <div class="links">
             <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'didatica' } }, data: { association_insertion_node: '.criterios-didatica', association_insertion_method: 'append' } %>
@@ -97,6 +99,7 @@
               <% end %>
             </tbody>
           </table>
+          <div class="mensagem-erro"></div>
 
           <div class="links">
             <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'procedimental' } }, data: { association_insertion_node: '.criterios-procedimental', association_insertion_method: 'append' } %>
