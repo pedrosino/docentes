@@ -46,8 +46,9 @@
     </div>
 
     <div class="prova-didatica">
-      <%= f.input :prova_didatica, label: "Haverá prova didática pedagógica?" %>
       <h3>Prova Didática</h3>
+
+      <%= f.input :prova_didatica, label: "Haverá prova didática pedagógica?" %>
       <div class="panel panel-default didatica">
         <div class="panel-heading">
           Critérios de correção da Prova Didática Pedagógica
@@ -174,54 +175,4 @@
 </div>
 <script type="text/javascript">
 window.fase = 1;
-
-function ativa_didatica() {
-  if($("#area_prova_didatica").is(":checked")) {
-    $(".panel.didatica").show();
-  } else {
-    $(".panel.didatica").hide();
-  }
-}
-
-function ativa_procedimental() {
-  if($("#area_prova_procedimental").is(":checked")) {
-    $(".panel.procedimental").show();
-  } else {
-    $(".panel.procedimental").hide();
-  }
-}
-
-$(function(){
-  var qual = $("#area_qualif_prorrogar").parent("div");
-  qual.hide();
-  $("#salvar").hide();
-
-  ativa_didatica();
-  ativa_procedimental();
-
-  $("#area_prorrogar").change(function(){
-    if($(this).is(":checked")) {
-      qual.show();
-      qual.prop("disabled", "");
-    } else {
-      qual.hide();
-    }
-  });
-
-  $("#avancar").click(function(){
-    switch(window.fase) {
-      case 1: $(".bloco-inicial").hide(); $(".prova-escrita").show(); window.fase = 2; break;
-      case 2: $(".prova-escrita").hide(); $(".prova-didatica").show(); window.fase = 3; break;
-      case 3: $(".prova-didatica").hide(); $(".titulos").show(); $("#salvar").show(); $("#avancar").hide(); window.fase = 4; break;
-    }
-  });
-
-  $("#area_prova_didatica").change(function(){
-    ativa_didatica();
-  });
-
-  $("#area_prova_procedimental").change(function(){
-    ativa_procedimental();
-  });
-});
 </script>
