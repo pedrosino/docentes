@@ -105,7 +105,62 @@
     </div>
 
     <div class="titulos">
-      Análise de títulos
+      <h3>Análise de Títulos</h3>
+      <div class="panel panel-default titulos">
+        <div class="panel-heading">
+          Valoração das atividades didáticas e/ou profissionais nos últimos 5 (cinco) anos
+        </div>
+        <div class="panel-body">
+          <table class="table titulos atividades">
+            <thead>
+              <tr>
+                <td class="borda">Descrição</td>
+                <td class="borda">Unidade de medida</td>
+                <td class="borda">Pontuação individual</td>
+                <td class="borda">Pontuação máxima</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :titulos, @area.titulos.where(tipo: 'atividades') do |options_form| %>
+                <%= render 'titulo_fields', f: options_form, tipo: "atividades" %>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div class="links">
+            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades' } }, data: { association_insertion_node: '.atividades', association_insertion_method: 'append' } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default titulos">
+        <div class="panel-heading">
+          Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos
+        </div>
+        <div class="panel-body">
+          <table class="table titulos producao">
+            <thead>
+              <tr>
+                <td class="borda">Descrição</td>
+                <td class="borda">Unidade de medida</td>
+                <td class="borda">Pontuação individual</td>
+                <td class="borda">Pontuação máxima</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :titulos, @area.titulos.where(tipo: 'producao') do |options_form| %>
+                <%= render 'titulo_fields', f: options_form, tipo: "producao" %>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div class="links">
+            <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao' } }, data: { association_insertion_node: '.producao', association_insertion_method: 'append' } %>
+          </div>
+        </div>
+      </div>
     </div>
 
     <%= link_to icon("arrow-left", "Cancelar"), areas_path, class: "btn btn-warning" %>

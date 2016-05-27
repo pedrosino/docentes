@@ -8,11 +8,13 @@
 .prova-procedimental,
 .titulos,
 .panel.didatica,
-.panel.procedimental {
+.panel.procedimental,
+.panel.titulos {
   display: none;
 }
 
-.table.criterios {
+.table.criterios,
+.table.titulos {
   border: none;
 
   tr td {
@@ -41,8 +43,17 @@ td.criterio {
   }
 }
 
-td.valor {
+td.valor,
+td.maximo {
   width: 10%;
+
+  input {
+    width: 100%;
+  }
+}
+
+td.unidade {
+  width: 20%;
 
   input {
     width: 100%;
