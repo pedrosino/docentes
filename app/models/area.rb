@@ -33,13 +33,15 @@ class Area < ActiveRecord::Base
 
   validate :soma_prova_escrita
   def soma_prova_escrita
-    if proximo == 'didatica' && criterios_da_prova('escrita').length < 1
-      errors.add(:base, "Você deve preencher os critérios da prova escrita.")
-    end
-    if proximo == 'didatica' && criterios_da_prova('escrita').length > 0
-      soma = criterios_da_prova('escrita').map(&:valor).reduce(&:+)
-      if soma != 100
-        errors.add(:base, "A soma dos critérios não atinge 100 pontos.")
+    if proximo == 'didatica'
+      if criterios_da_prova('escrita').length < 1
+        errors.add(:base, "Você deve preencher os critérios da prova escrita.")
+      end
+      if criterios_da_prova('escrita').length > 0
+        soma = criterios_da_prova('escrita').map(&:valor).reduce(&:+)
+        if soma != 100
+          errors.add(:base, "A soma dos critérios não atinge 100 pontos.")
+        end
       end
     end
   end

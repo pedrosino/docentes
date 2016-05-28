@@ -5,9 +5,7 @@ FactoryGirl.define do
     valor { Faker::Number.between(10,50) }
 
     trait :escrita do
-      after (:create) do |criterio|
-        criterio.tipo_prova = 'escrita'
-      end
+      tipo_prova 'escrita'
     end
   end
 end

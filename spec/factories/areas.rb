@@ -8,9 +8,7 @@ FactoryGirl.define do
     vagas { Faker::Number.between(1,5) }
 
     trait :prorrogada do
-      after(:create) do |unidade|
-        unidade.prorrogar = true
-      end
+      prorrogar true
     end
   end
 
