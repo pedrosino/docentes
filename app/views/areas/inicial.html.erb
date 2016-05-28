@@ -11,6 +11,7 @@
       <%= f.input :subarea %>
       <%= f.input :campus, required: true, collection: ["Educação Física","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
       <%= f.input :qualificacao, required: true %>
+      <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
       <%= f.input :regime, required: true, as: :select, collection: [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]].map{|regime| [regime[0], regime[1]]} %>
       <%= f.input :vagas, required: true %>
       <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>

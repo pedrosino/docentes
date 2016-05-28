@@ -33,14 +33,11 @@ class Area < ActiveRecord::Base
 
   validate :soma_prova_escrita
   def soma_prova_escrita
-    if proximo == 'didatica' && criterios.select{ |c| c.tipo_prova == 'escrita' }.length < 1
+    if proximo == 'didatica' && criterios_da_prova('escrita').length < 1
       errors.add(:base, "Você deve preencher os critérios da prova escrita.")
     end
-    if proximo == 'didatica' && criterios.select{ |c| c.tipo_prova == 'escrita' }.length > 0
-      soma = 0
-      criterios.select{ |c| c.tipo_prova == 'escrita' }.each do |criterio|
-        soma += criterio.valor
-      end
+    if proximo == 'didatica' && criterios_da_prova('escrita').length > 0
+      soma = criterios_da_prova('escrita').map(&:valor).reduce(&:+)
       if soma != 100
         errors.add(:base, "A soma dos critérios não atinge 100 pontos.")
       end
@@ -49,11 +46,8 @@ class Area < ActiveRecord::Base
 
   validate :soma_prova_didatica
   def soma_prova_didatica
-    if proximo == 'titulos' && prova_didatica && criterios.select{ |c| c.tipo_prova == 'didatica' }.length > 0
-      soma = 0
-      criterios.select{ |c| c.tipo_prova == 'didatica' }.each do |criterio|
-        soma += criterio.valor
-      end
+    if proximo == 'titulos' && prova_didatica && criterios_da_prova('didatica').length > 0
+      soma = criterios_da_prova('didatica').map(&:valor).reduce(&:+)
       if soma != 100
         errors.add(:base, "A soma dos critérios da prova didática pedagógica não atinge 100 pontos.")
       end
@@ -62,15 +56,16 @@ class Area < ActiveRecord::Base
 
   validate :soma_prova_procedimental
   def soma_prova_procedimental
-    if proximo == 'titulos' && prova_procedimental && criterios.select{ |c| c.tipo_prova == 'procedimental' }.length > 0
-      soma = 0
-      criterios.select{ |c| c.tipo_prova == 'procedimental' }.each do |criterio|
-        soma += criterio.valor
-      end
+    if proximo == 'titulos' && prova_procedimental && criterios_da_prova('procedimental').length > 0
+      soma = criterios_da_prova('procedimental').map(&:valor).reduce(&:+)
       if soma != 100
         errors.add(:base, "A soma dos critérios da prova didática procedimental não atinge 100 pontos.")
       end
     end
+  end
+
+  def criterios_da_prova(prova)
+    criterios.select{ |c| c.tipo_prova == prova}
   end
 
   accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
