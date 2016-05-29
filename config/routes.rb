@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :editais, only: [:index, :new, :edit, :create, :update, :destroy]
   get 'editais/:id/word' => 'editais#word', format: 'docx', as: 'edital_word'
-  get 'editals/:id/pdf' => 'editais#pdf', as: 'edital_pdf'
+  get 'editais/:id/pdf' => 'editais#pdf', as: 'edital_pdf'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

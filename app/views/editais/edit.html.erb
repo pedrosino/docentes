@@ -6,15 +6,26 @@
     <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
     <%= f.input :numero, required: true %>
     <%= f.input :data %>
-    <%= f.input :comeca_inscricao %>
-    <%= f.input :termina_inscricao %>
-    <%= f.input :publicacao %>
+    <%= f.input :comeca_inscricao, as: :datetime_picker %>
+    <%= f.input :termina_inscricao, as: :datetime_picker %>
+    <%= f.input :publicacao, as: :datetime_picker %>
 
+    Selecionar areas:
     <table class="table">
-      <% Area.where(edital_id: nil).each do |area| %>
+      <thead>
         <tr>
-          <td><%= check_box_tag 'areas[]', area.id  %></td>
+          <th></th>
+          <th>Unidade</th>
+          <th>Área</th>
+          <th>Subárea</th>
+        </tr>
+      </thead>
+      <% Area.where("edital_id is null or edital_id = ?", @edital.id).each do |area| %>
+        <tr>
+          <td><%= check_box_tag 'areas[]', area.id, checked = @edital.areas.include?(area) %></td>
+          <td><%= area.unidade.sigla %></td>
           <td><%= area.nome %></td>
+          <td><%= area.subarea %></td>
         </tr>
       <% end %>
     </table>

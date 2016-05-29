@@ -37,6 +37,8 @@ gem 'htmltoword'
 gem 'docx_replace', git: 'https://github.com/pedrosino/docx_replace.git'
 
 gem 'cocoon'
+gem 'momentjs-rails', '~> 2.9',  :github => 'derekprior/momentjs-rails'
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

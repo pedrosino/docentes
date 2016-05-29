@@ -1,4 +1,20 @@
 GIT
+  remote: git://github.com/derekprior/momentjs-rails.git
+  revision: 41e30d424e9a56ea4b310087615e1fdc94d87810
+  specs:
+    momentjs-rails (2.11.1)
+      railties (>= 3.1)
+
+GIT
+  remote: git://github.com/zpaulovics/datetimepicker-rails.git
+  revision: 36d21cec5da7f5b214925804f60e63c61c747023
+  branch: master
+  submodules: true
+  specs:
+    datetimepicker-rails (4.7.16)
+      momentjs-rails (>= 2.9.0)
+
+GIT
   remote: https://github.com/pedrosino/docx_replace.git
   revision: f66480cdfc6405c75dd4dfbabfc4f0a7aa3b27e4
   specs:
@@ -227,6 +243,7 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 4.1.0)
   database_cleaner
+  datetimepicker-rails!
   devise
   docx_replace!
   factory_girl_rails
@@ -235,6 +252,7 @@ DEPENDENCIES
   htmltoword
   jbuilder (~> 2.0)
   jquery-rails
+  momentjs-rails (~> 2.9)!
   mysql2
   rails (= 4.2.5)
   rspec-rails
