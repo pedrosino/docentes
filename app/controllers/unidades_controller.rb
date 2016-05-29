@@ -40,7 +40,7 @@ class UnidadesController < ApplicationController
     @unidade = Unidade.find(params[:id])
     if @unidade.destroy
       flash[:success] = "Unidade excluída."
-      redirect_to areas_path
+      redirect_to unidades_path
     else
       flash[:warning] = "Falha na exclusão."
       render :edit
