@@ -7,5 +7,13 @@ FactoryGirl.define do
     trait :escrita do
       tipo_prova 'escrita'
     end
+
+    trait :didatica do
+      tipo_prova 'didatica'
+    end
+
+    trait :procedimental do
+      tipo_prova 'procedimental'
+    end
   end
 end

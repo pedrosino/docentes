@@ -40,7 +40,7 @@ class Area < ActiveRecord::Base
       if criterios_da_prova('escrita').length > 0
         soma = criterios_da_prova('escrita').map(&:valor).reduce(&:+)
         if soma != 100
-          errors.add(:base, "A soma dos critérios não atinge 100 pontos.")
+          errors.add(:base, "A soma dos critérios da prova escrita não atinge 100 pontos.")
         end
       end
     end
@@ -48,20 +48,30 @@ class Area < ActiveRecord::Base
 
   validate :soma_prova_didatica
   def soma_prova_didatica
-    if proximo == 'titulos' && prova_didatica && criterios_da_prova('didatica').length > 0
-      soma = criterios_da_prova('didatica').map(&:valor).reduce(&:+)
-      if soma != 100
-        errors.add(:base, "A soma dos critérios da prova didática pedagógica não atinge 100 pontos.")
+    if proximo == 'titulos' && prova_didatica
+      if criterios_da_prova('didatica').length < 1
+        errors.add(:base, "Você deve preencher os critérios da prova didática pedagógica.")
+      end
+      if criterios_da_prova('didatica').length > 0
+        soma = criterios_da_prova('didatica').map(&:valor).reduce(&:+)
+        if soma != 100
+          errors.add(:base, "A soma dos critérios da prova didática pedagógica não atinge 100 pontos.")
+        end
       end
     end
   end
 
   validate :soma_prova_procedimental
   def soma_prova_procedimental
-    if proximo == 'titulos' && prova_procedimental && criterios_da_prova('procedimental').length > 0
-      soma = criterios_da_prova('procedimental').map(&:valor).reduce(&:+)
-      if soma != 100
-        errors.add(:base, "A soma dos critérios da prova didática procedimental não atinge 100 pontos.")
+    if proximo == 'titulos' && prova_procedimental
+      if criterios_da_prova('procedimental').length < 1
+        errors.add(:base, "Você deve preencher os critérios da prova didática procedimental.")
+      end
+      if criterios_da_prova('procedimental').length > 0
+        soma = criterios_da_prova('procedimental').map(&:valor).reduce(&:+)
+        if soma != 100
+          errors.add(:base, "A soma dos critérios da prova didática procedimental não atinge 100 pontos.")
+        end
       end
     end
   end

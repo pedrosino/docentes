@@ -49,7 +49,7 @@ describe Area do
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 50)
       area.proximo = "didatica"
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma dos critérios não atinge 100 pontos."]})
+      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova escrita não atinge 100 pontos."]})
 
       # Cria mais criterios
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 30)
@@ -60,8 +60,54 @@ describe Area do
     end
 
     # Testar soma da prova didatica
+    it "prova didatica precisa de criterios" do
+      area.proximo = "titulos"
+      area.tipo = 'processo'
+      area.prova_didatica = true
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["Você deve preencher os critérios da prova didática pedagógica."]})
+    end
+
+    it "soma dos criterios deve ser 100" do
+      FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 30)
+      area.proximo = "titulos"
+      area.tipo = 'processo'
+      area.prova_didatica = true
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática pedagógica não atinge 100 pontos."]})
+
+      # Cria mais criterios
+      FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 30)
+      FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 40)
+      # A associação fica em cache, então precisa resetar
+      area.criterios.reset
+      expect(area).to be_valid
+    end
 
     # Testar soma da prova procedimental
+    it "prova procedimental precisa de criterios" do
+      area.proximo = "titulos"
+      area.tipo = 'processo'
+      area.prova_procedimental = true
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["Você deve preencher os critérios da prova didática procedimental."]})
+    end
+
+    it "soma dos criterios deve ser 100" do
+      FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 35)
+      area.proximo = "titulos"
+      area.tipo = 'processo'
+      area.prova_procedimental = true
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática procedimental não atinge 100 pontos."]})
+
+      # Cria mais criterios
+      FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 20)
+      FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 45)
+      # A associação fica em cache, então precisa resetar
+      area.criterios.reset
+      expect(area).to be_valid
+    end
   end
 
 end
