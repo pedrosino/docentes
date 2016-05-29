@@ -20,7 +20,7 @@
           <th>Subárea</th>
         </tr>
       </thead>
-      <% Area.where("edital_id is null or edital_id = ?", @edital.id).each do |area| %>
+      <% Area.where("(edital_id is null or edital_id = ?) and tipo = ?", @edital.id, @edital.tipo).each do |area| %>
         <tr>
           <td><%= check_box_tag 'areas[]', area.id, checked = @edital.areas.include?(area) %></td>
           <td><%= area.unidade.sigla %></td>

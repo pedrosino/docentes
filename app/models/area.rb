@@ -8,6 +8,9 @@ class Area < ActiveRecord::Base
 
   attr_accessor :proximo
 
+  accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
+
   validates :vagas, presence: true, on: :update
 
   validate :tipo_do_edital
@@ -79,7 +82,4 @@ class Area < ActiveRecord::Base
   def criterios_da_prova(prova)
     criterios.select{ |c| c.tipo_prova == prova}
   end
-
-  accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
 end

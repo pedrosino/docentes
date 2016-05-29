@@ -29,10 +29,16 @@ class EditaisController < ApplicationController
 
   def update
     @edital = Edital.find(params[:id])
+    # Associa as áreas selecionadas ao edital
     areas = params[:areas]
     areas.each do |area|
       Area.find(area).update!(edital_id: @edital.id)
     end
+
+    # Remove as áreas que foram desmarcadas
+    difference = @edital.areas.pluck(:id) - params[:areas].map(&:to_i)
+    Area.where(id: difference).update_all(edital_id: nil)
+
     if @edital.update_attributes(edital_params)
       flash[:success] = "Salvo com sucesso!"
       redirect_to edit_edital_path(@edital)
