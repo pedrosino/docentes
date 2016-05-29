@@ -33,28 +33,29 @@ describe Area do
   describe "editando area" do
     it "concurso tem prova didatica" do
       area.tipo = 'concurso'
-      area.update(prova_didatica: false)
-      area.update(proximo: "titulos")
+      area.prova_didatica = false
+      area.proximo = "titulos"
       expect(area).to be_invalid
     end
 
     # Testar soma da prova escrita
     it "prova escrita precisa de criterios" do
-      area.update(proximo: "didatica")
+      area.proximo = "didatica"
+      area.valid?
       expect(area.errors.messages).to eq({base: ["Você deve preencher os critérios da prova escrita."]})
     end
 
     it "soma dos criterios deve ser 100" do
-      FactoryGirl.create(:criterio, :escrita, area_id: area.id)
-      area.update(proximo: "didatica")
+      FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 50)
+      area.proximo = "didatica"
+      area.valid?
       expect(area.errors.messages).to eq({base: ["A soma dos critérios não atinge 100 pontos."]})
 
-      # Atualiza valor do primeiro criterio
-      area.criterios.first.valor = 50
       # Cria mais criterios
-      area.criterios << FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 30)
-      area.criterios << FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 20)
-      area.update(proximo: "didatica")
+      FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 30)
+      FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 20)
+      # A associação fica em cache, então precisa resetar
+      area.criterios.reset
       expect(area).to be_valid
     end
 
