@@ -1,3 +1,36 @@
 // Place all the styles related to the Editais controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.areas-edital {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  td,
+  th {
+    border: 1px solid #000;
+    padding: 5px;
+    text-align: center;
+  }
+
+  td.area {
+    width: 20%;
+  }
+
+  td.subarea {
+    width: 20%;
+  }
+
+  td.vagas {
+    width: 10%;
+  }
+
+  td.qualificacao {
+    width: 40%;
+  }
+
+  td.regime {
+    width: 10%;
+  }
+}

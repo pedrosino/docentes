@@ -6,11 +6,11 @@
     <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
     <%= f.input :numero, required: true %>
     <%= f.input :data %>
-    <%= f.input :comeca_inscricao, as: :datetime_picker %>
-    <%= f.input :termina_inscricao, as: :datetime_picker %>
-    <%= f.input :publicacao, as: :datetime_picker %>
+    <%= f.input :comeca_inscricao, as: :date_picker %>
+    <%= f.input :termina_inscricao, as: :date_picker %>
+    <%= f.input :publicacao, as: :date_picker %>
 
-    Selecionar areas:
+    <h3>Selecionar areas:</h3>
     <table class="table">
       <thead>
         <tr>
