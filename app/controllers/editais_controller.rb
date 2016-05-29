@@ -29,6 +29,10 @@ class EditaisController < ApplicationController
 
   def update
     @edital = Edital.find(params[:id])
+    areas = params[:areas]
+    areas.each do |area|
+      Area.find(area).update!(edital_id: @edital.id)
+    end
     if @edital.update_attributes(edital_params)
       flash[:success] = "Salvo com sucesso!"
       redirect_to edit_edital_path(@edital)
@@ -78,6 +82,10 @@ class EditaisController < ApplicationController
         send_file tmp_file.path, filename: "edital_#{@edital.id}_report.docx", disposition: 'attachment'
       end
     end
+  end
+
+  def pdf
+    @edital = Edital.find(params[:id])
   end
 
   def edital_params

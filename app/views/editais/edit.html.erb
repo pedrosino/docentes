@@ -10,6 +10,15 @@
     <%= f.input :termina_inscricao %>
     <%= f.input :publicacao %>
 
+    <table class="table">
+      <% Area.where(edital_id: nil).each do |area| %>
+        <tr>
+          <td><%= check_box_tag 'areas[]', area.id  %></td>
+          <td><%= area.nome %></td>
+        </tr>
+      <% end %>
+    </table>
+
     <%= link_to icon("arrow-left", "Voltar"), editais_path, class: "btn btn-warning" %>
     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
     <%= link_to @edital, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
