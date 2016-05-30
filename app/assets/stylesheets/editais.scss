@@ -2,6 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.edital {
+  width: 17cm;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif;
+  font-size: 12pt;
+  text-align: justify;
+
+  .edital-header {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .to-the-right {
+    margin-left: 7cm;
+  }
+}
+
 .areas-edital {
   width: 100%;
   margin-top: 10px;
@@ -15,11 +33,11 @@
   }
 
   td.area {
-    width: 20%;
+    width: 18%;
   }
 
   td.subarea {
-    width: 20%;
+    width: 18%;
   }
 
   td.vagas {
@@ -27,10 +45,10 @@
   }
 
   td.qualificacao {
-    width: 40%;
+    width: 39%;
   }
 
   td.regime {
-    width: 10%;
+    width: 15%;
   }
 }
