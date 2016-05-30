@@ -1,28 +1,8 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Many thanks to @jfly and @jonatanklosko for helping me!
 
-Things you may want to cover:
+Este sistema foi desenvolvido entre maio e agosto de 2016, por Pedro Santos Guimarães.
 
-* Ruby version
+O sistema é destinado ao gerenciamento do pessoal docente da Universidade Federal de Uberlândia, abrangendo desde os concursos públicos e processos seletivos simplificados até o processo de admissão e acompanhamento da carreira.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
