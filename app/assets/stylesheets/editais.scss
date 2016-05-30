@@ -3,20 +3,59 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .edital {
-  width: 17cm;
+  /*width: 17cm;*/
+  width: 21cm;
+  padding-left: 3cm;
+  padding-right: 1cm;
+  border: 1px solid #555;
+
   margin-left: auto;
   margin-right: auto;
   font-family: TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif;
   font-size: 12pt;
+  line-height: 1.15;
   text-align: justify;
+  color: #000;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  p.nivel-1 {
+    margin-left: 1.25cm;
+  }
+
+  div.itens {
+    margin-left: 1.25cm;
+  }
 
   .edital-header {
     font-weight: bold;
     text-align: center;
+
+    .cabecalho {
+      width: 100%;
+    }
+
+    p.linha-cabecalho {
+      font-size: 11pt;
+      line-height: 11pt;
+    }
+
+    .numero-edital {
+      font-size: 14pt;
+      line-height: 1.5;
+      border-bottom: 1px solid #666;
+      border-top: 1px solid #666;
+    }
   }
 
   .to-the-right {
     margin-left: 7cm;
+    margin-top: 0.5cm;
+    font-size: 11pt;
+    font-weight: bold;
   }
 }
 
