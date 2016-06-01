@@ -45,6 +45,17 @@ describe EditaisController do
         post :destroy, id: edital.id
         expect(Edital.find_by_id(edital.id)).to eq nil
       end
+
+      it "inclui areas" do
+        edital = FactoryGirl.create(:edital)
+        area1 = FactoryGirl.create(:area)
+        area2 = FactoryGirl.create(:area)
+        # FALHANDO
+        #post :update, id: edital.id, edital: { areas: [area1.id.to_s, area2.id.to_s] }
+        edital.reload
+        debugger
+        expect(edital.areas.length).to eq 2
+      end
     end
   end
 
