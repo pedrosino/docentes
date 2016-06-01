@@ -31,12 +31,14 @@ class EditaisController < ApplicationController
     @edital = Edital.find(params[:id])
     # Associa as áreas selecionadas ao edital
     areas = params[:areas]
-    areas.each do |area|
-      Area.find(area).update!(edital_id: @edital.id)
+    if areas
+      areas.each do |area|
+        Area.find(area).update!(edital_id: @edital.id)
+      end
     end
 
     # Remove as áreas que foram desmarcadas
-    difference = @edital.areas.pluck(:id) - params[:areas].map(&:to_i)
+    difference = @edital.areas.pluck(:id) - ( params[:areas] ? params[:areas].map(&:to_i) : [] )
     Area.where(id: difference).update_all(edital_id: nil)
 
     if @edital.update_attributes(edital_params)
