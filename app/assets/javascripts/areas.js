@@ -28,13 +28,13 @@ onPage('areas inicial, areas update', function(){
   qual.hide();
 
   $("#area_prorrogar").change(function(){
-      if($(this).is(":checked")) {
-        qual.show();
-        qual.prop("disabled", "");
-      } else {
-        qual.hide();
-      }
-    });
+    if($(this).is(":checked")) {
+      qual.show();
+      qual.prop("disabled", "");
+    } else {
+      qual.hide();
+    }
+  });
 });
 
 onPage('areas escrita, areas escrita', function(){

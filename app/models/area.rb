@@ -12,11 +12,20 @@ class Area < ActiveRecord::Base
   accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
 
   validates :vagas, presence: true, on: :update
+  validates :nome, presence: true, on: :update
+  validates :qualificacao, presence: true, on: :update
 
   validate :tipo_do_edital
   def tipo_do_edital
     if tipo && !['concurso','processo'].include?(tipo)
       errors.add(:tipo, "Inválido!")
+    end
+  end
+
+  validate :campus_validos
+  def campus_validos
+    if campus && !['Educação Física','Monte Carmelo','Patos de Minas','Santa Mônica','Umuarama'].include?(campus)
+      errors.add(:campus, "inválido!")
     end
   end
 
