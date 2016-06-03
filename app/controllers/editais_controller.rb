@@ -100,7 +100,10 @@ class EditaisController < ApplicationController
     edital_params = params.require(:edital).permit(:numero, :tipo, :data, :comeca_inscricao, :termina_inscricao, :publicacao)
     # As inscrições terminam sempre às 23:59:59 do último dia.
     # O campo do formulário passa apenas a data, então incluímos o horário no final da string
-    edital_params[:termina_inscricao] += ' 23:59:59'
-    edital_params
+    if edital_params[:termina_inscricao]
+      edital_params[:termina_inscricao] += ' 23:59:59'
+      edital_params
+    end
   end
+
 end
