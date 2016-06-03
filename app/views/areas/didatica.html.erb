@@ -12,7 +12,7 @@
     <div class="prova-didatica">
       <h3>Prova Didática</h3>
 
-      <%= f.input :prova_didatica, label: "Haverá prova didática pedagógica?" %>
+      <%= f.input :prova_didatica, label: "Haverá prova didática pedagógica?", disabled: @area.tipo == 'concurso' %>
       <div class="panel panel-default didatica">
         <div class="panel-heading">
           Critérios de correção da Prova Didática Pedagógica
