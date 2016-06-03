@@ -48,3 +48,11 @@ td.unidade {
     width: 100%;
   }
 }
+
+.aviso-mi {
+  font-weight: bold;
+
+  &.affix {
+    top: 0;
+  }
+}

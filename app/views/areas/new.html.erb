@@ -1,11 +1,14 @@
 <% provide(:title, 'Cadastrar Área') %>
 
 <div class="container">
+  <div class="aviso-mi alert alert-danger">
+    A Unidade deve enviar um Memorando Interno (MI) à Pró-Reitoria de Gestão de Pessoas, solicitando a abertura do edital.
+  </div>
   <h3><%= yield(:title) %></h3>
 
   <%= simple_form_for @area do |f| %>
     <%= f.input :tipo, required: true, autofocus: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
-    <% if current_user.tipo == 'p' %>
+    <% if current_user.tipo == 'p' || current_user.tipo == 'a' %>
       <%= f.input :unidade_id, as: :select, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
     <% else %>
       <%= f.input :unidade_id, required: true, as: :hidden, input_html: { value: current_user.unidade_id } %>
