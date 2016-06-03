@@ -3,7 +3,7 @@ class AreasController < ApplicationController
   before_action -> { redireciona_usuario(:pode_criar_area?) }
 
   def index
-    if current_user.tipo == 'p'
+    if current_user.pode_criar_edital?
       @areas = Area.all
     else
       @areas = Area.where(unidade_id: current_user.unidade_id)

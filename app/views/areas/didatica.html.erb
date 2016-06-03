@@ -18,7 +18,7 @@
           Critérios de correção da Prova Didática Pedagógica
         </div>
         <div class="panel-body">
-        <div class="mensagem-erro"></div>
+          <div class="mensagem-erro"></div>
           <table class="table criterios criterios-didatica">
             <thead>
               <tr>
@@ -42,11 +42,20 @@
       </div>
 
       <%= f.input :prova_procedimental, label: "Haverá prova didática procedimental?" %>
+      <div class="procedimental-esconder">
+        <div class="alert alert-warning">
+          No caso de prova procedimental, deve ser informada a duração mínima e máxima, e deve ser encaminhada justificativa circunstanciada da necessidade de realização desta prova junto com o MI à PROGEP.
+        </div>
+        <%= f.input :min_procedimental, label: "Duração mínima" %>
+        <%= f.input :max_procedimental, label: "Duração máxima" %>
+      </div>
+
       <div class="panel panel-default procedimental">
         <div class="panel-heading">
           Critérios de correção da Prova Didática Procedimental
         </div>
         <div class="panel-body">
+          <div class="mensagem-erro"></div>
           <table class="table criterios criterios-procedimental">
             <thead>
               <tr>
@@ -62,7 +71,6 @@
               <% end %>
             </tbody>
           </table>
-          <div class="mensagem-erro"></div>
 
           <div class="links">
             <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'procedimental' } }, data: { association_insertion_node: '.criterios-procedimental', association_insertion_method: 'append' } %>
