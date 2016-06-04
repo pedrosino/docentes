@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603155719) do
+ActiveRecord::Schema.define(version: 20160604181548) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",          limit: 4
@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(version: 20160603155719) do
     t.boolean  "prova_procedimental"
     t.integer  "min_procedimental",   limit: 4
     t.integer  "max_procedimental",   limit: 4
+    t.string   "curso",               limit: 255
+    t.integer  "vagas_negros",        limit: 4
+    t.integer  "vagas_pcd",           limit: 4
   end
 
   add_index "areas", ["unidade_id"], name: "fk_rails_7e4c0346f5", using: :btree

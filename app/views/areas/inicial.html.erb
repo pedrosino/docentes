@@ -11,8 +11,9 @@
 
     <div class="bloco-inicial">
       <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
-      <%= f.input :nome, required: true %>
-      <%= f.input :subarea %>
+      <%= f.input :nome, label: "Área", required: true, autofocus: true %>
+      <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
+      <%= f.input :curso, label: "Curso (OPCIONAL)" %>
       <%= f.input :campus, required: true, collection: ["Educação Física","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
       <%= f.input :qualificacao, required: true %>
       <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
@@ -22,7 +23,7 @@
         <% regimes = [["20 horas","20"], ["40 horas","40"]] %>
       <% end %>
       <%= f.input :regime, required: true, as: :select, collection: regimes.map{|regime| [regime[0], regime[1]]} %>
-      <%= f.input :vagas, required: true %>
+      <%= f.input :vagas, required: true, wrapper_html: { class: "vagas" } %>
       <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
       <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
     </div>

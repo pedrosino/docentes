@@ -29,21 +29,6 @@ class AreasController < ApplicationController
     end
   end
 
-  # def edit
-  #   @area = Area.find(params[:id])
-  # end
-
-  # def update
-  #   @area = Area.find(params[:id])
-  #   if @area.update_attributes(area_params)
-  #     flash[:success] = "Salvo com sucesso!"
-  #     redirect_to edit_area_path(@area)
-  #   else
-  #     flash[:danger] = "Falha ao salvar."
-  #     render :edit
-  #   end
-  # end
-
   # O formulário de edição da área é dividido em partes.
   # Cada parte tem uma ação para carregar a view, mas todas
   # chamam a ação 'update', que salva o que foi passado e
@@ -105,7 +90,7 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :proximo,
+    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :curso, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :proximo,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy], titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
   end
 end
