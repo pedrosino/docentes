@@ -11,6 +11,26 @@ class Area < ActiveRecord::Base
   accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
 
+  # Reserva de vagas automática
+  before_save do
+    # Reserva para negros: 20% das vagas, arredondamento comum
+    # 0,1 até 0,4 => arredonda para baixo
+    # 0,5 até 0,9 => arredonda para cima
+    # 3 vagas * 20% = 0,6 => arredonda para 1 vaga
+    #
+    # Reserva para pessoas com deficiência: 10%, arredondamento sempre para cima
+    # limitado a 20%
+    # Exemplo: 1 vaga * 10% = 0,1 => arredonda para 1
+    # mas 1/1 = 100% => acima do teto de 20% => não tem reserva
+    # 5 vagas * 10% = 0,5 => arredonda para 1
+    # 1/5 = 20% => dentro do teto => reserva de uma vaga
+    self.vagas_negros = (self.vagas * 0.2).round
+    self.vagas_pcd = (self.vagas * 0.1).ceil
+    if (self.vagas_pcd / self.vagas.to_f) > 0.2
+      self.vagas_pcd -= 1
+    end
+  end
+
   validates :vagas, presence: true, on: :update
   validates :nome, presence: true, on: :update
   validates :qualificacao, presence: true, on: :update

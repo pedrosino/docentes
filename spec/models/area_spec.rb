@@ -110,4 +110,73 @@ describe Area do
     end
   end
 
+  describe "reserva de vagas" do
+    it "uma vaga nao tem reserva" do
+      area.vagas = 1
+      area.save
+      expect(area.vagas_negros).to eq 0
+      expect(area.vagas_pcd).to eq 0
+    end
+    it "2 vagas nao tem reserva" do
+      area.vagas = 2
+      area.save
+      expect(area.vagas_negros).to eq 0
+      expect(area.vagas_pcd).to eq 0
+    end
+    it "com 3 vagas => reserva 1 para negros" do
+      area.vagas = 3
+      area.save
+      expect(area.vagas_negros).to eq 1
+      expect(area.vagas_pcd).to eq 0
+    end
+    it "com 5 vagas => reserva 1 para negros e 1 para pessoas com deficiencia" do
+      area.vagas = 5
+      area.save
+      expect(area.vagas_negros).to eq 1
+      expect(area.vagas_pcd).to eq 1
+    end
+    it "com 8 vagas => reserva 2 para negros e 1 para pessoas com deficiencia" do
+      area.vagas = 8
+      area.save
+      expect(area.vagas_negros).to eq 2
+      expect(area.vagas_pcd).to eq 1
+    end
+    it "com 11 vagas => reserva 2 para negros e 2 para pessoas com deficiencia" do
+      area.vagas = 11
+      area.save
+      expect(area.vagas_negros).to eq 2
+      expect(area.vagas_pcd).to eq 2
+    end
+    it "com 13 vagas => reserva 3 para negros e 2 para pessoas com deficiencia" do
+      area.vagas = 13
+      area.save
+      expect(area.vagas_negros).to eq 3
+      expect(area.vagas_pcd).to eq 2
+    end
+    it "com 18 vagas => reserva 4 para negros e 2 para pessoas com deficiencia" do
+      area.vagas = 18
+      area.save
+      expect(area.vagas_negros).to eq 4
+      expect(area.vagas_pcd).to eq 2
+    end
+    it "com 21 vagas => reserva 4 para negros e 3 para pessoas com deficiencia" do
+      area.vagas = 21
+      area.save
+      expect(area.vagas_negros).to eq 4
+      expect(area.vagas_pcd).to eq 3
+    end
+    it "com 23 vagas => reserva 5 para negros e 3 para pessoas com deficiencia" do
+      area.vagas = 23
+      area.save
+      expect(area.vagas_negros).to eq 5
+      expect(area.vagas_pcd).to eq 3
+    end
+    it "com 60 vagas => reserva 12 para negros e 6 para pessoas com deficiencia" do
+      area.vagas = 60
+      area.save
+      expect(area.vagas_negros).to eq 12
+      expect(area.vagas_pcd).to eq 6
+    end
+  end
+
 end
