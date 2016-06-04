@@ -3,8 +3,8 @@
   <%= simple_form_for @unidade, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 
-    <%= f.input :sigla %>
-    <%= f.input :nome %>
+    <%= f.input :sigla, required: true %>
+    <%= f.input :nome, required: true %>
     <%= f.input :diretor %>
     <%= f.input :email, hint: "E-mail de contato da unidade" %>
 

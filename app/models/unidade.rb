@@ -2,6 +2,8 @@ class Unidade < ActiveRecord::Base
 
   has_many :areas
 
+  validates :nome, presence: true
+
   validate :tamanho_da_sigla
   def tamanho_da_sigla
     if sigla.length != 5
