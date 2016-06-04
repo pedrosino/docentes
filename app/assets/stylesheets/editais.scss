@@ -63,6 +63,7 @@
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 11pt;
 
   td,
   th {
@@ -72,11 +73,7 @@
   }
 
   td.area {
-    width: 18%;
-  }
-
-  td.subarea {
-    width: 18%;
+    width: 30%;
   }
 
   td.vagas {
@@ -84,7 +81,7 @@
   }
 
   td.qualificacao {
-    width: 39%;
+    width: 45%;
   }
 
   td.regime {

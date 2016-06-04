@@ -14,7 +14,7 @@
       </thead>
 
       <tbody>
-      <% @areas.each do |area| %>
+      <% @areas.sort_by{ |area| area[:unidade_id] }.each do |area| %>
         <tr>
           <td><%= area.unidade.sigla %></td>
           <td><%= area.nome %></td>

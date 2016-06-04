@@ -12,7 +12,7 @@ class Area < ActiveRecord::Base
   accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
 
   # Reserva de vagas automática
-  before_save do
+  before_update do
     # Reserva para negros: 20% das vagas, arredondamento comum
     # 0,1 até 0,4 => arredonda para baixo
     # 0,5 até 0,9 => arredonda para cima

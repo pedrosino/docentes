@@ -48,8 +48,8 @@
   <table class="areas-edital">
     <thead>
       <tr>
-        <th>Área</th>
-        <th>Subárea</th>
+        <th colspan=2 >Área</th>
+        <!--th>Subárea</th-->
         <th>Nº de vagas</th>
         <th>Qualificação Mínima Exigida</th>
         <th>Regime de trabalho</th>
@@ -57,13 +57,24 @@
     </thead>
 
     <tbody>
-      <% @edital.areas.each do |area| %>
+      <% @edital.areas.sort_by{ |area| area.nome}.each_with_index do |area, index| %>
         <tr>
-          <td class="area"><%= area.nome %></td>
-          <td class="subarea"><%= area.subarea %></td>
-          <td class="vagas"><%= area.vagas %></td>
+          <td class="area">
+            <%= @edital.areas.length > 1 %>,
+            <%= @edital.areas[index+1] && @edital.areas[index].nome == @edital.areas[index+1].nome %>
+            <br />
+            <%= @edital.areas.length > 1 ? "Área #{index+1}" : "" %>: <%= area.nome %>
+            <% if area.subarea %>
+              <br /><strong>Subárea:</strong> <%= area.subarea %>
+            <% end %>
+            <% if area.curso.present? %>
+              <br /><strong>Curso:</strong> <%= area.curso %>
+            <% end %>
+          </td>
+          <td></td>
+          <td class="vagas"><%= sprintf '%02d', area.vagas %></td>
           <td class="qualificacao"><%= area.qualificacao %></td>
-          <td class="regime"><%= area.regime %></td>
+          <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
         </tr>
       <% end %>
     </tbody>

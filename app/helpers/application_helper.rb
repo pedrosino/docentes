@@ -13,4 +13,12 @@ module ApplicationHelper
       recaptcha_error: "alert-danger",
     }[flash_type.to_sym] || flash_type.to_s
   end
+
+  def regime_de_trabalho(codigo)
+    {
+      "20" => "20 (vinte) horas semanais",
+      "40" => "40 (quarenta) horas semanais",
+      "DE" => "Dedicação Exclusiva"
+    }[codigo]
+  end
 end
