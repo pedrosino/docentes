@@ -114,7 +114,7 @@ onPage('areas titulos, areas update', function(){
     pontos_por($(this));
   });
 
-  $("select[name*='unidade_medida']").on('change',function(){
+  $(document).on('change', "select[name*='unidade_medida']", function(){
     pontos_por($(this));
   });
 

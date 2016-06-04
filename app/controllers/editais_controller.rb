@@ -102,8 +102,8 @@ class EditaisController < ApplicationController
     # O campo do formulário passa apenas a data, então incluímos o horário no final da string
     if edital_params[:termina_inscricao]
       edital_params[:termina_inscricao] += ' 23:59:59'
-      edital_params
     end
+    edital_params
   end
 
 end

@@ -1,6 +1,6 @@
 <tr class="nested-fields">
   <td class="descricao borda"><%= f.text_area :descricao, required: true, class: "form-control" %></td>
-  <td class="unidade borda"><%= f.select :unidade_medida, ['ano','semestre','aluno','artigo','trabalho','livro','capítulo','tradução','parecer','disciplina','trabalho','resumo','evento','participação','aprovação','banca','orientação','publicação','patente','registro','projeto','premiação','maquete','obra','relatório','direção'].sort, required: true, class: "form-control" %></td>
+  <td class="unidade borda"><%= f.select :unidade_medida, ['','ano','semestre','aluno','artigo','trabalho','livro','capítulo','tradução','parecer','disciplina','trabalho','resumo','evento','participação','aprovação','banca','orientação','publicação','patente','registro','projeto','premiação','maquete','obra','relatório','direção'].sort, required: true, class: "form-control" %></td>
   <td class="valor borda">
     <%= f.text_field :valor, require: true, class: "form-control", locale: "br" %>
     <span class="pontos-por"></span>
