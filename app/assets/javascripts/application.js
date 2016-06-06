@@ -18,6 +18,7 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require pickers
+//= require pt-br
 //= require_self
 //= require_tree .
 
@@ -43,3 +44,5 @@ function onPage(pageSelector, fun) {
 function onEveryPage(fun) {
   $(document).on('page:change', fun);
 }
+
+moment.locale('pt-BR');
