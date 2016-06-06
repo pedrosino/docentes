@@ -25,10 +25,6 @@ function verifica_soma($objeto, $tipo, $total) {
   return (soma == $total);
 }
 
-function pontos_por($objeto) {
-  $objeto.closest("td").next("td").find('span').html('pontos por ' + $objeto.val());
-}
-
 onPage('areas inicial, areas update', function(){
   var qual = $("#area_qualif_prorrogar").parent("div");
   qual.hide();
@@ -110,14 +106,6 @@ onPage('areas didatica, areas update', function(){
 });
 
 onPage('areas titulos, areas update', function(){
-  $("select[name*='unidade_medida'").each(function(){
-    pontos_por($(this));
-  });
-
-  $(document).on('change', "select[name*='unidade_medida']", function(){
-    pontos_por($(this));
-  });
-
   $("#salvar").click(function(e){
     var validado_atividades = true;
     if (!verifica_soma($(".table.atividades"),"maximo", $("input[name='maximo-atividades']").val())) {

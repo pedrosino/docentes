@@ -32,20 +32,25 @@ td.criterio {
   }
 }
 
-td.valor,
-td.maximo {
-  width: 10%;
+td.valor {
+  width: 30%;
 
   input {
-    width: 100%;
+    width: 70px;
+    display: inline;
+  }
+
+  select {
+    display: inline;
   }
 }
 
-td.unidade {
-  width: 20%;
+td.maximo {
+  width: 15%;
 
   input {
-    width: 100%;
+    width: 70px;
+    display: inline;
   }
 }
 
