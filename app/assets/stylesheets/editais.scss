@@ -20,14 +20,31 @@
   p {
     margin: 0;
     padding: 0;
+
+    a {
+      color: #03d;
+      font-weight: bold;
+    }
   }
 
   p.nivel-1 {
-    margin-left: 1.25cm;
+    margin-left: 1cm;
+  }
+
+  p.nivel-2 {
+    margin-left: 1.75cm;
+  }
+
+  p.center {
+    text-align: center;
+  }
+
+  div.item {
+    margin-bottom: 12pt;
   }
 
   div.itens {
-    margin-left: 1.25cm;
+    margin-left: 1.75cm;
   }
 
   .edital-header {
@@ -62,7 +79,7 @@
 .areas-edital {
   width: 100%;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12pt;
   font-size: 11pt;
 
   td,
@@ -73,7 +90,15 @@
   }
 
   td.area {
-    width: 30%;
+    width: 32%;
+  }
+
+  td.area-mesclada {
+    width: 16%;
+  }
+
+  td.subarea {
+    width: 16%;
   }
 
   td.vagas {
@@ -81,10 +106,67 @@
   }
 
   td.qualificacao {
-    width: 45%;
+    width: 43%;
   }
 
   td.regime {
     width: 15%;
+  }
+}
+
+.salario {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 12pt;
+
+  td,
+  th {
+    border: 1px solid #000;
+    padding: 5px;
+    text-align: center;
+  }
+}
+
+.criterios {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 12pt;
+  font-size: 11pt;
+
+  td,
+  th {
+    border: 1px solid #000;
+    padding: 5px;
+    text-align: center;
+  }
+}
+
+.titulos {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 12pt;
+  font-size: 11pt;
+
+  td,
+  th {
+    border: 1px solid #000;
+    padding: 5px;
+    text-align: center;
+  }
+
+  td.item {
+    width: 10%;
+  }
+
+  td.descricao {
+    width: 50%;
+  }
+
+  td.pontuacao {
+    width: 20%;
+  }
+
+  td.maximo {
+    width: 20%
   }
 }
