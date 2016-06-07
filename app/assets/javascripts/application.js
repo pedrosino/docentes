@@ -46,3 +46,17 @@ function onEveryPage(fun) {
 }
 
 moment.locale('pt-BR');
+
+$(function() {
+  $datetimepicker = $('.date_picker.form-control, .datetime_picker.form-control');
+  $datetimepicker.each(function() {
+    var $this = $(this);
+    var datetimepickerOptions = {
+      useStrict: true,
+      keepInvalid: true,
+      useCurrent: false,
+      sideBySide: true,
+    };
+    $this.datetimepicker(datetimepickerOptions);
+  });
+});

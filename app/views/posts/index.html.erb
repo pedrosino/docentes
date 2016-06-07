@@ -28,5 +28,11 @@
     <li class="list-group-item">Edital 013/2016</li>
     <a href="#">Ver mais...</a>
   </ul>
+
+  <%= simple_form_for :user do |f| %>
+    <div class="col-sm-6">
+      <%= f.input :created_at, as: :date_picker %>
+    </div>
+  <% end %>
 </div>
 
