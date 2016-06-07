@@ -102,9 +102,22 @@
     <table class="areas-edital">
       <thead>
         <tr>
-          <th>Área</th>
-          <!--th>Subárea</th-->
-          <th>Nº de vagas</th>
+          <% vagas_negros = @edital.areas.map(&:vagas_negros).sum %>
+          <% vagas_pcd = @edital.areas.map(&:vagas_pcd).sum %>
+          <% vagas_reservadas = vagas_negros + vagas_pcd %>
+          <th class="<%= vagas_reservadas > 0 ? "area-pequena" : "" %>">Área</th>
+          <%# Se tiver alguma vaga reservada, o layout é diferente %>
+          <% if vagas_reservadas > 0 %>
+            <th>Vagas ampla concorrência</th>
+            <% if vagas_negros > 0 %>
+              <th>Vagas reservadas aos negros</th>
+            <% end %>
+            <% if vagas_pcd > 0 %>
+              <th>Vagas reservadas às pessoas com deficiência</th>
+            <% end %>
+          <% else %>
+            <th>Nº de vagas</th>
+          <% end %>
           <th>Qualificação Mínima Exigida</th>
           <th>Regime de trabalho</th>
         </tr>
@@ -113,7 +126,7 @@
       <tbody>
         <% @edital.areas.sort_by{ |area| area.nome}.each_with_index do |area, index| %>
           <tr>
-            <td class="area">
+            <td class="<%= vagas_reservadas > 0 ? "area-pequena" : "area" %>">
               <%= @edital.areas.length > 1 ? "Área #{index+1}" : "" %>: <%= area.nome %>
               <% if area.subarea %>
                 <br /><strong>Subárea:</strong> <%= area.subarea %>
@@ -122,7 +135,19 @@
                 <br /><strong>Curso:</strong> <%= area.curso %>
               <% end %>
             </td>
-            <td class="vagas"><%= sprintf '%02d', area.vagas %></td>
+            <% if vagas_reservadas > 0 %>
+              <td class="vagas-reserva"><%= sprintf '%02d', (area.vagas - area.vagas_negros - area.vagas_pcd) %></td>
+              <% if vagas_negros > 0 %>
+                <td class="vagas-reserva"><%= area.vagas_negros > 0 ? sprintf('%02d', area.vagas_negros) : '-' %></td>
+              <% end %>
+              <% if vagas_pcd > 0 %>
+                <td class="vagas-reserva"><%= sprintf '%02d', area.vagas_pcd %></td>
+              <% end %>
+            <% else %>
+              <td class="vagas">
+                <%= sprintf '%02d', area.vagas %>
+              </td>
+            <% end %>
             <td class="qualificacao"><%= highlight(area.qualificacao, /Graduação|Mestrado|Doutorado/, highlighter: '<strong>\1</strong>') %></td>
             <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
           </tr>
