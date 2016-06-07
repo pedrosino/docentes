@@ -26,6 +26,7 @@
     <p><strong>1 - DAS DISPOSIÇÕES PRELIMINARES</strong></p>
     <p><strong>1.1</strong> - O concurso visa ao preenchimento de vaga(s) destinada(s) a <strong><%= @edital.areas.first.unidade.nome %> (<%= @edital.areas.first.unidade.sigla %>), para o Campus <%= @edital.areas.first.campus %>, na cidade de <%= %>/MG</strong>, pelos candidatos nele habilitados e aprovados e considerados aptos em exame de saúde, obedecida a ordem de classificação.</p>
     <p><strong>1.2</strong> - Se porventura durante a validade deste concurso ocorrer a vacância de cargo de professor na <%= @edital.areas.first.unidade.sigla %>, na mesma área e qualificação mínima exigidas ou a distribuição pelo Conselho da Unidade de novo cargo de professor para a mesma área e qualificação mínima exigidas, o seu preenchimento, em qualquer das situações, ocorrerá de acordo com a ordem de classificação, podendo, inclusive, o candidato ser nomeado e lotado para trabalhar nos campi de Uberlândia, ou demais campi fora de sede, conforme dispuser a portaria de nomeação, observando o interesse da Universidade.</p>
+    <p><strong>1.3</strong> - Todos os horários mencionados referem-se ao horário oficial de Brasília-DF.</p>
   </div>
 
   <div class="item">
@@ -48,32 +49,71 @@
 
   <div class="item">
     <p><strong>3 - DA ESPECIFICAÇÃO DO CONCURSO PÚBLICO</strong></p>
-  </div>
-  <table class="areas-edital">
-    <thead>
-      <tr>
-        <th colspan=2 >Área</th>
-        <!--th>Subárea</th-->
-        <th>Nº de vagas</th>
-        <th>Qualificação Mínima Exigida</th>
-        <th>Regime de trabalho</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @edital.areas.sort_by{ |area| area.nome}.each_with_index do |area, index| %>
+    <table class="areas-edital">
+      <thead>
         <tr>
-          <% mesclar = 0 %>
-          <% if @edital.areas.length > 1 %>
-            <% if @edital.areas[index+1] && @edital.areas[index].nome == @edital.areas[index+1].nome %>
-              <% mesclar = 1 %>
-            <% elsif @edital.areas[index-1] && @edital.areas[index].nome == @edital.areas[index-1].nome %>
-              <% mesclar = 2 %>
-            <% end %>
-          <% end %>
+          <th colspan=2 >Área</th>
+          <!--th>Subárea</th-->
+          <th>Nº de vagas</th>
+          <th>Qualificação Mínima Exigida</th>
+          <th>Regime de trabalho</th>
+        </tr>
+      </thead>
 
-          <% if mesclar == 0 %>
-            <td class="area" colspan=2>
+      <tbody>
+        <% @edital.areas.sort_by{ |area| area.nome}.each_with_index do |area, index| %>
+          <tr>
+            <% mesclar = 0 %>
+            <% if @edital.areas.length > 1 %>
+              <% if @edital.areas[index+1] && @edital.areas[index].nome == @edital.areas[index+1].nome %>
+                <% mesclar = 1 %>
+              <% elsif @edital.areas[index-1] && @edital.areas[index].nome == @edital.areas[index-1].nome %>
+                <% mesclar = 2 %>
+              <% end %>
+            <% end %>
+
+            <% if mesclar == 0 %>
+              <td class="area" colspan=2>
+                <%= @edital.areas.length > 1 ? "Área #{index+1}" : "" %>: <%= area.nome %>
+                <% if area.subarea %>
+                  <br /><strong>Subárea:</strong> <%= area.subarea %>
+                <% end %>
+                <% if area.curso.present? %>
+                  <br /><strong>Curso:</strong> <%= area.curso %>
+                <% end %>
+              </td>
+            <% else %>
+              <% if mesclar == 1 %>
+                <td class="area-mesclada" rowspan="<%= mesclar == 1 ? "2" : "" %>">
+                  <%= @edital.areas.length > 1 ? "Área #{index+1}" : "" %>: <%= area.nome %>
+                </td>
+              <% end %>
+              <td class="subarea"><strong>Subárea:</strong> <%= area.subarea %></td>
+            <% end %>
+
+            <td class="vagas"><%= sprintf '%02d', area.vagas %></td>
+            <td class="qualificacao"><%= area.qualificacao %></td>
+            <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <table class="areas-edital">
+      <thead>
+        <tr>
+          <th>Área</th>
+          <!--th>Subárea</th-->
+          <th>Nº de vagas</th>
+          <th>Qualificação Mínima Exigida</th>
+          <th>Regime de trabalho</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @edital.areas.sort_by{ |area| area.nome}.each_with_index do |area, index| %>
+          <tr>
+            <td class="area">
               <%= @edital.areas.length > 1 ? "Área #{index+1}" : "" %>: <%= area.nome %>
               <% if area.subarea %>
                 <br /><strong>Subárea:</strong> <%= area.subarea %>
@@ -82,53 +122,14 @@
                 <br /><strong>Curso:</strong> <%= area.curso %>
               <% end %>
             </td>
-          <% else %>
-            <% if mesclar == 1 %>
-              <td class="area-mesclada" rowspan="<%= mesclar == 1 ? "2" : "" %>">
-                <%= @edital.areas.length > 1 ? "Área #{index+1}" : "" %>: <%= area.nome %>
-              </td>
-            <% end %>
-            <td class="subarea"><strong>Subárea:</strong> <%= area.subarea %></td>
-          <% end %>
-
-          <td class="vagas"><%= sprintf '%02d', area.vagas %></td>
-          <td class="qualificacao"><%= area.qualificacao %></td>
-          <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <table class="areas-edital">
-    <thead>
-      <tr>
-        <th>Área</th>
-        <!--th>Subárea</th-->
-        <th>Nº de vagas</th>
-        <th>Qualificação Mínima Exigida</th>
-        <th>Regime de trabalho</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @edital.areas.sort_by{ |area| area.nome}.each_with_index do |area, index| %>
-        <tr>
-          <td class="area">
-            <%= @edital.areas.length > 1 ? "Área #{index+1}" : "" %>: <%= area.nome %>
-            <% if area.subarea %>
-              <br /><strong>Subárea:</strong> <%= area.subarea %>
-            <% end %>
-            <% if area.curso.present? %>
-              <br /><strong>Curso:</strong> <%= area.curso %>
-            <% end %>
-          </td>
-          <td class="vagas"><%= sprintf '%02d', area.vagas %></td>
-          <td class="qualificacao"><%= highlight(area.qualificacao, /Graduação|Mestrado|Doutorado/, highlighter: '<strong>\1</strong>') %></td>
-          <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+            <td class="vagas"><%= sprintf '%02d', area.vagas %></td>
+            <td class="qualificacao"><%= highlight(area.qualificacao, /Graduação|Mestrado|Doutorado/, highlighter: '<strong>\1</strong>') %></td>
+            <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
   <div class="item">
     <p><strong>4 - REMUNERAÇÕES DO CARGO</strong></p>
@@ -159,13 +160,12 @@
     <p><strong>5 - DAS INSCRIÇÕES DOS CANDIDATOS</strong></p>
     <p><strong>5.1</strong> - A inscrição do candidato implicará o conhecimento e a tácita aceitação das normas e condições estabelecidas neste Edital, em relação às quais não poderá alegar desconhecimento, e o comprovante de inscrição deverá ser mantido com o candidato, pois poderá lhe ser solicitado pela DIRETORIA DE PROCESSOS SELETIVOS - DIRPS.</p>
     <p><strong>5.2</strong> - As inscrições devem ser realizadas, <strong>exclusivamente <em>on line</em></strong>, pelo endereço eletrônico <a href="http://www.portal.prograd.ufu.br/">http://www.portal.prograd.ufu.br/</a>, iniciando-se às <strong>00h do dia <%=l @edital.comeca_inscricao, format: :long %> e encerrando-se às 23h59min do dia <%=I18n.l @edital.termina_inscricao, format: :long %></strong>. Informações sobre as inscrições deverão ser obtidas na DIRPS pelo e-mail atende.dirps@prograd.ufu.br ou telefone (34) 3239-4127/4128. Horário de Atendimento na DIRPS: 8h às 17h.</p>
-    <div>
     <p class="nivel-1"><strong>5.2.1</strong> - A UFU não se responsabilizará por inscrição não recebida por motivos de natureza técnica associados a computadores, a falhas de comunicação, a congestionamento de linhas de comunicação e a quaisquer outros motivos de ordem técnica que impossibilitem a transferência de dados para consolidação da inscrição.</p>
     <p class="nivel-1"><strong>5.2.2</strong> - O valor da taxa de inscrição não será restituído, exceto nos casos de invalidação ou revogação do concurso público por conveniência ou interesse da Universidade.</p>
-    <p class="nivel-1"><strong>5.2.3</strong> - Encerradas as inscrições e não havendo candidatos inscritos <mark>com a qualificação mínima</mark> em número igual ou superior ao número de vagas, <strong>serão prorrogadas de imediato, por mais 07 (sete) dias corridos</strong>, de 17 de junho a 23 de junho de 2016, via on line, as inscrições, <strong>mantendo a mesma qualificação mínima exigida no item 3 deste edital.</strong></p>
-    </div>
+    <p class="nivel-1"><strong>5.2.3</strong> - Encerradas as inscrições e não havendo candidatos inscritos <mark>com a qualificação mínima</mark> em número igual ou superior ao número de vagas, <strong>serão prorrogadas de imediato, por mais 07 (sete) dias corridos</strong>, de <%=I18n.l (@edital.termina_inscricao+1), format: :short %> a <%=I18n.l (@edital.termina_inscricao+7), format: :long %>, via on line, as inscrições, <strong>mantendo a mesma qualificação mínima exigida no item 3 deste edital.</strong></p>
+    <p class="nivel-1"><strong>5.2.4</strong> - <mark>Caso tenha mais de uma área...</mark></p>
     <p><strong>5.3</strong> - O candidato deverá preencher no ato da inscrição os formulários disponíveis no link de inscrição do Concurso acessado pelo site <a href="http://www.portal.prograd.ufu.br/">http://www.portal.prograd.ufu.br/</a>, de modo que nele constem informações exatas e verídicas, sob pena de cancelamento da inscrição.</p>
-    <p class="nivel-1"><strong>5.3.1</strong> - O candidato deverá indicar a qualificação que possui no momento da inscrição e eventual previsão de conclusão de nova titulação.</p>
+    <p class="nivel-1"><strong>5.3.1</strong> - <mark>O candidato deverá indicar a qualificação que possui no momento da inscrição e eventual previsão de conclusão de nova titulação.</mark></p>
 
     <p><strong>5.4</strong> - O valor da inscrição será de R$ 60,00 (sessenta reais) para todos os candidatos e o pagamento deverá ser efetuado na rede bancária, por meio de GRU (Guia de Recolhimento da União) gerada exclusivamente no sistema de inscrição. O pagamento da GRU deverá ser efetuado até as 21h59min do dia posterior ao término do período de inscrição. A confirmação do pagamento da taxa de inscrição será disponibilizada no sistema de inscrição em até 05 (cinco) dias úteis contados a partir da data de pagamento da GRU.</p>
     <p class="nivel-1"><strong>5.4.1</strong> - O candidato deverá acessar o endereço eletrônico, http://www.portal.prograd.ufu.br/, conferir os dados da inscrição e se o pagamento da taxa de inscrição está confirmado.</p>
@@ -528,9 +528,9 @@
     <p><strong>13.5.1</strong> - Em nenhuma hipótese serão restituídas aos candidatos cópias de documentos, que integrarão obrigatoriamente o processo administrativo supramencionado.</p>
     <p><strong>13.6</strong> - A Universidade Federal de Uberlândia poderá, a seu exclusivo critério e obedecendo às normas legais pertinentes, admitir candidatos homologados em Concursos Públicos e não nomeados, de outras Instituições Federais de Ensino, bem como ceder a essas Instituições candidatos homologados e não nomeados, nos termos deste edital.</p>
     <p><strong>13.7</strong> - Caberá impugnação ao edital do certame, endereçada à PROGEP e protocolada junto à DIRPS, no prazo de 05 (cinco) dias, contatos de sua publicação no Diário Oficial da União.</p>
-    <p><strong>13.8</strong> - As respostas às impugnações ao edital e à Comissão julgadora, bem como as respostas aos recursos de cada uma das fases do certame, serão enviadas exclusivamente por email para os requerentes.</p>
-    <p><strong>13.9</strong> - O resultado final do Concurso público será homologado pela Pró-Reitoria de Gestão de Pessoas e publicado no Diário Oficial da União.</p>
-    <p><strong>13.10</strong> - Incorporar-se-ão a este edital as normas complementares, as informações contidas no site www.editais.ufu.br e quaisquer editais complementares que venham a ser publicados.</p>
+    <p><strong>13.8 - As respostas às impugnações ao edital e à Comissão julgadora, bem como as respostas aos recursos de cada uma das fases do certame, serão enviadas exclusivamente por e-mail para os requerentes.</strong></p>
+    <p><strong>13.9</strong> - O resultado final do Concurso público será <strong>homologado pela Pró-Reitoria de Gestão de Pessoas e publicado no Diário Oficial da União.</strong></p>
+    <p><strong>13.10</strong> - Incorporar-se-ão a este edital as normas complementares, as informações contidas no site <mark>www.editais.ufu.br</mark> e quaisquer editais complementares que venham a ser publicados.</p>
     <p><strong>13.11</strong> - Os casos omissos serão resolvidos pelo Reitor.</p>
   </div>
 
