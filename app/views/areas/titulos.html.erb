@@ -51,7 +51,6 @@
             <thead>
               <tr>
                 <td class="borda">Descrição</td>
-                <td class="borda">Unidade de medida</td>
                 <td class="borda">Pontuação individual</td>
                 <td class="borda">Pontuação máxima</td>
                 <td></td>
@@ -69,6 +68,11 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="coautoria">
+      <span class="coautoria">Os trabalhos em coautoria receberão: <%= f.input :coautoria, as: :string, required: true, label: false %>% da pontuação dos trabalhos de autoria exclusiva do candidato.</span>
+      <p class="dica">(Para mesma pontuação, preencha 100)</p>
     </div>
 
     <%= link_to icon("arrow-left", "Voltar"), areas_path, class: "btn btn-warning" %>
