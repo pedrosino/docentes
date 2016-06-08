@@ -105,8 +105,51 @@ onPage('areas didatica, areas update', function(){
   });
 });
 
+//////////////////////////////////////////////////////
+///////////////   Página /titulos ////////////////////
+//////////////////////////////////////////////////////
+function verifica_proporcao($objeto) {
+  var numero = ($objeto.prop('id').split('_'))[3];
+  $maximo = $("input[name*='["+numero+"][maximo]'").val();
+  $individual = $("input[name*='["+numero+"][valor]'").val();
+  $correto = (($maximo % $individual) == 0);
+  return $correto;
+}
+
+function erro_proporcao($objeto, $correto) {
+  var numero = ($objeto.prop('id').split('_'))[3];
+  $input_maximo = $("input[name*='["+numero+"][maximo]'");
+  if ($correto) {
+    $input_maximo.siblings('p').html("");
+    $input_maximo.closest('td').removeClass('alert alert-danger');
+  } else {
+    $input_maximo.siblings('p').html("A proporção entre a pontuação máxima e a pontuação individual não está correta!");
+    $input_maximo.closest('td').addClass('alert alert-danger');
+  }
+}
+
 onPage('areas titulos, areas update', function(){
+  // Verificar proporção entre pontuação individual e máxima
+  // No input 'maximo'...
+  $("input[name*='[maximo]']").each(function(){
+    erro_proporcao($(this), verifica_proporcao($(this)));
+  });
+
+  $(document).on('change', "input[name*='[maximo]']", function(){
+    erro_proporcao($(this), verifica_proporcao($(this)));
+  });
+
+  // e também no input 'valor'.
+  $("input[name*='[valor]']").each(function(){
+    erro_proporcao($(this), verifica_proporcao($(this)));
+  });
+
+  $(document).on('change', "input[name*='[valor]']", function(){
+    erro_proporcao($(this), verifica_proporcao($(this)));
+  });
+
   $("#salvar").click(function(e){
+    // Verificar soma de cada parte
     var validado_atividades = true;
     if (!verifica_soma($(".table.atividades"),"maximo", $("input[name='maximo-atividades']").val())) {
       validado_atividades = false;
@@ -123,6 +166,18 @@ onPage('areas titulos, areas update', function(){
     }
     if (!validado_producao) {
       $(".panel.panel-default.producao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
+      e.preventDefault();
+    }
+
+    // Verifica proporções
+    var validado_proporcao = true;
+    $("input[name*='[maximo]']").each(function(){
+      if (!verifica_proporcao($(this))) {
+        validado_proporcao = false;
+        alert($(this).prop('id'));
+      }
+    });
+    if (!validado_proporcao) {
       e.preventDefault();
     }
   });
