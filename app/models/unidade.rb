@@ -2,7 +2,7 @@ class Unidade < ActiveRecord::Base
 
   has_many :areas
 
-  validates :nome, presence: true
+  validates :nome, presence: true, on: :update
 
   validate :tamanho_da_sigla
   def tamanho_da_sigla
