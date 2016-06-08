@@ -141,7 +141,7 @@ class Area < ActiveRecord::Base
   validate :proporcao_titulos
   def proporcao_titulos
     titulos.each do |titulo|
-      if (maximo % valor) != 0
+      if (titulo.maximo % titulo.valor) != 0
         errors.add(:base, "A proporção entre a pontuação individual e a pontuação máxima não está correta.")
       end
     end

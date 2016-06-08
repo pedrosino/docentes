@@ -37,7 +37,7 @@ describe EditaisController do
         post :update, id: edital.id, edital: { data: "01 de junho de 2016", publicacao: "2016-06-03" }
         edital.reload
         expect(edital.data).to eq "01 de junho de 2016"
-        expect(edital.publicacao).to eq "2016-06-03"
+        expect(edital.publicacao.to_s).to eq "2016-06-03"
       end
 
       it "exclui um edital" do
