@@ -66,11 +66,12 @@ class Area < ActiveRecord::Base
   validate :soma_prova_escrita
   def soma_prova_escrita
     if proximo == 'didatica'
-      if criterios_da_prova('escrita').length < 1
+      criterios_escrita = criterios_da_prova('escrita')
+      if criterios_escrita.length < 1
         errors.add(:base, "Você deve preencher os critérios da prova escrita.")
       end
-      if criterios_da_prova('escrita').length > 0
-        soma = criterios_da_prova('escrita').map(&:valor).reduce(&:+)
+      if criterios_escrita.length > 0
+        soma = criterios_escrita.sum(&:valor)
         if soma != 100
           errors.add(:base, "A soma dos critérios da prova escrita não atinge 100 pontos.")
         end
@@ -81,11 +82,12 @@ class Area < ActiveRecord::Base
   validate :soma_prova_didatica
   def soma_prova_didatica
     if proximo == 'titulos' && prova_didatica
-      if criterios_da_prova('didatica').length < 1
+      criterios_didatica = criterios_da_prova('didatica')
+      if criterios_didatica.length < 1
         errors.add(:base, "Você deve preencher os critérios da prova didática pedagógica.")
       end
-      if criterios_da_prova('didatica').length > 0
-        soma = criterios_da_prova('didatica').map(&:valor).reduce(&:+)
+      if criterios_didatica.length > 0
+        soma = criterios_didatica.sum(&:valor)
         if soma != 100
           errors.add(:base, "A soma dos critérios da prova didática pedagógica não atinge 100 pontos.")
         end
@@ -96,11 +98,12 @@ class Area < ActiveRecord::Base
   validate :soma_prova_procedimental
   def soma_prova_procedimental
     if proximo == 'titulos' && prova_procedimental
-      if criterios_da_prova('procedimental').length < 1
+      criterios_procedimental = criterios_da_prova('procedimental')
+      if criterios_procedimental.length < 1
         errors.add(:base, "Você deve preencher os critérios da prova didática procedimental.")
       end
-      if criterios_da_prova('procedimental').length > 0
-        soma = criterios_da_prova('procedimental').map(&:valor).reduce(&:+)
+      if criterios_procedimental.length > 0
+        soma = criterios_procedimental.sum(&:valor)
         if soma != 100
           errors.add(:base, "A soma dos critérios da prova didática procedimental não atinge 100 pontos.")
         end
@@ -108,7 +111,47 @@ class Area < ActiveRecord::Base
     end
   end
 
+  validate :soma_titulos
+  def soma_titulos
+    if proximo == 'acabou'
+      atividades = titulos_do_tipo('atividades')
+      if atividades.length < 1
+        errors.add(:base, "Você deve preencher a valoração das atividades didáticas e/ou profissionais.")
+      end
+      if atividades.length > 0
+        soma = atividades.sum(&:valor)
+        if soma != maximo_atividades
+          errors.add(:base, "A soma dos títulos não atinge o valor máximo.")
+        end
+      end
+
+      producao = titulos_do_tipo('atividades')
+      if producao.length < 1
+        errors.add(:base, "Você deve preencher a valoração das atividades didáticas e/ou profissionais.")
+      end
+      if producao.length > 0
+        soma = producao.sum(&:valor)
+        if soma != maximo_producao
+          errors.add(:base, "A soma dos títulos não atinge o valor máximo.")
+        end
+      end
+    end
+  end
+
+  validate :proporcao_titulos
+  def proporcao_titulos
+    titulos.each do |titulo|
+      if (maximo % valor) != 0
+        errors.add(:base, "A proporção entre a pontuação individual e a pontuação máxima não está correta.")
+      end
+    end
+  end
+
   def criterios_da_prova(prova)
     criterios.select{ |c| c.tipo_prova == prova}
+  end
+
+  def titulos_do_tipo(tipo)
+    titulos.select{ |t| t.tipo == tipo }
   end
 end
