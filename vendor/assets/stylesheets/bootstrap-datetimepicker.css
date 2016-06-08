@@ -291,7 +291,7 @@
 }
 .bootstrap-datetimepicker-widget table td.old,
 .bootstrap-datetimepicker-widget table td.new {
-  color: #777777;
+  color: #999;
 }
 .bootstrap-datetimepicker-widget table td.today {
   position: relative;
