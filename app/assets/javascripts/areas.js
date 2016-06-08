@@ -25,6 +25,9 @@ function verifica_soma($objeto, $tipo, $total) {
   return (soma == $total);
 }
 
+/////////////////////////////////////////////////
+//////    Informações básicas da área     ///////
+/////////////////////////////////////////////////
 onPage('areas inicial, areas update', function(){
   var qual = $("#area_qualif_prorrogar").parent("div");
   qual.hide();
@@ -35,6 +38,16 @@ onPage('areas inicial, areas update', function(){
       qual.prop("disabled", "");
     } else {
       qual.hide();
+    }
+  });
+
+  $("#area_regime").on('change', function(){
+    $tipo = $("#area_tipo").val();
+    $regime = $(this).val();
+    if ($tipo == 'concurso' && $regime == '40') {
+      $("#aviso-regime").html("Para Concurso Público em regime de 40 horas semanais, deve ser encaminhada aprovação do CONDIR para o regime excepcional junto ao MI.").addClass("alert alert-danger");
+    } else {
+      $("#aviso-regime").html("").removeClass("alert alert-danger");
     }
   });
 });
