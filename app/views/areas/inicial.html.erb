@@ -14,7 +14,7 @@
       <%= f.input :nome, label: "Área", required: true, autofocus: true %>
       <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
       <%= f.input :curso, label: "Curso (OPCIONAL)" %>
-      <%= f.input :campus, required: true, collection: ["Educação Física","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
+      <%= f.input :campus, required: true, collection: ["Educação Física","Glória","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
       <%= f.input :qualificacao, required: true %>
       <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
       <% if @area.tipo == 'concurso' %>
