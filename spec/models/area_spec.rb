@@ -21,13 +21,6 @@ describe Area do
       area.regime = '20'
       expect(area).to be_valid
     end
-
-    it "numero de vagas" do
-      area.vagas = nil
-      expect(area).to be_invalid
-      area.vagas = 1
-      expect(area).to be_valid
-    end
   end
 
   describe "editando area" do
@@ -38,6 +31,20 @@ describe Area do
       expect(area).to be_invalid
     end
 
+    it "numero de vagas" do
+      area.vagas = nil
+      expect(area).to be_invalid
+      area.vagas = 1
+      expect(area).to be_valid
+    end
+
+    it "campus valido" do
+      area.campus = "Guaxupe"
+      expect(area).to be_invalid
+      area.campus = "Monte Carmelo"
+      expect(area).to be_valid
+    end
+
     # Testar soma da prova escrita
     it "prova escrita precisa de criterios" do
       area.proximo = "didatica"
@@ -46,13 +53,14 @@ describe Area do
     end
 
     it "soma dos criterios deve ser 100" do
+      # Precisa de pelo menos dois critérios
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 50)
+      FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 30)
       area.proximo = "didatica"
       area.valid?
       expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova escrita não atinge 100 pontos."]})
 
       # Cria mais criterios
-      FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 30)
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 20)
       # A associação fica em cache, então precisa resetar
       area.criterios.reset
@@ -69,6 +77,8 @@ describe Area do
     end
 
     it "soma dos criterios deve ser 100" do
+      # Precisa de pelo menos dois critérios
+      FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 30)
       FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 30)
       area.proximo = "titulos"
       area.tipo = 'processo'
@@ -77,7 +87,6 @@ describe Area do
       expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática pedagógica não atinge 100 pontos."]})
 
       # Cria mais criterios
-      FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 30)
       FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 40)
       # A associação fica em cache, então precisa resetar
       area.criterios.reset
@@ -94,7 +103,9 @@ describe Area do
     end
 
     it "soma dos criterios deve ser 100" do
+      # Precisa de pelo menos dois critérios
       FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 35)
+      FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 20)
       area.proximo = "titulos"
       area.tipo = 'processo'
       area.prova_procedimental = true
@@ -102,10 +113,48 @@ describe Area do
       expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática procedimental não atinge 100 pontos."]})
 
       # Cria mais criterios
-      FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 20)
       FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 45)
       # A associação fica em cache, então precisa resetar
       area.criterios.reset
+      expect(area).to be_valid
+    end
+
+    # Testar soma dos títulos
+    it "pelo menos dois itens" do
+      area.proximo = "acabou"
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["Você deve preencher a valoração das atividades didáticas e/ou profissionais.","Você deve preencher a valoração da produção científica e/ou artística."]})
+    end
+
+    it "soma dos titulos deve ser igual ao maximo" do
+      area.tipo = 'concurso'
+      # Precisa de pelo menos duas atividades
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 5, unidade_medida: "ano", maximo: 10)
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, unidade_medida: "ano", maximo: 9)
+      area.proximo = "acabou"
+      area.titulos.reload
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.","Você deve preencher a valoração da produção científica e/ou artística."]})
+
+      # Cria mais atividades
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 0.2, unidade_medida: "ano", maximo: 1)
+      # A associação fica em cache, então precisa resetar
+      area.titulos.reset
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["Você deve preencher a valoração da produção científica e/ou artística."]})
+
+      # Precisa de pelo menos dois itens de produção
+      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 5, unidade_medida: "ano", maximo: 40)
+      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 3, unidade_medida: "ano", maximo: 30)
+      area.proximo = "acabou"
+      area.titulos.reload
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["A soma da pontuação da produção científica e/ou artística não atinge o valor máximo."]})
+
+      # Cria mais itens de produção
+      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 0.5, unidade_medida: "ano", maximo: 10)
+      # A associação fica em cache, então precisa resetar
+      area.titulos.reset
       expect(area).to be_valid
     end
   end
