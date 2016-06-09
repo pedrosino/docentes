@@ -73,7 +73,7 @@ class AreasController < ApplicationController
       when 'titulos'
         render :didatica
       else
-        render :tutlos
+        render :titulos
       end
     end
   end

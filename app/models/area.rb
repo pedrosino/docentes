@@ -111,32 +111,48 @@ class Area < ActiveRecord::Base
     end
   end
 
-  # validate :soma_titulos
-  # def soma_titulos
-  #   if proximo == 'acabou'
-  #     atividades = titulos_do_tipo('atividades')
-  #     if atividades.length < 1
-  #       errors.add(:base, "Você deve preencher a valoração das atividades didáticas e/ou profissionais.")
-  #     end
-  #     if atividades.length > 0
-  #       soma = atividades.sum(&:valor)
-  #       if soma != maximo_atividades
-  #         errors.add(:base, "A soma dos títulos não atinge o valor máximo.")
-  #       end
-  #     end
+  def maximo_atividades
+    if tipo == 'concurso'
+      20
+    else
+      45
+    end
+  end
 
-  #     producao = titulos_do_tipo('atividades')
-  #     if producao.length < 1
-  #       errors.add(:base, "Você deve preencher a valoração das atividades didáticas e/ou profissionais.")
-  #     end
-  #     if producao.length > 0
-  #       soma = producao.sum(&:valor)
-  #       if soma != maximo_producao
-  #         errors.add(:base, "A soma dos títulos não atinge o valor máximo.")
-  #       end
-  #     end
-  #   end
-  # end
+  def maximo_producao
+    if tipo == 'concurso'
+      80
+    else
+      45
+    end
+  end
+
+  validate :soma_titulos
+  def soma_titulos
+    if proximo == 'acabou'
+      atividades = titulos_do_tipo('atividades')
+      if atividades.length < 1
+        errors.add(:base, "Você deve preencher a valoração das atividades didáticas e/ou profissionais.")
+      end
+      if atividades.length > 0
+        soma = atividades.sum(&:maximo)
+        if soma != maximo_atividades
+          errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.")
+        end
+      end
+
+      producao = titulos_do_tipo('producao')
+      if producao.length < 1
+        errors.add(:base, "Você deve preencher a valoração da produção científica e/ou artística.")
+      end
+      if producao.length > 0
+        soma = producao.sum(&:maximo)
+        if soma != maximo_producao
+          errors.add(:base, "A soma da pontuação da produção científica e/ou artística não atinge o valor máximo.")
+        end
+      end
+    end
+  end
 
   validate :proporcao_titulos
   def proporcao_titulos
