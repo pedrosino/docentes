@@ -49,7 +49,7 @@ describe Area do
     it "prova escrita precisa de criterios" do
       area.proximo = "didatica"
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher os critérios da prova escrita."]})
+      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois critérios da prova escrita."]})
     end
 
     it "soma dos criterios deve ser 100" do
@@ -73,7 +73,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_didatica = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher os critérios da prova didática pedagógica."]})
+      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois critérios da prova didática pedagógica."]})
     end
 
     it "soma dos criterios deve ser 100" do
@@ -99,7 +99,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_procedimental = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher os critérios da prova didática procedimental."]})
+      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois critérios da prova didática procedimental."]})
     end
 
     it "soma dos criterios deve ser 100" do
@@ -120,42 +120,56 @@ describe Area do
     end
 
     # Testar soma dos títulos
-    it "pelo menos dois itens" do
+    it "pelo menos dois itens de titulos" do
       area.proximo = "acabou"
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher a valoração das atividades didáticas e/ou profissionais.","Você deve preencher a valoração da produção científica e/ou artística."]})
+      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.",
+                                                 "Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
     end
 
     it "soma dos titulos deve ser igual ao maximo" do
       area.tipo = 'concurso'
       # Precisa de pelo menos duas atividades
-      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 5, unidade_medida: "ano", maximo: 10)
-      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, unidade_medida: "ano", maximo: 9)
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 5, maximo: 10)
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, maximo: 9)
       area.proximo = "acabou"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.","Você deve preencher a valoração da produção científica e/ou artística."]})
+      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.",
+                                                 "Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
 
       # Cria mais atividades
-      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 0.2, unidade_medida: "ano", maximo: 1)
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 0.2, maximo: 1)
       # A associação fica em cache, então precisa resetar
       area.titulos.reset
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher a valoração da produção científica e/ou artística."]})
+      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
 
       # Precisa de pelo menos dois itens de produção
-      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 5, unidade_medida: "ano", maximo: 40)
-      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 3, unidade_medida: "ano", maximo: 30)
+      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 5, maximo: 40)
+      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 3, maximo: 30)
       area.proximo = "acabou"
       area.titulos.reload
       area.valid?
       expect(area.errors.messages).to eq({base: ["A soma da pontuação da produção científica e/ou artística não atinge o valor máximo."]})
 
       # Cria mais itens de produção
-      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 0.5, unidade_medida: "ano", maximo: 10)
+      FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 0.5, maximo: 10)
       # A associação fica em cache, então precisa resetar
       area.titulos.reset
       expect(area).to be_valid
+    end
+
+    it "proporcao entre valor individual e maximo" do
+      area.tipo = 'concurso'
+      # Dois itens - um com proporção errada
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, maximo: 10)
+      FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 2, maximo: 10)
+      area.proximo = "acabou"
+      area.titulos.reload
+      area.valid?
+      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de produção científica e/ou artística.",
+                                                 "A proporção entre a pontuação individual e a pontuação máxima não está correta."]})
     end
   end
 

@@ -68,7 +68,7 @@ class Area < ActiveRecord::Base
     if proximo == 'didatica'
       criterios_escrita = criterios_da_prova('escrita')
       if criterios_escrita.length < 2
-        errors.add(:base, "Você deve preencher os critérios da prova escrita.")
+        errors.add(:base, "Você deve preencher pelo menos dois critérios da prova escrita.")
       end
       if criterios_escrita.length > 1
         soma = criterios_escrita.sum(&:valor)
@@ -84,7 +84,7 @@ class Area < ActiveRecord::Base
     if proximo == 'titulos' && prova_didatica
       criterios_didatica = criterios_da_prova('didatica')
       if criterios_didatica.length < 2
-        errors.add(:base, "Você deve preencher os critérios da prova didática pedagógica.")
+        errors.add(:base, "Você deve preencher pelo menos dois critérios da prova didática pedagógica.")
       end
       if criterios_didatica.length > 1
         soma = criterios_didatica.sum(&:valor)
@@ -100,7 +100,7 @@ class Area < ActiveRecord::Base
     if proximo == 'titulos' && prova_procedimental
       criterios_procedimental = criterios_da_prova('procedimental')
       if criterios_procedimental.length < 2
-        errors.add(:base, "Você deve preencher os critérios da prova didática procedimental.")
+        errors.add(:base, "Você deve preencher pelo menos dois critérios da prova didática procedimental.")
       end
       if criterios_procedimental.length > 1
         soma = criterios_procedimental.sum(&:valor)
@@ -132,7 +132,7 @@ class Area < ActiveRecord::Base
     if proximo == 'acabou'
       atividades = titulos_do_tipo('atividades')
       if atividades.length < 2
-        errors.add(:base, "Você deve preencher a valoração das atividades didáticas e/ou profissionais.")
+        errors.add(:base, "Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.")
       end
       if atividades.length > 1
         soma = atividades.sum(&:maximo)
@@ -143,7 +143,7 @@ class Area < ActiveRecord::Base
 
       producao = titulos_do_tipo('producao')
       if producao.length < 2
-        errors.add(:base, "Você deve preencher a valoração da produção científica e/ou artística.")
+        errors.add(:base, "Você deve preencher pelo menos dois itens de produção científica e/ou artística.")
       end
       if producao.length > 1
         soma = producao.sum(&:maximo)
@@ -157,7 +157,7 @@ class Area < ActiveRecord::Base
   # 1 % 0.2 retorna 0.1999999999996
   # Não entendi bem por que...
   def modulo_especial(big, small)
-    big - small*(big/small)
+    big - small*(big/small).floor
   end
 
   validate :proporcao_titulos
