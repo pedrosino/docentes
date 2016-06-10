@@ -56,38 +56,14 @@ class AreasController < ApplicationController
 
   def update
     @area = Area.find(params[:id])
-    # proximo = params[:area][:proximo]
-    # if @area.update_attributes(area_params)
-    #   case proximo
-    #   when 'escrita'
-    #     redirect_to escrita_area_path(@area)
-    #   when 'didatica'
-    #     redirect_to didatica_area_path(@area)
-    #   when 'titulos'
-    #     redirect_to titulos_area_path(@area)
-    #   else
-    #     redirect_to areas_path
-    #   end
-    # else
-    #   flash[:danger] = "Falha ao salvar."
-    #   case proximo
-    #   when 'escrita'
-    #     render :inicial
-    #   when 'didatica'
-    #     render :escrita
-    #   when 'titulos'
-    #     render :didatica
-    #   else
-    #     render :titulos
-    #   end
-    # end
+    # Direciona para a próxima etapa quando salvar
     if @area.update_attributes(area_params)
       if params[:commit] == "Confirm"
         flash[:success] = "Solicitação enviada!"
         redirect_to areas_path
       else
         flash[:success] = "Dados salvos!"
-        redirect_to edit_area_path(@area)
+        redirect_to edit_area_path(@area, secao: area_params[:proximo])
       end
     else
       flash[:danger] = "Falha ao salvar!"
@@ -107,10 +83,21 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :curso, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :proximo, :coautoria,
+    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :curso, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :coautoria,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy], titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
     if params[:commit] == "Confirm"
       area_params[:confirmada] = true
+    end
+    secao = params[:secao]
+    case secao
+    when 'inicial'
+      area_params[:proximo] = 'escrita'
+    when 'escrita'
+      area_params[:proximo] = 'didatica'
+    when 'didatica'
+      area_params[:proximo] = 'titulos'
+    when 'titulos'
+      area_params[:proximo] = 'inicial'
     end
     area_params
   end

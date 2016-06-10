@@ -89,6 +89,8 @@ onPage('areas didatica, areas edit, areas update', function(){
       }
       if (!validado_didatica) {
         $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
+      } else {
+        $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("");
       }
     }
 
@@ -102,6 +104,8 @@ onPage('areas didatica, areas edit, areas update', function(){
 
       if (!validado_procedimental) {
         $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
+      } else {
+        $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("");
       }
 
       // Verifica se a duração foi preenchida
@@ -174,10 +178,14 @@ onPage('areas titulos, areas edit, areas update', function(){
     if (!validado_atividades) {
       $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
       e.preventDefault();
+    } else {
+      $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
     }
     if (!validado_producao) {
       $(".panel.panel-default.producao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
       e.preventDefault();
+    } else {
+      $(".panel.panel-default.producao>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
     }
 
     // Verifica proporções

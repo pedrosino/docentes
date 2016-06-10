@@ -56,14 +56,14 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :concurso_tem_prova_didatica, if: :confirmada
+  validate :concurso_tem_prova_didatica, if: -> { confirmada || proximo == 'didatica' }
   def concurso_tem_prova_didatica
     if tipo == 'concurso' && !prova_didatica
       errors.add(:prova_didatica, "é obrigatória em concurso público")
     end
   end
 
-  validate :soma_prova_escrita, if: :confirmada
+  validate :soma_prova_escrita, if: -> { confirmada || proximo == 'didatica' }
   def soma_prova_escrita
     criterios_escrita = criterios_da_prova('escrita')
     if criterios_escrita.length < 2
@@ -77,7 +77,7 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :soma_prova_didatica, if: :confirmada
+  validate :soma_prova_didatica, if: -> { confirmada || proximo == 'titulos' }
   def soma_prova_didatica
     if prova_didatica
       criterios_didatica = criterios_da_prova('didatica')
@@ -93,7 +93,7 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :soma_prova_procedimental, if: :confirmada
+  validate :soma_prova_procedimental, if: -> { confirmada || proximo == 'titulos' }
   def soma_prova_procedimental
     if prova_procedimental
       criterios_procedimental = criterios_da_prova('procedimental')
@@ -125,7 +125,7 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :soma_titulos, if: :confirmada
+  validate :soma_titulos, if: -> { confirmada || proximo == 'inicial' }
   def soma_titulos
     atividades = titulos_do_tipo('atividades')
     if atividades.length < 2
