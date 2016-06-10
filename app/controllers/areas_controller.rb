@@ -29,6 +29,11 @@ class AreasController < ApplicationController
     end
   end
 
+  def edit
+    params[:secao] ||= "inicial"
+    @area = Area.find(params[:id])
+  end
+
   # O formulário de edição da área é dividido em partes.
   # Cada parte tem uma ação para carregar a view, mas todas
   # chamam a ação 'update', que salva o que foi passado e
@@ -50,31 +55,43 @@ class AreasController < ApplicationController
   end
 
   def update
-    proximo = params[:area][:proximo]
     @area = Area.find(params[:id])
+    # proximo = params[:area][:proximo]
+    # if @area.update_attributes(area_params)
+    #   case proximo
+    #   when 'escrita'
+    #     redirect_to escrita_area_path(@area)
+    #   when 'didatica'
+    #     redirect_to didatica_area_path(@area)
+    #   when 'titulos'
+    #     redirect_to titulos_area_path(@area)
+    #   else
+    #     redirect_to areas_path
+    #   end
+    # else
+    #   flash[:danger] = "Falha ao salvar."
+    #   case proximo
+    #   when 'escrita'
+    #     render :inicial
+    #   when 'didatica'
+    #     render :escrita
+    #   when 'titulos'
+    #     render :didatica
+    #   else
+    #     render :titulos
+    #   end
+    # end
     if @area.update_attributes(area_params)
-      case proximo
-      when 'escrita'
-        redirect_to escrita_area_path(@area)
-      when 'didatica'
-        redirect_to didatica_area_path(@area)
-      when 'titulos'
-        redirect_to titulos_area_path(@area)
-      else
+      if params[:commit] == "Confirm"
+        flash[:success] = "Solicitação enviada!"
         redirect_to areas_path
+      else
+        flash[:success] = "Dados salvos!"
+        redirect_to edit_area_path(@area)
       end
     else
-      flash[:danger] = "Falha ao salvar."
-      case proximo
-      when 'escrita'
-        render :inicial
-      when 'didatica'
-        render :escrita
-      when 'titulos'
-        render :didatica
-      else
-        render :titulos
-      end
+      flash[:danger] = "Falha ao salvar!"
+      render :edit
     end
   end
 
@@ -92,5 +109,9 @@ class AreasController < ApplicationController
   def area_params
     area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :curso, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :proximo, :coautoria,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy], titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
+    if params[:commit] == "Confirm"
+      area_params[:confirmada] = true
+    end
+    area_params
   end
 end

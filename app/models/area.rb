@@ -56,32 +56,30 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :concurso_tem_prova_didatica
+  validate :concurso_tem_prova_didatica, if: :confirmada
   def concurso_tem_prova_didatica
-    if tipo == 'concurso' && !prova_didatica && proximo == 'titulos'
+    if tipo == 'concurso' && !prova_didatica
       errors.add(:prova_didatica, "é obrigatória em concurso público")
     end
   end
 
-  validate :soma_prova_escrita
+  validate :soma_prova_escrita, if: :confirmada
   def soma_prova_escrita
-    if proximo == 'didatica'
-      criterios_escrita = criterios_da_prova('escrita')
-      if criterios_escrita.length < 2
-        errors.add(:base, "Você deve preencher pelo menos dois critérios da prova escrita.")
-      end
-      if criterios_escrita.length > 1
-        soma = criterios_escrita.sum(&:valor)
-        if soma != 100
-          errors.add(:base, "A soma dos critérios da prova escrita não atinge 100 pontos.")
-        end
+    criterios_escrita = criterios_da_prova('escrita')
+    if criterios_escrita.length < 2
+      errors.add(:base, "Você deve preencher pelo menos dois critérios da prova escrita.")
+    end
+    if criterios_escrita.length > 1
+      soma = criterios_escrita.sum(&:valor)
+      if soma != 100
+        errors.add(:base, "A soma dos critérios da prova escrita não atinge 100 pontos.")
       end
     end
   end
 
-  validate :soma_prova_didatica
+  validate :soma_prova_didatica, if: :confirmada
   def soma_prova_didatica
-    if proximo == 'titulos' && prova_didatica
+    if prova_didatica
       criterios_didatica = criterios_da_prova('didatica')
       if criterios_didatica.length < 2
         errors.add(:base, "Você deve preencher pelo menos dois critérios da prova didática pedagógica.")
@@ -95,9 +93,9 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :soma_prova_procedimental
+  validate :soma_prova_procedimental, if: :confirmada
   def soma_prova_procedimental
-    if proximo == 'titulos' && prova_procedimental
+    if prova_procedimental
       criterios_procedimental = criterios_da_prova('procedimental')
       if criterios_procedimental.length < 2
         errors.add(:base, "Você deve preencher pelo menos dois critérios da prova didática procedimental.")
@@ -127,29 +125,27 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :soma_titulos
+  validate :soma_titulos, if: :confirmada
   def soma_titulos
-    if proximo == 'acabou'
-      atividades = titulos_do_tipo('atividades')
-      if atividades.length < 2
-        errors.add(:base, "Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.")
+    atividades = titulos_do_tipo('atividades')
+    if atividades.length < 2
+      errors.add(:base, "Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.")
+    end
+    if atividades.length > 1
+      soma = atividades.sum(&:maximo)
+      if soma != maximo_atividades
+        errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.")
       end
-      if atividades.length > 1
-        soma = atividades.sum(&:maximo)
-        if soma != maximo_atividades
-          errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.")
-        end
-      end
+    end
 
-      producao = titulos_do_tipo('producao')
-      if producao.length < 2
-        errors.add(:base, "Você deve preencher pelo menos dois itens de produção científica e/ou artística.")
-      end
-      if producao.length > 1
-        soma = producao.sum(&:maximo)
-        if soma != maximo_producao
-          errors.add(:base, "A soma da pontuação da produção científica e/ou artística não atinge o valor máximo.")
-        end
+    producao = titulos_do_tipo('producao')
+    if producao.length < 2
+      errors.add(:base, "Você deve preencher pelo menos dois itens de produção científica e/ou artística.")
+    end
+    if producao.length > 1
+      soma = producao.sum(&:maximo)
+      if soma != maximo_producao
+        errors.add(:base, "A soma da pontuação da produção científica e/ou artística não atinge o valor máximo.")
       end
     end
   end

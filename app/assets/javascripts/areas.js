@@ -28,7 +28,7 @@ function verifica_soma($objeto, $tipo, $total) {
 /////////////////////////////////////////////////
 //////    Informações básicas da área     ///////
 /////////////////////////////////////////////////
-onPage('areas inicial, areas update', function(){
+onPage('areas inicial, areas edit, areas update', function(){
   var qual = $("#area_qualif_prorrogar").parent("div");
   qual.hide();
 
@@ -52,8 +52,9 @@ onPage('areas inicial, areas update', function(){
   });
 });
 
-onPage('areas escrita, areas escrita', function(){
-  $("#salvar").click(function(){
+// Prova escrita
+onPage('areas escrita, areas edit, areas update', function(){
+  $("#salvar-escrita").click(function(){
     if (verifica_soma($(".criterios-escrita"),"valor", 100)) {
       $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
     } else {
@@ -64,7 +65,8 @@ onPage('areas escrita, areas escrita', function(){
   });
 });
 
-onPage('areas didatica, areas update', function(){
+// Prova didática
+onPage('areas didatica, areas edit, areas update', function(){
   // Verifica ao carregar a página também
   ativa_didatica();
   ativa_procedimental();
@@ -78,7 +80,7 @@ onPage('areas didatica, areas update', function(){
     ativa_procedimental();
   });
 
-  $("#salvar").click(function(){
+  $("#salvar-didatica").click(function(){
     // Verifica a prova didática (pedagógica)
     var validado_didatica = true;
     if ($("#area_prova_didatica").is(":checked")) {
@@ -123,15 +125,15 @@ onPage('areas didatica, areas update', function(){
 //////////////////////////////////////////////////////
 function verifica_proporcao($objeto) {
   var numero = ($objeto.prop('id').split('_'))[3];
-  $maximo = $("input[name*='["+numero+"][maximo]'").val();
-  $individual = $("input[name*='["+numero+"][valor]'").val();
+  $maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]'").val();
+  $individual = $("input[name*='[titulos_attributes]["+numero+"][valor]'").val();
   $correto = (($maximo % $individual) == 0);
   return $correto;
 }
 
 function erro_proporcao($objeto, $correto) {
   var numero = ($objeto.prop('id').split('_'))[3];
-  $input_maximo = $("input[name*='["+numero+"][maximo]'");
+  $input_maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]'");
   if ($correto) {
     $input_maximo.siblings('p').html("");
     $input_maximo.closest('td').removeClass('alert alert-danger');
@@ -141,27 +143,23 @@ function erro_proporcao($objeto, $correto) {
   }
 }
 
-onPage('areas titulos, areas update', function(){
+onPage('areas titulos, areas edit, areas update', function(){
   // Verificar proporção entre pontuação individual e máxima
-  // No input 'maximo'...
   $("input[name*='[maximo]']").each(function(){
     erro_proporcao($(this), verifica_proporcao($(this)));
   });
 
+  // No input 'maximo'...
   $(document).on('change', "input[name*='[maximo]']", function(){
     erro_proporcao($(this), verifica_proporcao($(this)));
   });
 
   // e também no input 'valor'.
-  $("input[name*='[valor]']").each(function(){
-    erro_proporcao($(this), verifica_proporcao($(this)));
-  });
-
   $(document).on('change', "input[name*='[valor]']", function(){
     erro_proporcao($(this), verifica_proporcao($(this)));
   });
 
-  $("#salvar").click(function(e){
+  $("#salvar-titulos").click(function(e){
     // Verificar soma de cada parte
     var validado_atividades = true;
     if (!verifica_soma($(".table.atividades"),"maximo", $("input[name='maximo-atividades']").val())) {

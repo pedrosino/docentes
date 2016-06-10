@@ -85,3 +85,26 @@ td.maximo {
 p.dica {
   color: #888;
 }
+
+.nav-tabs > li > a:hover {
+  background-color: #cdf;
+
+}
+
+.nav.nav-tabs {
+  .active {
+    a, a:hover {
+      background-color: #cdf;
+    }
+  }
+}
+
+.tab-pane {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.botoes {
+  margin-top: 10px;
+}
