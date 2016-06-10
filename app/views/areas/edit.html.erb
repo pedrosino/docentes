@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="aviso-mi alert alert-danger" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+  <div class="aviso-mi alert alert-danger" >
     A Unidade deve enviar um Memorando Interno (MI) à Pró-Reitoria de Gestão de Pessoas, solicitando a abertura do edital.
   </div>
 
@@ -13,6 +13,8 @@
   <div class="tab-content" id="editar-area">
     <div class="tab-pane active" id="inicial">
       <%= simple_form_for @area do |f| %>
+        <% @area.confirmada = true %>
+        <% @area.valid? %>
         <%= render 'shared/error_messages', object: f.object %>
 
         <%= hidden_field_tag "secao", "inicial" %>
