@@ -13,6 +13,7 @@
   <div class="tab-content" id="editar-area">
     <div class="tab-pane active" id="inicial">
       <%= simple_form_for @area do |f| %>
+        <% @confirmada = @area.confirmada %>
         <% @area.confirmada = true %>
         <% @area.valid? %>
         <%= render 'shared/error_messages', object: f.object %>
@@ -247,10 +248,17 @@
 
   <div class="botoes">
     <%= simple_form_for @area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
-      <%= link_to icon("arrow-left", "Voltar"), areas_path, class: "btn btn-warning" %>
       <%= f.hidden_field :tipo %>
+      <% @area.confirmada = @confirmada %>
+      <% if current_user.pode_criar_edital? %>
+        <%= f.input :confirmada %>
+      <% end %>
+      <%= link_to icon("arrow-left", "Voltar"), areas_path, class: "btn btn-warning" %>
+      <% if current_user.pode_criar_edital? %>
+        <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+      <% end %>
       <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-primary", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
-        Finalizar
+        <span class="glyphicon glyphicon-share"></span> Enviar
       <% end %>
       <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
