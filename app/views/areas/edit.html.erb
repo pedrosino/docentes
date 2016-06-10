@@ -10,238 +10,246 @@
     <li><a href="#titulos" data-toggle="tab">Análise de Títulos</a></li>
   </ul>
 
-  <div class="tab-content" id="editar-area">
-    <div class="tab-pane active" id="inicial">
-      <%= simple_form_for @area do |f| %>
-        <% @confirmada = @area.confirmada %>
-        <% @area.confirmada = true %>
-        <% @area.valid? %>
-        <%= render 'shared/error_messages', object: f.object %>
+  <% @confirmada = @area.confirmada %>
+  <% @area.confirmada = true %>
+  <% @area.valid? %>
+  <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == @area.unidade_id %>
 
-        <%= hidden_field_tag "secao", "inicial" %>
+  <% if @confirmada && !current_user.pode_criar_edital? %>
+    <div class="alert alert-info">Essa solicitação já foi enviada à PROGEP. Caso seja necessário fazer alguma alteração, entre em contato.</div>
+  <% elsif !@tem_acesso %>
+    <div class="alert alert-warning">Você não tem acesso para editar esta área.</div>
+  <% else %>
+    <div class="tab-content" id="editar-area">
+      <div class="tab-pane active" id="inicial">
+        <%= simple_form_for @area do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
 
-        <div class="bloco-inicial">
-          <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
-          <%= f.input :nome, label: "Área", required: true, autofocus: true %>
-          <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
-          <%= f.input :curso, label: "Curso (OPCIONAL)" %>
-          <%= f.input :campus, required: true, collection: ["Educação Física","Glória","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
-          <%= f.input :qualificacao, required: true %>
-          <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
-          <% if @area.tipo == 'concurso' %>
-            <% regimes = [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]] %>
-          <% else %>
-            <% regimes = [["20 horas","20"], ["40 horas","40"]] %>
-          <% end %>
-          <%= f.input :regime, required: true, as: :select, collection: regimes.map{|regime| [regime[0], regime[1]]} %>
-          <div id="aviso-regime"></div>
-          <%= f.input :vagas, as: :string, required: true, wrapper_html: { class: "vagas" } %>
-          <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
-          <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
-        </div>
+          <%= hidden_field_tag "secao", "inicial" %>
 
-        <button type="submit" class="btn btn-success" id="salvar-inicial"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
-      <% end %>
-    </div>
+          <div class="bloco-inicial">
+            <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
+            <%= f.input :nome, label: "Área", required: true, autofocus: true %>
+            <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
+            <%= f.input :curso, label: "Curso (OPCIONAL)" %>
+            <%= f.input :campus, required: true, collection: ["Educação Física","Glória","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
+            <%= f.input :qualificacao, required: true %>
+            <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
+            <% if @area.tipo == 'concurso' %>
+              <% regimes = [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]] %>
+            <% else %>
+              <% regimes = [["20 horas","20"], ["40 horas","40"]] %>
+            <% end %>
+            <%= f.input :regime, required: true, as: :select, collection: regimes.map{|regime| [regime[0], regime[1]]} %>
+            <div id="aviso-regime"></div>
+            <%= f.input :vagas, as: :string, required: true, wrapper_html: { class: "vagas" } %>
+            <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
+            <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
+          </div>
 
-    <div class="tab-pane active" id="escrita">
-      <%= simple_form_for @area do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
+          <button type="submit" class="btn btn-success" id="salvar-inicial"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+        <% end %>
+      </div>
 
-        <%= hidden_field_tag "secao", "escrita" %>
+      <div class="tab-pane active" id="escrita">
+        <%= simple_form_for @area do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
 
-        <div class="prova-escrita">
-          <h3>Prova Escrita</h3>
-          <div class="panel panel-default escrita">
-            <div class="panel-heading">
-              Critérios de correção da Prova Escrita
+          <%= hidden_field_tag "secao", "escrita" %>
+
+          <div class="prova-escrita">
+            <h3>Prova Escrita</h3>
+            <div class="panel panel-default escrita">
+              <div class="panel-heading">
+                Critérios de correção da Prova Escrita
+              </div>
+              <div class="panel-body">
+                <div class="mensagem-erro"></div>
+                <table class="table criterios criterios-escrita">
+                  <thead>
+                    <tr>
+                      <td class="borda">Critério</td>
+                      <td class="borda">Descrição</td>
+                      <td class="borda">Valor</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%= f.fields_for :criterios, @area.criterios.select{ |c| c.tipo_prova == 'escrita' } do |options_form| %>
+                      <%= render 'criterio_fields', f: options_form, tipo: "escrita" %>
+                    <% end %>
+                  </tbody>
+                </table>
+
+                <div class="links">
+                  <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'escrita' } }, data: { association_insertion_node: '.criterios-escrita', association_insertion_method: 'append' } %>
+                </div>
+              </div>
             </div>
-            <div class="panel-body">
+          </div>
+
+          <button type="submit" class="btn btn-success" id="salvar-escrita"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+        <% end %>
+      </div>
+
+      <div class="tab-pane active" id="didatica">
+        <%= simple_form_for @area do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
+          <%= hidden_field_tag "secao", "didatica" %>
+
+          <div class="prova-didatica">
+            <h3>Prova Didática</h3>
+
+            <%= f.input :prova_didatica, label: "Haverá prova didática pedagógica?", disabled: @area.tipo == 'concurso' %>
+            <div class="panel panel-default didatica">
+              <div class="panel-heading">
+                Critérios de correção da Prova Didática Pedagógica
+              </div>
+              <div class="panel-body">
+                <div class="mensagem-erro"></div>
+                <table class="table criterios criterios-didatica">
+                  <thead>
+                    <tr>
+                      <td class="borda">Critério</td>
+                      <td class="borda">Descrição</td>
+                      <td class="borda">Valor</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%= f.fields_for :criterios, @area.criterios.select{ |c| c.tipo_prova == 'didatica' } do |options_form| %>
+                      <%= render 'criterio_fields', f: options_form, tipo: "didatica" %>
+                    <% end %>
+                  </tbody>
+                </table>
+
+                <div class="links">
+                  <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'didatica' } }, data: { association_insertion_node: '.criterios-didatica', association_insertion_method: 'append' } %>
+                </div>
+              </div>
+            </div>
+
+            <%= f.input :prova_procedimental, label: "Haverá prova didática procedimental?" %>
+            <div class="procedimental-esconder">
+              <div class="alert alert-warning">
+                No caso de prova procedimental, deve ser informada a duração mínima e máxima, e deve ser encaminhada justificativa circunstanciada da necessidade de realização desta prova junto com o MI à PROGEP.
+              </div>
+              <%= f.input :min_procedimental, label: "Duração mínima" %>
+              <%= f.input :max_procedimental, label: "Duração máxima" %>
+            </div>
+
+            <div class="panel panel-default procedimental">
+              <div class="panel-heading">
+                Critérios de correção da Prova Didática Procedimental
+              </div>
+              <div class="panel-body">
+                <div class="mensagem-erro"></div>
+                <table class="table criterios criterios-procedimental">
+                  <thead>
+                    <tr>
+                      <td class="borda">Critério</td>
+                      <td class="borda">Descrição</td>
+                      <td class="borda">Valor</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%= f.fields_for :criterios, @area.criterios.select{ |c| c.tipo_prova == 'procedimental' } do |options_form| %>
+                      <%= render 'criterio_fields', f: options_form, tipo: "procedimental" %>
+                    <% end %>
+                  </tbody>
+                </table>
+
+                <div class="links">
+                  <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'procedimental' } }, data: { association_insertion_node: '.criterios-procedimental', association_insertion_method: 'append' } %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success" id="salvar-didatica"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+        <% end %>
+      </div>
+
+      <div class="tab-pane active" id="titulos">
+        <%= simple_form_for @area do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
+
+          <%= hidden_field_tag "secao", "titulos" %>
+
+          <%= hidden_field_tag "maximo-atividades", @area.tipo == 'concurso' ? 20 : 45 %>
+          <%= hidden_field_tag "maximo-producao", @area.tipo == 'concurso' ? 80 : 45 %>
+
+          <div class="titulos">
+            <h3>Análise de Títulos</h3>
+            <div class="panel panel-default atividades">
+              <div class="panel-heading">
+                Valoração das atividades didáticas e/ou profissionais nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 20 : 45 %> pontos</strong>
+              </div>
+              <div class="panel-body">
               <div class="mensagem-erro"></div>
-              <table class="table criterios criterios-escrita">
-                <thead>
-                  <tr>
-                    <td class="borda">Critério</td>
-                    <td class="borda">Descrição</td>
-                    <td class="borda">Valor</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= f.fields_for :criterios, @area.criterios.select{ |c| c.tipo_prova == 'escrita' } do |options_form| %>
-                    <%= render 'criterio_fields', f: options_form, tipo: "escrita" %>
-                  <% end %>
-                </tbody>
-              </table>
+                <table class="table titulos atividades">
+                  <thead>
+                    <tr>
+                      <td class="borda">Descrição</td>
+                      <td class="borda">Pontuação individual</td>
+                      <td class="borda">Pontuação máxima</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%= f.fields_for :titulos, @area.titulos.where(tipo: 'atividades') do |options_form| %>
+                      <%= render 'titulo_fields', f: options_form, tipo: "atividades" %>
+                    <% end %>
+                  </tbody>
+                </table>
 
-              <div class="links">
-                <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'escrita' } }, data: { association_insertion_node: '.criterios-escrita', association_insertion_method: 'append' } %>
+                <div class="links">
+                  <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades' } }, data: { association_insertion_node: '.table.atividades', association_insertion_method: 'append' } %>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <button type="submit" class="btn btn-success" id="salvar-escrita"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
-      <% end %>
-    </div>
-
-    <div class="tab-pane active" id="didatica">
-      <%= simple_form_for @area do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-        <%= hidden_field_tag "secao", "didatica" %>
-
-        <div class="prova-didatica">
-          <h3>Prova Didática</h3>
-
-          <%= f.input :prova_didatica, label: "Haverá prova didática pedagógica?", disabled: @area.tipo == 'concurso' %>
-          <div class="panel panel-default didatica">
-            <div class="panel-heading">
-              Critérios de correção da Prova Didática Pedagógica
-            </div>
-            <div class="panel-body">
+            <div class="panel panel-default producao">
+              <div class="panel-heading">
+                Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 80 : 45 %> pontos</strong>
+              </div>
+              <div class="panel-body">
               <div class="mensagem-erro"></div>
-              <table class="table criterios criterios-didatica">
-                <thead>
-                  <tr>
-                    <td class="borda">Critério</td>
-                    <td class="borda">Descrição</td>
-                    <td class="borda">Valor</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= f.fields_for :criterios, @area.criterios.select{ |c| c.tipo_prova == 'didatica' } do |options_form| %>
-                    <%= render 'criterio_fields', f: options_form, tipo: "didatica" %>
-                  <% end %>
-                </tbody>
-              </table>
+                <table class="table titulos producao">
+                  <thead>
+                    <tr>
+                      <td class="borda">Descrição</td>
+                      <td class="borda">Pontuação individual</td>
+                      <td class="borda">Pontuação máxima</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%= f.fields_for :titulos, @area.titulos.where(tipo: 'producao') do |options_form| %>
+                      <%= render 'titulo_fields', f: options_form, tipo: "producao" %>
+                    <% end %>
+                  </tbody>
+                </table>
 
-              <div class="links">
-                <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'didatica' } }, data: { association_insertion_node: '.criterios-didatica', association_insertion_method: 'append' } %>
+                <div class="links">
+                  <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao' } }, data: { association_insertion_node: '.table.producao', association_insertion_method: 'append' } %>
+                </div>
               </div>
             </div>
           </div>
 
-          <%= f.input :prova_procedimental, label: "Haverá prova didática procedimental?" %>
-          <div class="procedimental-esconder">
-            <div class="alert alert-warning">
-              No caso de prova procedimental, deve ser informada a duração mínima e máxima, e deve ser encaminhada justificativa circunstanciada da necessidade de realização desta prova junto com o MI à PROGEP.
-            </div>
-            <%= f.input :min_procedimental, label: "Duração mínima" %>
-            <%= f.input :max_procedimental, label: "Duração máxima" %>
+          <div id="coautoria">
+            <span class="coautoria">Os trabalhos em coautoria receberão: <%= f.input :coautoria, as: :string, required: true, label: false %>% da pontuação dos trabalhos de autoria exclusiva do candidato.</span>
+            <p class="dica">(Para mesma pontuação, preencha 100)</p>
           </div>
 
-          <div class="panel panel-default procedimental">
-            <div class="panel-heading">
-              Critérios de correção da Prova Didática Procedimental
-            </div>
-            <div class="panel-body">
-              <div class="mensagem-erro"></div>
-              <table class="table criterios criterios-procedimental">
-                <thead>
-                  <tr>
-                    <td class="borda">Critério</td>
-                    <td class="borda">Descrição</td>
-                    <td class="borda">Valor</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= f.fields_for :criterios, @area.criterios.select{ |c| c.tipo_prova == 'procedimental' } do |options_form| %>
-                    <%= render 'criterio_fields', f: options_form, tipo: "procedimental" %>
-                  <% end %>
-                </tbody>
-              </table>
+          <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+        <% end %>
+      </div>
 
-              <div class="links">
-                <%= link_to_add_association button_tag(icon("plus", "Critério"), type: "button", class: "btn btn-primary add"), f, :criterios, render_options: { locals: { tipo: 'procedimental' } }, data: { association_insertion_node: '.criterios-procedimental', association_insertion_method: 'append' } %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-success" id="salvar-didatica"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
-      <% end %>
     </div>
-
-    <div class="tab-pane active" id="titulos">
-      <%= simple_form_for @area do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-
-        <%= hidden_field_tag "secao", "titulos" %>
-
-        <%= hidden_field_tag "maximo-atividades", @area.tipo == 'concurso' ? 20 : 45 %>
-        <%= hidden_field_tag "maximo-producao", @area.tipo == 'concurso' ? 80 : 45 %>
-
-        <div class="titulos">
-          <h3>Análise de Títulos</h3>
-          <div class="panel panel-default atividades">
-            <div class="panel-heading">
-              Valoração das atividades didáticas e/ou profissionais nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 20 : 45 %> pontos</strong>
-            </div>
-            <div class="panel-body">
-            <div class="mensagem-erro"></div>
-              <table class="table titulos atividades">
-                <thead>
-                  <tr>
-                    <td class="borda">Descrição</td>
-                    <td class="borda">Pontuação individual</td>
-                    <td class="borda">Pontuação máxima</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= f.fields_for :titulos, @area.titulos.where(tipo: 'atividades') do |options_form| %>
-                    <%= render 'titulo_fields', f: options_form, tipo: "atividades" %>
-                  <% end %>
-                </tbody>
-              </table>
-
-              <div class="links">
-                <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades' } }, data: { association_insertion_node: '.table.atividades', association_insertion_method: 'append' } %>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel panel-default producao">
-            <div class="panel-heading">
-              Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 80 : 45 %> pontos</strong>
-            </div>
-            <div class="panel-body">
-            <div class="mensagem-erro"></div>
-              <table class="table titulos producao">
-                <thead>
-                  <tr>
-                    <td class="borda">Descrição</td>
-                    <td class="borda">Pontuação individual</td>
-                    <td class="borda">Pontuação máxima</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= f.fields_for :titulos, @area.titulos.where(tipo: 'producao') do |options_form| %>
-                    <%= render 'titulo_fields', f: options_form, tipo: "producao" %>
-                  <% end %>
-                </tbody>
-              </table>
-
-              <div class="links">
-                <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao' } }, data: { association_insertion_node: '.table.producao', association_insertion_method: 'append' } %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="coautoria">
-          <span class="coautoria">Os trabalhos em coautoria receberão: <%= f.input :coautoria, as: :string, required: true, label: false %>% da pontuação dos trabalhos de autoria exclusiva do candidato.</span>
-          <p class="dica">(Para mesma pontuação, preencha 100)</p>
-        </div>
-
-        <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
-      <% end %>
-    </div>
-
-  </div>
+  <% end %>
   <script>
     $('a[href="#<%=j params[:secao] %>"]').tab('show');
   </script>
@@ -257,11 +265,14 @@
       <% if current_user.pode_criar_edital? %>
         <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
       <% end %>
-      <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-primary", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
-        <span class="glyphicon glyphicon-share"></span> Enviar
-      <% end %>
-      <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+      <% if (!@confirmada && @tem_acesso) || current_user.pode_criar_edital? %>
+        <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-primary", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
+          <span class="glyphicon glyphicon-share"></span> Enviar
+        <% end %>
+
+        <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+        <% end %>
       <% end %>
     <% end %>
   </div>
