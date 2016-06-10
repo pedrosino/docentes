@@ -129,15 +129,15 @@ onPage('areas didatica, areas edit, areas update', function(){
 //////////////////////////////////////////////////////
 function verifica_proporcao($objeto) {
   var numero = ($objeto.prop('id').split('_'))[3];
-  $maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]'").val();
-  $individual = $("input[name*='[titulos_attributes]["+numero+"][valor]'").val();
+  $maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]']").val();
+  $individual = $("input[name*='[titulos_attributes]["+numero+"][valor]']").val();
   $correto = (($maximo % $individual) == 0);
   return $correto;
 }
 
 function erro_proporcao($objeto, $correto) {
   var numero = ($objeto.prop('id').split('_'))[3];
-  $input_maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]'");
+  $input_maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]']");
   if ($correto) {
     $input_maximo.siblings('p').html("");
     $input_maximo.closest('td').removeClass('alert alert-danger');
@@ -149,17 +149,17 @@ function erro_proporcao($objeto, $correto) {
 
 onPage('areas titulos, areas edit, areas update', function(){
   // Verificar proporção entre pontuação individual e máxima
-  $("input[name*='[maximo]']").each(function(){
+  $("input[name*='[maximo]'][name*='[titulos_attributes]']").each(function(){
     erro_proporcao($(this), verifica_proporcao($(this)));
   });
 
   // No input 'maximo'...
-  $(document).on('change', "input[name*='[maximo]']", function(){
+  $(document).on('change', "input[name*='[maximo]'][name*='[titulos_attributes]']", function(){
     erro_proporcao($(this), verifica_proporcao($(this)));
   });
 
   // e também no input 'valor'.
-  $(document).on('change', "input[name*='[valor]']", function(){
+  $(document).on('change', "input[name*='[valor]'][name*='[titulos_attributes]']", function(){
     erro_proporcao($(this), verifica_proporcao($(this)));
   });
 
@@ -190,7 +190,7 @@ onPage('areas titulos, areas edit, areas update', function(){
 
     // Verifica proporções
     var validado_proporcao = true;
-    $("input[name*='[maximo]']").each(function(){
+    $("input[name*='[maximo]'][name*='[titulos_attributes]']").each(function(){
       if (!verifica_proporcao($(this))) {
         validado_proporcao = false;
         alert($(this).prop('id'));
