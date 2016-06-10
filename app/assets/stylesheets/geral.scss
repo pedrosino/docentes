@@ -98,3 +98,9 @@
 .input-group.date {
   cursor: pointer;
 }
+
+table.table.table-condensed.index {
+  td {
+    vertical-align: middle;
+  }
+}
