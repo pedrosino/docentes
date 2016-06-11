@@ -299,15 +299,17 @@ onPage('areas edit, areas update', function(){
   //------------------------------------
   $("#enviar").click(function(){
     if (!valida_inicial()) {
-      alert('inicial'); return false;
+      alert('Pendências nas informações iniciais');
+      return false;
     } else if (!valida_prova_escrita()) {
-      alert('escrita'); return false;
+      alert('Pendências na prova escrita');
+      return false;
     } else if (!valida_prova_didatica()) {
-      alert('didatica'); return false;
+      alert('Pendências na prova didática');
+      return false;
     } else if (!valida_titulos()) {
-      alert('titulos'); return false;
-    } else {
-      alert("ok");
+      alert('Pendências na análise de títulos');
+      return false;
     }
   });
 });
