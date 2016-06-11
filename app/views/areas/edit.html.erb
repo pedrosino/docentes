@@ -13,6 +13,7 @@
   <% @confirmada = @area.confirmada %>
   <% @area.confirmada = true %>
   <% @area.valid? %>
+  <% @area.confirmada = @confirmada %>
   <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == @area.unidade_id %>
 
   <% if @confirmada && !current_user.pode_criar_edital? %>
@@ -252,12 +253,17 @@
   <% end %>
   <script>
     $('a[href="#<%=j params[:secao] %>"]').tab('show');
+    // Salva a seção atual no form do botão Enviar
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function() {
+      var secao = $(this).prop("href").split("#")[1];
+      $(".botoes").find("input[name=secao]").val(secao);
+    });
   </script>
 
   <div class="botoes">
     <%= simple_form_for @area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
       <%= f.hidden_field :tipo %>
-      <% @area.confirmada = @confirmada %>
+      <%= hidden_field_tag "secao", "inicial" %>
       <% if current_user.pode_criar_edital? %>
         <%= f.input :confirmada %>
       <% end %>
@@ -266,7 +272,7 @@
         <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
       <% end %>
       <% if (!@confirmada && @tem_acesso) || current_user.pode_criar_edital? %>
-        <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-primary", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
+        <%= button_tag(type: 'submit', id: "enviar", name: "commit", value: "Confirm", class: "btn btn-primary", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
           <span class="glyphicon glyphicon-share"></span> Enviar
         <% end %>
 

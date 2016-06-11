@@ -166,10 +166,10 @@ class Area < ActiveRecord::Base
   end
 
   def criterios_da_prova(prova)
-    criterios.select{ |c| c.tipo_prova == prova}
+    criterios.select{ |c| c.tipo_prova == prova}.reject(&:_destroy)
   end
 
   def titulos_do_tipo(tipo)
-    titulos.select{ |t| t.tipo == tipo }
+    titulos.select{ |t| t.tipo == tipo }.reject(&:_destroy)
   end
 end

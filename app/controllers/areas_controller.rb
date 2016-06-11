@@ -22,7 +22,7 @@ class AreasController < ApplicationController
     end
     if @area.save
       flash[:success] = "Criado com sucesso."
-      redirect_to editar_area_path(@area)
+      redirect_to edit_area_path(@area)
     else
       flash[:danger] = "Falha no cadastro."
       render :new
@@ -67,7 +67,7 @@ class AreasController < ApplicationController
       end
     else
       flash[:danger] = "Falha ao salvar!"
-      render :edit
+      render :edit, secao: params[:secao]
     end
   end
 
@@ -83,7 +83,7 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :curso, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :coautoria, :confirmada,
+    area_params = params.require(:area).permit(:unidade_id, :nome, :subarea, :curso, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :min_procedimental, :max_procedimental, :coautoria, :confirmada,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy], titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
     if params[:commit] == "Confirm"
       area_params[:confirmada] = true

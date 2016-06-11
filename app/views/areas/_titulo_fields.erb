@@ -1,11 +1,11 @@
 <tr class="nested-fields">
-  <td class="descricao borda"><%= f.text_area :descricao, required: true, class: "form-control" %></td>
+  <td class="descricao borda"><%= f.text_area :descricao, required: true, class: "form-control required" %></td>
   <td class="valor borda">
-    <%= f.text_field :valor, require: true, class: "form-control" %>
-    pontos por <%= f.select :unidade_medida, ['','ano','semestre','aluno','artigo','trabalho','livro','capítulo','tradução','parecer','disciplina','trabalho','resumo','evento','participação','aprovação','banca','orientação','publicação','patente','registro','projeto','premiação','maquete','obra','relatório','direção'].sort, required: true, class: "form-control" %>
+    <%= f.text_field :valor, required: true, class: "form-control required" %>
+    pontos por <%= f.select :unidade_medida, ['','ano','semestre','aluno','artigo','trabalho','livro','capítulo','tradução','parecer','disciplina','trabalho','resumo','evento','participação','aprovação','banca','orientação','publicação','patente','registro','projeto','premiação','maquete','obra','relatório','direção'].sort, {}, { required: true, class: "required" } %>
   </td>
   <td class="maximo borda">
-    <%= f.text_field :maximo, require: true, class: "form-control" %> pontos
+    <%= f.text_field :maximo, required: true, class: "form-control required" %> pontos
     <p class="texto-maximo"></p>
   </td>
   <td><%= link_to_remove_association button_tag(icon("times", "Remover"), type: "button", class: "btn btn-danger"), f %></td>
