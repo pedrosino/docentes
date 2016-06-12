@@ -30,6 +30,11 @@
 
           <div class="bloco-inicial">
             <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
+            <div class="vaga">
+              <label class="string control-label vaga">Vaga</label>
+              <%= f.input :tipo_vaga, required: true, label: "Tipo", hint: "Licença, aposentadoria, cargo" %>
+              <%= f.input :nome_vaga, required: true, label: "Nome", hint: "Docente desligado ou afastado, ou projeto novo" %>
+            </div>
             <%= f.input :nome, label: "Área", required: true, autofocus: true %>
             <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
             <%= f.input :curso, label: "Curso (OPCIONAL)" %>
