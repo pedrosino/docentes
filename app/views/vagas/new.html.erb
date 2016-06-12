@@ -1,0 +1,15 @@
+<% provide(:title, 'Cadastrar Vaga') %>
+
+<div class="container">
+  <h1><%= yield(:title) %></h1>
+
+  <%= simple_form_for @vaga do |f| %>
+    <%= f.input :tipo, required: true, autofocus: true %>
+    <%= f.input :nome, required: true %>
+
+    <button type="submit" class="btn btn-success">Criar</button>
+    <%= link_to vagas_path, class: "btn btn-danger" do %>
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+    <% end %>
+  <% end %>
+</div>
