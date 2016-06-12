@@ -60,7 +60,7 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :concurso_tem_prova_didatica, if: -> { confirmada || proximo == 'didatica' }
+  validate :concurso_tem_prova_didatica, if: -> { confirmada || proximo == 'titulos' }
   def concurso_tem_prova_didatica
     if tipo == 'concurso' && !prova_didatica
       errors.add(:prova_didatica, "é obrigatória em concurso público")
