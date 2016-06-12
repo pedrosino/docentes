@@ -354,7 +354,7 @@ onPage('areas edit, areas update', function(){
 
   function nao_salvou() {
     if (nao_salvas) {
-      alert("Alterações não salvas!");
+      alert("Você fez alterações que ainda não foram salvas! Clique no botão Salvar antes de enviar.");
       return false;
     }
     return true;
