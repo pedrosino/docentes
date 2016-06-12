@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610005906) do
+ActiveRecord::Schema.define(version: 20160612135927) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",          limit: 4
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160610005906) do
     t.integer  "vagas_pcd",           limit: 4
     t.integer  "coautoria",           limit: 4
     t.boolean  "confirmada"
+    t.integer  "vaga_id",             limit: 4
   end
 
   add_index "areas", ["unidade_id"], name: "fk_rails_7e4c0346f5", using: :btree
@@ -107,6 +108,16 @@ ActiveRecord::Schema.define(version: 20160610005906) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unidade_id"], name: "fk_rails_94265554cc", using: :btree
+
+  create_table "vagas", force: :cascade do |t|
+    t.integer  "codigo",     limit: 4
+    t.string   "tipo",       limit: 255
+    t.string   "nome",       limit: 255
+    t.integer  "unidade_id", limit: 4
+    t.string   "situacao",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   add_foreign_key "areas", "unidades"
   add_foreign_key "users", "unidades"

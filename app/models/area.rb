@@ -6,7 +6,11 @@ class Area < ActiveRecord::Base
   has_many :criterios
   has_many :titulos
 
+  has_one :vaga
+
   attr_accessor :proximo
+  attr_accessor :tipo_vaga
+  attr_accessor :nome_vaga
 
   accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
