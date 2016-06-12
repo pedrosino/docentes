@@ -55,6 +55,12 @@ function erro_proporcao($objeto, $correto) {
   }
 }
 
+function rolar_para($objeto, $tempo=500) {
+  $('html, body').animate({
+    scrollTop: $objeto.offset().top
+  }, $tempo);
+}
+
 function valida_inicial() {
   $("#inicial").find(":input.required").each(function(){
     if ($(this).val() == "") {
@@ -70,10 +76,12 @@ function valida_prova_escrita() {
   if (confere == -1) {
     $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").addClass('alert alert-danger').
     html("Preencha pelo menos dois critérios!");
+    rolar_para($(".panel.panel-default.escrita>.panel-body>.mensagem-erro"));
     return false;
   } else if (!confere) {
     $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").addClass('alert alert-danger').
     html("A soma dos critérios não atinge 100 pontos!");
+    rolar_para($(".panel.panel-default.escrita>.panel-body>.mensagem-erro"));
     return false;
   } else {
     $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
@@ -99,9 +107,11 @@ function valida_prova_didatica() {
     if (confere == -1) {
       $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("Preencha pelo menos dois critérios!");
       validado_didatica = false;
+      rolar_para($(".panel.panel-default.didatica>.panel-body>.mensagem-erro"));
     } else if (!confere) {
       $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
       validado_didatica = false;
+      rolar_para($(".panel.panel-default.didatica>.panel-body>.mensagem-erro"));
     } else {
       $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
     }
@@ -124,9 +134,11 @@ function valida_prova_didatica() {
     if (confere == -1) {
       $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("Preencha pelo menos dois critérios!");
       validado_procedimental = false;
+      rolar_para($(".panel.panel-default.procedimental>.panel-body>.mensagem-erro"));
     } else if (!confere) {
       $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
       validado_procedimental = false;
+      rolar_para($(".panel.panel-default.procedimental>.panel-body>.mensagem-erro"));
     } else {
       $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
     }
@@ -165,8 +177,11 @@ function valida_titulos() {
   if (confere_atividades == -1) {
     $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("Preencha pelo menos dois itens!");
     validado_atividades = false;
+    rolar_para($(".panel.panel-default.atividades>.panel-body>.mensagem-erro"));
   } else if (!confere_atividades) {
     $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
+    validado_atividades = false;
+    rolar_para($(".panel.panel-default.atividades>.panel-body>.mensagem-erro"));
   } else {
     $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
   }
@@ -176,8 +191,11 @@ function valida_titulos() {
   if (confere_producao == -1) {
     $(".panel.panel-default.producao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("Preencha pelo menos dois itens!");
     validado_producao = false;
+    rolar_para($(".panel.panel-default.producao>.panel-body>.mensagem-erro"));
   } else if (!confere_producao) {
     $(".panel.panel-default.producao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
+    validado_producao = false;
+    rolar_para($(".panel.panel-default.producao>.panel-body>.mensagem-erro"));
   } else {
     $(".panel.panel-default.producao>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
   }
@@ -290,7 +308,7 @@ onPage('areas edit, areas update', function(){
     erro_proporcao($(this), verifica_proporcao($(this)));
   });
 
-  $("#salvar-titulos").click(function(e){
+  $("#salvar-titulos").click(function(){
     return valida_titulos();
   });
 
@@ -315,11 +333,6 @@ onPage('areas edit, areas update', function(){
     // Impede o envio caso haja alterações que não foram salvas
     return nao_salvou();
 
-  });
-
-  $("#voltar").click(function(){
-    // Impede o envio caso haja alterações que não foram salvas
-    return nao_salvou();
   });
 
   //------- Verifica alterações não salvas ----------
