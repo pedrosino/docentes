@@ -158,7 +158,7 @@ function valida_prova_didatica() {
   return true;
 }
 
-function valida_titulos($this) {
+function valida_titulos() {
   // Verificar soma de cada parte
   var validado_atividades = true;
   var confere_atividades = verifica_soma($(".table.atividades"),"maximo", $("input[name='maximo-atividades']").val(), "titulos");
@@ -291,7 +291,7 @@ onPage('areas edit, areas update', function(){
   });
 
   $("#salvar-titulos").click(function(e){
-    return valida_titulos($(this));
+    return valida_titulos();
   });
 
   //------------------------------------
@@ -311,5 +311,31 @@ onPage('areas edit, areas update', function(){
       alert('Pendências na análise de títulos');
       return false;
     }
+
+    // Impede o envio caso haja alterações que não foram salvas
+    return nao_salvou();
+
   });
+
+  $("#voltar").click(function(){
+    // Impede o envio caso haja alterações que não foram salvas
+    return nao_salvou();
+  });
+
+  //------- Verifica alterações não salvas ----------
+  // Ao carregar a página, a variável é falsa
+  var nao_salvas = false;
+
+  // A qualquer mudança em algum campo, a variável se torna verdadeira
+  $(document).on('change',':input', function(){ //trigers change in all input fields including text type
+    nao_salvas = true;
+  });
+
+  function nao_salvou() {
+    if (nao_salvas) {
+      alert("Alterações não salvas!");
+      return false;
+    }
+    return true;
+  }
 });

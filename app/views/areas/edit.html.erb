@@ -267,7 +267,7 @@
       <% if current_user.pode_criar_edital? %>
         <%= f.input :confirmada %>
       <% end %>
-      <%= link_to icon("arrow-left", "Voltar"), areas_path, class: "btn btn-warning" %>
+      <%= link_to icon("arrow-left", "Voltar"), areas_path, id: "voltar", class: "btn btn-warning" %>
       <% if current_user.pode_criar_edital? %>
         <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
       <% end %>
@@ -276,7 +276,7 @@
           <span class="glyphicon glyphicon-share"></span> Enviar
         <% end %>
 
-        <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
+        <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, id: "excluir", class: "btn btn-danger" do %>
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
         <% end %>
       <% end %>
