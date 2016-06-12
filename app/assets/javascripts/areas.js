@@ -234,6 +234,14 @@ function valida_titulos() {
 }
 
 onPage('areas edit, areas update', function(){
+  // Se o usuário pressionar Enter, o formulário não é enviado
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+
   //---------------------------------------------------------
   //------------- Informações básicas da área ---------------
   //---------------------------------------------------------
