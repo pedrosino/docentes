@@ -28,16 +28,20 @@ class Area < ActiveRecord::Base
     # mas 1/1 = 100% => acima do teto de 20% => não tem reserva
     # 5 vagas * 10% = 0,5 => arredonda para 1
     # 1/5 = 20% => dentro do teto => reserva de uma vaga
-    self.vagas_negros = (self.vagas * 0.2).round
-    self.vagas_pcd = (self.vagas * 0.1).ceil
-    if (self.vagas_pcd / self.vagas.to_f) > 0.2
-      self.vagas_pcd -= 1
+    if vagas
+      self.vagas_negros = (self.vagas * 0.2).round
+      self.vagas_pcd = (self.vagas * 0.1).ceil
+      if (self.vagas_pcd / self.vagas.to_f) > 0.2
+        self.vagas_pcd -= 1
+      end
     end
   end
 
-  validates :vagas, presence: true, on: :update
-  validates :nome, presence: true, on: :update
-  validates :qualificacao, presence: true, on: :update
+  validates :vagas, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :nome, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :qualificacao, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :tipo_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :nome_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
 
   validate :tipo_do_edital
   def tipo_do_edital
@@ -45,6 +49,13 @@ class Area < ActiveRecord::Base
       errors.add(:tipo, "Inválido!")
     end
   end
+
+  # validate :vaga_preenchida, if: -> { confirmada || proximo =='escrita' }
+  # def vaga_preenchida
+  #   unless tipo_vaga.present? && nome_vaga.present?
+  #     errors.add(:tipo_vaga, "não pode ficar em branco")
+  #   end
+  # end
 
   validate :campus_validos
   def campus_validos
