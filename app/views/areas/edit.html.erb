@@ -186,14 +186,21 @@
 
           <%= hidden_field_tag "secao", "titulos" %>
 
-          <%= hidden_field_tag "maximo-atividades", @area.tipo == 'concurso' ? 20 : 45 %>
-          <%= hidden_field_tag "maximo-producao", @area.tipo == 'concurso' ? 80 : 45 %>
+          <% if @area.tipo == 'concurso' && ['ESEBA','ESTES'].exclude?(@area.unidade.sigla)
+            max_atividades = 20
+            max_producao = 80
+          else
+            max_atividades = 45
+            max_producao = 45
+            end %>
+          <%= hidden_field_tag "maximo-atividades", max_atividades %>
+          <%= hidden_field_tag "maximo-producao", max_producao %>
 
           <div class="titulos">
             <h3>Análise de Títulos</h3>
             <div class="panel panel-default atividades">
               <div class="panel-heading">
-                Valoração das atividades didáticas e/ou profissionais nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 20 : 45 %> pontos</strong>
+                Valoração das atividades didáticas e/ou profissionais nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= max_atividades %> pontos</strong>
               </div>
               <div class="panel-body">
               <div class="mensagem-erro"></div>
@@ -221,7 +228,7 @@
 
             <div class="panel panel-default producao">
               <div class="panel-heading">
-                Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= @area.tipo == 'concurso' ? 80 : 45 %> pontos</strong>
+                Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= max_producao %> pontos</strong>
               </div>
               <div class="panel-body">
               <div class="mensagem-erro"></div>

@@ -128,7 +128,7 @@ class Area < ActiveRecord::Base
   end
 
   def maximo_atividades
-    if tipo == 'concurso'
+    if tipo == 'concurso' && unidade && ['ESEBA','ESTES'].exclude?(unidade.sigla)
       20
     else
       45
@@ -136,7 +136,7 @@ class Area < ActiveRecord::Base
   end
 
   def maximo_producao
-    if tipo == 'concurso'
+    if tipo == 'concurso' && unidade && ['ESEBA','ESTES'].exclude?(unidade.sigla)
       80
     else
       45
@@ -152,7 +152,7 @@ class Area < ActiveRecord::Base
     if atividades.length > 1
       soma = atividades.sum(&:maximo)
       if soma != maximo_atividades
-        errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não é igual o valor máximo.")
+        errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não é igual ao valor máximo.")
       end
     end
 
@@ -163,7 +163,7 @@ class Area < ActiveRecord::Base
     if producao.length > 1
       soma = producao.sum(&:maximo)
       if soma != maximo_producao
-        errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual o valor máximo.")
+        errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo.")
       end
     end
   end

@@ -79,7 +79,7 @@ function valida_prova_escrita() {
     return false;
   } else if (!confere) {
     $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").addClass('alert alert-danger').
-    html("A soma dos critérios não atinge 100 pontos!");
+    html("A soma dos critérios não é igual a 100 pontos!");
     rolar_para($(".panel.panel-default.escrita>.panel-body>.mensagem-erro"));
     return false;
   } else {
@@ -108,7 +108,7 @@ function valida_prova_didatica() {
       validado_didatica = false;
       rolar_para($(".panel.panel-default.didatica>.panel-body>.mensagem-erro"));
     } else if (!confere) {
-      $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
+      $(".panel.panel-default.didatica>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não é igual a 100 pontos!");
       validado_didatica = false;
       rolar_para($(".panel.panel-default.didatica>.panel-body>.mensagem-erro"));
     } else {
@@ -135,7 +135,7 @@ function valida_prova_didatica() {
       validado_procedimental = false;
       rolar_para($(".panel.panel-default.procedimental>.panel-body>.mensagem-erro"));
     } else if (!confere) {
-      $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não atinge 100 pontos!");
+      $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos critérios não é igual a 100 pontos!");
       validado_procedimental = false;
       rolar_para($(".panel.panel-default.procedimental>.panel-body>.mensagem-erro"));
     } else {
@@ -192,7 +192,7 @@ function valida_titulos() {
     validado_atividades = false;
     rolar_para($(".panel.panel-default.atividades>.panel-body>.mensagem-erro"));
   } else if (!confere_atividades) {
-    $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
+    $(".panel.panel-default.atividades>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não é igual a pontuação máxima!");
     validado_atividades = false;
     rolar_para($(".panel.panel-default.atividades>.panel-body>.mensagem-erro"));
   } else {
@@ -206,7 +206,7 @@ function valida_titulos() {
     validado_producao = false;
     rolar_para($(".panel.panel-default.producao>.panel-body>.mensagem-erro"));
   } else if (!confere_producao) {
-    $(".panel.panel-default.producao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não atinge a pontuação máxima!");
+    $(".panel.panel-default.producao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não é igual a pontuação máxima!");
     validado_producao = false;
     rolar_para($(".panel.panel-default.producao>.panel-body>.mensagem-erro"));
   } else {

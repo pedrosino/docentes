@@ -31,10 +31,17 @@ describe Area do
       expect(area).to be_invalid
     end
 
-    it "numero de vagas" do
+    it "tipo, nome e numero de vagas" do
+      area.proximo = 'escrita'
       area.vagas = nil
+      area.tipo_vaga = nil
+      area.nome_vaga = nil
       expect(area).to be_invalid
       area.vagas = 1
+      expect(area).to be_invalid
+      area.tipo_vaga = "Aposentadoria"
+      expect(area).to be_invalid
+      area.nome_vaga = "Pedro"
       expect(area).to be_valid
     end
 
@@ -129,13 +136,16 @@ describe Area do
 
     it "soma dos titulos deve ser igual ao maximo" do
       area.tipo = 'concurso'
+      # Cria uma unidade que não é ESEBA nem ESTES
+      unidade = FactoryGirl.create :unidade, sigla: 'PEDRO'
+      area.unidade_id = unidade.id
       # Precisa de pelo menos duas atividades
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 5, maximo: 10)
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, maximo: 9)
       area.proximo = "inicial"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não é igual o valor máximo.",
+      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não é igual ao valor máximo.",
                                                  "Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
 
       # Cria mais atividades
@@ -151,7 +161,7 @@ describe Area do
       area.proximo = "inicial"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma da pontuação da produção científica e/ou artística não é igual o valor máximo."]})
+      expect(area.errors.messages).to eq({base: ["A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo."]})
 
       # Cria mais itens de produção
       FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 0.5, maximo: 10)
@@ -162,6 +172,9 @@ describe Area do
 
     it "proporcao entre valor individual e maximo" do
       area.tipo = 'concurso'
+      # Cria uma unidade que não é ESEBA nem ESTES
+      unidade = FactoryGirl.create :unidade, sigla: 'PEDRO'
+      area.unidade_id = unidade.id
       # Dois itens - um com proporção errada
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, maximo: 10)
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 2, maximo: 10)
