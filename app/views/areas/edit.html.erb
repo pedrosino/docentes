@@ -11,7 +11,7 @@
   </ul>
 
   <% @confirmada = @area.confirmada %>
-  <% @area.confirmada = true %>
+  <% @area.confirmada = true unless (@area.created_at == @area.updated_at) %>
   <% @area.valid? %>
   <% @area.confirmada = @confirmada %>
   <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == @area.unidade_id %>
