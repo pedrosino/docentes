@@ -9,8 +9,6 @@ class Area < ActiveRecord::Base
   has_one :vaga
 
   attr_accessor :proximo
-  attr_accessor :tipo_vaga
-  attr_accessor :nome_vaga
 
   accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :titulos, reject_if: :all_blank, allow_destroy: true
@@ -40,8 +38,8 @@ class Area < ActiveRecord::Base
   validates :vagas, presence: true, if: -> { confirmada || proximo =='escrita' }
   validates :nome, presence: true, if: -> { confirmada || proximo =='escrita' }
   validates :qualificacao, presence: true, if: -> { confirmada || proximo =='escrita' }
-  #validates :tipo_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
-  #validates :nome_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :tipo_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :nome_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
 
   validate :tipo_do_edital
   def tipo_do_edital
@@ -49,13 +47,6 @@ class Area < ActiveRecord::Base
       errors.add(:tipo, "Inválido!")
     end
   end
-
-  # validate :vaga_preenchida, if: -> { confirmada || proximo =='escrita' }
-  # def vaga_preenchida
-  #   unless tipo_vaga.present? && nome_vaga.present?
-  #     errors.add(:tipo_vaga, "não pode ficar em branco")
-  #   end
-  # end
 
   validate :campus_validos
   def campus_validos
