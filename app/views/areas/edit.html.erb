@@ -30,9 +30,16 @@
 
           <div class="bloco-inicial">
             <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
+            <% if @area.tipo == 'concurso' %>
+              <% regimes = [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]] %>
+              <% tipos_vaga = ['Aposentadoria','Exoneração','Falecimento','Redistribuição','Remoção','Vacância do cargo'] %>
+            <% else %>
+              <% regimes = [["20 horas","20"], ["40 horas","40"]] %>
+              <% tipos_vaga = ['Licença maternidade','Licença médica','Afastamento para pós-graduação','Cargo de Reitor','Cargo de Pró-Reitor'] %>
+            <% end %>
             <div class="vaga">
               <label class="string control-label vaga">Vaga</label>
-              <%= f.input :tipo_vaga, required: true, label: "Tipo", hint: "Licença, aposentadoria, cargo" %>
+              <%= f.input :tipo_vaga, required: true, collection: tipos_vaga, label: "Tipo", hint: "Licença, aposentadoria, cargo" %>
               <%= f.input :nome_vaga, required: true, label: "Nome", hint: "Docente desligado ou afastado, ou projeto novo" %>
             </div>
             <%= f.input :nome, label: "Área", required: true, autofocus: true %>
@@ -41,11 +48,6 @@
             <%= f.input :campus, required: true, collection: ["Educação Física","Glória","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
             <%= f.input :qualificacao, required: true %>
             <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
-            <% if @area.tipo == 'concurso' %>
-              <% regimes = [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]] %>
-            <% else %>
-              <% regimes = [["20 horas","20"], ["40 horas","40"]] %>
-            <% end %>
             <%= f.input :regime, required: true, as: :select, collection: regimes.map{|regime| [regime[0], regime[1]]} %>
             <div id="aviso-regime"></div>
             <%= f.input :vagas, as: :string, required: true, wrapper_html: { class: "vagas" } %>
