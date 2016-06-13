@@ -272,7 +272,7 @@
       <% if current_user.pode_criar_edital? %>
         <%= f.input :confirmada %>
       <% end %>
-      <%= link_to icon("arrow-left", "Voltar"), areas_path, data: { confirm: "Você perderá qualquer alteraçao que não foi salva. Continuar?" }, id: "voltar", class: "btn btn-warning" %>
+      <%= link_to icon("arrow-left", "Voltar"), areas_path, data: { confirm: "Você perderá qualquer alteração que não foi salva. Continuar?" }, id: "voltar", class: "btn btn-warning" %>
       <% if current_user.pode_criar_edital? %>
         <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
       <% end %>

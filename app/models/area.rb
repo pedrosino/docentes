@@ -40,8 +40,8 @@ class Area < ActiveRecord::Base
   validates :vagas, presence: true, if: -> { confirmada || proximo =='escrita' }
   validates :nome, presence: true, if: -> { confirmada || proximo =='escrita' }
   validates :qualificacao, presence: true, if: -> { confirmada || proximo =='escrita' }
-  validates :tipo_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
-  validates :nome_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
+  #validates :tipo_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
+  #validates :nome_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
 
   validate :tipo_do_edital
   def tipo_do_edital
@@ -87,7 +87,7 @@ class Area < ActiveRecord::Base
     if criterios_escrita.length > 1
       soma = criterios_escrita.sum(&:valor)
       if soma != 100
-        errors.add(:base, "A soma dos critérios da prova escrita não atinge 100 pontos.")
+        errors.add(:base, "A soma dos critérios da prova escrita não é igual 100 pontos.")
       end
     end
   end
@@ -102,7 +102,7 @@ class Area < ActiveRecord::Base
       if criterios_didatica.length > 1
         soma = criterios_didatica.sum(&:valor)
         if soma != 100
-          errors.add(:base, "A soma dos critérios da prova didática pedagógica não atinge 100 pontos.")
+          errors.add(:base, "A soma dos critérios da prova didática pedagógica não é igual 100 pontos.")
         end
       end
     end
@@ -118,7 +118,7 @@ class Area < ActiveRecord::Base
       if criterios_procedimental.length > 1
         soma = criterios_procedimental.sum(&:valor)
         if soma != 100
-          errors.add(:base, "A soma dos critérios da prova didática procedimental não atinge 100 pontos.")
+          errors.add(:base, "A soma dos critérios da prova didática procedimental não é igual 100 pontos.")
         end
       end
     end
@@ -149,7 +149,7 @@ class Area < ActiveRecord::Base
     if atividades.length > 1
       soma = atividades.sum(&:maximo)
       if soma != maximo_atividades
-        errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.")
+        errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não é igual o valor máximo.")
       end
     end
 
@@ -160,7 +160,7 @@ class Area < ActiveRecord::Base
     if producao.length > 1
       soma = producao.sum(&:maximo)
       if soma != maximo_producao
-        errors.add(:base, "A soma da pontuação da produção científica e/ou artística não atinge o valor máximo.")
+        errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual o valor máximo.")
       end
     end
   end

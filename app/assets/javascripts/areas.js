@@ -64,7 +64,6 @@ function rolar_para($objeto, $tempo=500) {
 function valida_inicial() {
   $("#inicial").find(":input.required").each(function(){
     if ($(this).val() == "") {
-      alert($(this).prop('id'));
       return false;
     }
   });
