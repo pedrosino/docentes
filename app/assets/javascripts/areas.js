@@ -246,6 +246,10 @@ function valida_titulos() {
   return true;
 }
 
+function valida_todas() {
+  return valida_inicial() && valida_prova_escrita() && valida_prova_didatica() && valida_titulos();
+}
+
 onPage('areas edit, areas update', function(){
   // Se o usuário pressionar Enter, o formulário não é enviado
   $(window).keydown(function(event){
@@ -254,6 +258,22 @@ onPage('areas edit, areas update', function(){
       return false;
     }
   });
+
+  // Tabs do bootstrap
+  $('a[href="#<%=j params[:secao] %>"]').tab('show');
+  // Salva a seção atual no form do botão Enviar
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function() {
+    var secao = $(this).prop("href").split("#")[1];
+    $(".botoes").find("input[name=secao]").val(secao);
+  });
+
+  // Desabilita botão enviar, inicialmente
+  $("#enviar").hide();
+  // Se estiver tudo ok, habilita o botão
+  if (valida_todas) {
+    $("#enviar").show();
+    $(".mensagem-ok").html("Não existem mais pendências! Você pode enviar esta solicitação no botão no final da página.");
+  }
 
   //---------------------------------------------------------
   //------------- Informações básicas da área ---------------
@@ -353,7 +373,6 @@ onPage('areas edit, areas update', function(){
 
     // Impede o envio caso haja alterações que não foram salvas
     return nao_salvou();
-
   });
 
   //------- Verifica alterações não salvas ----------
