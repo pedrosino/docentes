@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613015708) do
+ActiveRecord::Schema.define(version: 20160613201308) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",          limit: 4
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20160613015708) do
     t.text     "disciplinas",         limit: 65535
     t.boolean  "prova_didatica"
     t.boolean  "prova_procedimental"
-    t.integer  "min_procedimental",   limit: 4
-    t.integer  "max_procedimental",   limit: 4
+    t.string   "min_procedimental",   limit: 255
+    t.string   "max_procedimental",   limit: 255
     t.string   "curso",               limit: 255
     t.integer  "vagas_negros",        limit: 4
     t.integer  "vagas_pcd",           limit: 4

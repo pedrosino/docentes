@@ -115,6 +115,16 @@ class Area < ActiveRecord::Base
     end
   end
 
+  validate :duracao_prova_procedimental, if: -> { confirmada || proximo == 'titulos' }
+  def duracao_prova_procedimental
+    if min_procedimental && min_procedimental.exclude?('minuto') && min_procedimental.exclude?('hora')
+      errors.add(:min_procedimental, "deve ser no formato '40 minutos' ou '1 hora e 10 minutos'")
+    end
+    if max_procedimental && max_procedimental.exclude?('minuto') && max_procedimental.exclude?('hora')
+      errors.add(:max_procedimental, "deve ser no formato '40 minutos' ou '1 hora e 10 minutos'")
+    end
+  end
+
   def maximo_atividades
     if tipo == 'concurso'
       20

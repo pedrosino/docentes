@@ -46,7 +46,7 @@
             <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
             <%= f.input :curso, label: "Curso (OPCIONAL)" %>
             <%= f.input :campus, required: true, collection: ["Educação Física","Glória","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
-            <%= f.input :qualificacao, required: true %>
+            <%= f.input :qualificacao, required: true, label: "Qualificação mínima exigida" %>
             <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
             <%= f.input :regime, required: true, as: :select, collection: regimes.map{|regime| [regime[0], regime[1]]} %>
             <div id="aviso-regime"></div>
@@ -142,8 +142,8 @@
               <div class="alert alert-warning">
                 No caso de prova procedimental, deve ser informada a duração mínima e máxima, e deve ser encaminhada justificativa circunstanciada da necessidade de realização desta prova junto com o MI à PROGEP.
               </div>
-              <%= f.input :min_procedimental, label: "Duração mínima" %>
-              <%= f.input :max_procedimental, label: "Duração máxima" %>
+              <%= f.input :min_procedimental, label: "Duração mínima", placeholder: "Por exemplo: 40 minutos ou 1 hora e 10 minutos" %>
+              <%= f.input :max_procedimental, label: "Duração máxima", placeholder: "Por exemplo: 40 minutos ou 1 hora e 10 minutos" %>
             </div>
 
             <div class="panel panel-default procedimental">
