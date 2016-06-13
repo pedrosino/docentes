@@ -141,7 +141,7 @@
                 <td class="vagas-reserva"><%= area.vagas_negros > 0 ? sprintf('%02d', area.vagas_negros) : '-' %></td>
               <% end %>
               <% if vagas_pcd > 0 %>
-                <td class="vagas-reserva"><%= sprintf '%02d', area.vagas_pcd %></td>
+                <td class="vagas-reserva"><%= area.vagas_pcd > 0 ? sprintf('%02d', area.vagas_pcd) : '-' %></td>
               <% end %>
             <% else %>
               <td class="vagas">
