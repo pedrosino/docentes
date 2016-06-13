@@ -160,6 +160,20 @@ function valida_prova_didatica() {
         $(this).removeClass("alert-danger");
       }
     });
+
+    $min_proced = $("#area_min_procedimental");
+    if (!/minuto/i.test($min_proced.val()) && !/hora/i.test($min_proced.val())) {
+      $min_proced.addClass('alert-danger');
+    } else {
+      $min_proced.removeClass('alert-danger');
+    }
+
+    $max_proced = $("#area_max_procedimental");
+    if (!/minuto/i.test($max_proced.val()) && !/hora/i.test($max_proced.val())) {
+      $max_proced.addClass('alert-danger');
+    } else {
+      $max_proced.removeClass('alert-danger');
+    }
   }
 
   // Impede o formulário de ser enviado
