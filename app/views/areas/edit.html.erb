@@ -32,10 +32,10 @@
             <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
             <% if @area.tipo == 'concurso' %>
               <% regimes = [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]] %>
-              <% tipos_vaga = ['Aposentadoria','Exoneração','Falecimento','Redistribuição','Remoção','Vacância do cargo'] %>
+              <% tipos_vaga = ['Aposentadoria','Exoneração','Falecimento','Redistribuição','Remoção','Vacância do cargo','Vaga nova (especificar)'] %>
             <% else %>
               <% regimes = [["20 horas","20"], ["40 horas","40"]] %>
-              <% tipos_vaga = ['Licença maternidade','Licença médica','Afastamento para pós-graduação','Cargo de Reitor','Cargo de Pró-Reitor'] %>
+              <% tipos_vaga = ['Licença maternidade','Licença médica','Afastamento para pós-graduação','Cessão','Cargo de Reitor','Cargo de Pró-Reitor'] %>
             <% end %>
             <div class="vaga">
               <label class="string control-label vaga">Vaga</label>
