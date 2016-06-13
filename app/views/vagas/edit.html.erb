@@ -1,0 +1,19 @@
+<div class="container">
+
+  <%= simple_form_for @vaga, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.input :tipo, required: true %>
+    <%= f.input :nome, required: true %>
+    <%= f.input :codigo, as: :string %>
+    <%= f.input :unidade_id, as: :select, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
+    <%= f.input :situacao %>
+
+    <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>
+    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+    <%= link_to @vaga, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+    <% end %>
+  <% end %>
+
+</div>

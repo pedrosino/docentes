@@ -58,7 +58,7 @@ describe Area do
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 30)
       area.proximo = "didatica"
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova escrita não atinge 100 pontos."]})
+      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova escrita não é igual 100 pontos."]})
 
       # Cria mais criterios
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 20)
@@ -84,7 +84,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_didatica = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática pedagógica não atinge 100 pontos."]})
+      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática pedagógica não é igual 100 pontos."]})
 
       # Cria mais criterios
       FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 40)
@@ -110,7 +110,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_procedimental = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática procedimental não atinge 100 pontos."]})
+      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática procedimental não é igual 100 pontos."]})
 
       # Cria mais criterios
       FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 45)
@@ -121,7 +121,7 @@ describe Area do
 
     # Testar soma dos títulos
     it "pelo menos dois itens de titulos" do
-      area.proximo = "acabou"
+      area.proximo = "inicial"
       area.valid?
       expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.",
                                                  "Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
@@ -132,10 +132,10 @@ describe Area do
       # Precisa de pelo menos duas atividades
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 5, maximo: 10)
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, maximo: 9)
-      area.proximo = "acabou"
+      area.proximo = "inicial"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.",
+      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não é igual o valor máximo.",
                                                  "Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
 
       # Cria mais atividades
@@ -148,10 +148,10 @@ describe Area do
       # Precisa de pelo menos dois itens de produção
       FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 5, maximo: 40)
       FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 3, maximo: 30)
-      area.proximo = "acabou"
+      area.proximo = "inicial"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma da pontuação da produção científica e/ou artística não atinge o valor máximo."]})
+      expect(area.errors.messages).to eq({base: ["A soma da pontuação da produção científica e/ou artística não é igual o valor máximo."]})
 
       # Cria mais itens de produção
       FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 0.5, maximo: 10)
@@ -165,7 +165,7 @@ describe Area do
       # Dois itens - um com proporção errada
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 3, maximo: 10)
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 2, maximo: 10)
-      area.proximo = "acabou"
+      area.proximo = "inicial"
       area.titulos.reload
       area.valid?
       expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de produção científica e/ou artística.",

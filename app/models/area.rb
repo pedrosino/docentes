@@ -6,6 +6,8 @@ class Area < ActiveRecord::Base
   has_many :criterios
   has_many :titulos
 
+  has_one :vaga
+
   attr_accessor :proximo
 
   accepts_nested_attributes_for :criterios, reject_if: :all_blank, allow_destroy: true
@@ -24,16 +26,20 @@ class Area < ActiveRecord::Base
     # mas 1/1 = 100% => acima do teto de 20% => não tem reserva
     # 5 vagas * 10% = 0,5 => arredonda para 1
     # 1/5 = 20% => dentro do teto => reserva de uma vaga
-    self.vagas_negros = (self.vagas * 0.2).round
-    self.vagas_pcd = (self.vagas * 0.1).ceil
-    if (self.vagas_pcd / self.vagas.to_f) > 0.2
-      self.vagas_pcd -= 1
+    if vagas
+      self.vagas_negros = (self.vagas * 0.2).round
+      self.vagas_pcd = (self.vagas * 0.1).ceil
+      if (self.vagas_pcd / self.vagas.to_f) > 0.2
+        self.vagas_pcd -= 1
+      end
     end
   end
 
-  validates :vagas, presence: true, on: :update
-  validates :nome, presence: true, on: :update
-  validates :qualificacao, presence: true, on: :update
+  validates :vagas, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :nome, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :qualificacao, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :tipo_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :nome_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
 
   validate :tipo_do_edital
   def tipo_do_edital
@@ -56,7 +62,7 @@ class Area < ActiveRecord::Base
     end
   end
 
-  validate :concurso_tem_prova_didatica, if: -> { confirmada || proximo == 'didatica' }
+  validate :concurso_tem_prova_didatica, if: -> { confirmada || proximo == 'titulos' }
   def concurso_tem_prova_didatica
     if tipo == 'concurso' && !prova_didatica
       errors.add(:prova_didatica, "é obrigatória em concurso público")
@@ -72,7 +78,7 @@ class Area < ActiveRecord::Base
     if criterios_escrita.length > 1
       soma = criterios_escrita.sum(&:valor)
       if soma != 100
-        errors.add(:base, "A soma dos critérios da prova escrita não atinge 100 pontos.")
+        errors.add(:base, "A soma dos critérios da prova escrita não é igual 100 pontos.")
       end
     end
   end
@@ -87,7 +93,7 @@ class Area < ActiveRecord::Base
       if criterios_didatica.length > 1
         soma = criterios_didatica.sum(&:valor)
         if soma != 100
-          errors.add(:base, "A soma dos critérios da prova didática pedagógica não atinge 100 pontos.")
+          errors.add(:base, "A soma dos critérios da prova didática pedagógica não é igual 100 pontos.")
         end
       end
     end
@@ -103,7 +109,7 @@ class Area < ActiveRecord::Base
       if criterios_procedimental.length > 1
         soma = criterios_procedimental.sum(&:valor)
         if soma != 100
-          errors.add(:base, "A soma dos critérios da prova didática procedimental não atinge 100 pontos.")
+          errors.add(:base, "A soma dos critérios da prova didática procedimental não é igual 100 pontos.")
         end
       end
     end
@@ -134,7 +140,7 @@ class Area < ActiveRecord::Base
     if atividades.length > 1
       soma = atividades.sum(&:maximo)
       if soma != maximo_atividades
-        errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não atinge o valor máximo.")
+        errors.add(:base, "A soma da pontuação das atividades didáticas e/ou profissionais não é igual o valor máximo.")
       end
     end
 
@@ -145,7 +151,7 @@ class Area < ActiveRecord::Base
     if producao.length > 1
       soma = producao.sum(&:maximo)
       if soma != maximo_producao
-        errors.add(:base, "A soma da pontuação da produção científica e/ou artística não atinge o valor máximo.")
+        errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual o valor máximo.")
       end
     end
   end

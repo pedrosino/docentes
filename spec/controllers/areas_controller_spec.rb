@@ -19,7 +19,7 @@ describe AreasController do
       it "cria uma area" do
         post :create, area: { tipo: "concurso" }
         area = assigns(:area)
-        expect(response).to redirect_to editar_area_path(area)
+        expect(response).to redirect_to edit_area_path(area)
         expect(area.tipo).to eq "concurso"
       end
 
@@ -52,7 +52,7 @@ describe AreasController do
       it "cria uma area" do
         post :create, area: { tipo: "concurso" }
         area = assigns(:area)
-        expect(response).to redirect_to editar_area_path(area)
+        expect(response).to redirect_to edit_area_path(area)
         expect(area.tipo).to eq "concurso"
       end
 

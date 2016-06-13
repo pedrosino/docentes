@@ -66,7 +66,7 @@ td.maximo {
   display: none;
 }
 
-.vagas {
+div.vagas {
   input {
     width: 100px;
   }
@@ -107,4 +107,25 @@ p.dica {
 
 .botoes {
   margin-top: 10px;
+}
+
+div.vaga {
+
+  label.string.control-label.vaga {
+    display: block;
+  }
+
+  div {
+    display: inline-block;
+    &.area_tipo_vaga {
+      width: 25%;
+    }
+
+    &.area_nome_vaga {
+      width: 70%;
+    }
+  }
+  input {
+    width: 100%;
+  }
 }
