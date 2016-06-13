@@ -259,14 +259,6 @@ onPage('areas edit, areas update', function(){
     }
   });
 
-  // Tabs do bootstrap
-  $('a[href="#<%=j params[:secao] %>"]').tab('show');
-  // Salva a seção atual no form do botão Enviar
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function() {
-    var secao = $(this).prop("href").split("#")[1];
-    $(".botoes").find("input[name=secao]").val(secao);
-  });
-
   // Desabilita botão enviar, inicialmente
   $("#enviar").hide();
   // Se estiver tudo ok, habilita o botão
@@ -373,6 +365,12 @@ onPage('areas edit, areas update', function(){
 
     // Impede o envio caso haja alterações que não foram salvas
     return nao_salvou();
+  });
+
+  $("#voltar").click(function(e){
+    if (nao_salvas) {
+      return window.confirm("Você perderá qualquer alteração que não foi salva. Continuar?");
+    }
   });
 
   //------- Verifica alterações não salvas ----------
