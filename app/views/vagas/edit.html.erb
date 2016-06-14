@@ -6,10 +6,14 @@
     <%= f.input :tipo, required: true %>
     <%= f.input :nome, required: true %>
     <%= f.input :codigo, as: :string %>
-    <%= f.input :unidade_id, as: :select, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
-    <%= f.input :data_inicio, as: :date_picker, label: "Data início", wrapper_html: { class: "data-pequena" } %>
+    <%= f.input :unidade_id, as: :select, required: true, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
+    <%= f.input :campus, collection: ["Educação Física","Glória","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
+    <% regimes = [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]] %>
+    <%= f.input :regime, as: :select, collection: regimes.map{|regime| [regime[0], regime[1]]} %>
+    <%= f.input :data_inicio, as: :date_picker, required: true, label: "Data início", wrapper_html: { class: "data-pequena" } %>
     <%= f.input :data_fim, as: :date_picker, label: "Data término", hint: "Deixe em branco para vagas de efetivo", wrapper_html: { class: "data-pequena" } %>
     <%= f.input :situacao, as: :select, collection: [['Aberta','a'],['Ocupada','o'],['Concurso','c'],['Redistribuída','r'],['Substituto','s'],['Nomeação','n']] %>
+    <%= f.input :observacao %>
 
     <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>
     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>

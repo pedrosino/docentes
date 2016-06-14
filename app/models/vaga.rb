@@ -4,6 +4,7 @@ class Vaga < ActiveRecord::Base
 
   validates :tipo, presence: true
   validates :nome, presence: true
+  validates :data_inicio, presence: true, on: :update
 
   validate :situacoes_possiveis
   def situacoes_possiveis
