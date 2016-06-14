@@ -61,13 +61,16 @@ function rolar_para($objeto, $tempo=500) {
   }, $tempo);
 }
 
+// Funções de validação de cada parte
+// Retornam false se a validação falhar
 function valida_inicial() {
+  var preenchidos = true;
   $("#inicial").find(":input.required").each(function(){
     if ($(this).val() == "") {
-      return false;
+      preenchidos = false;
     }
   });
-  return true;
+  return preenchidos;
 }
 
 function valida_prova_escrita() {
@@ -86,6 +89,7 @@ function valida_prova_escrita() {
     $(".panel.panel-default.escrita>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
   }
 
+  var preenchidos = true;
   $("#escrita").find(":input.required").each(function() {
     if($(this).val() == "") {
       $(this).addClass("alert-danger");
@@ -94,6 +98,10 @@ function valida_prova_escrita() {
       $(this).removeClass("alert-danger");
     }
   });
+
+  if (!preenchidos) {
+    return false;
+  }
   return true;
 }
 
@@ -246,8 +254,9 @@ function valida_titulos() {
   return true;
 }
 
+// Todas as validações juntas
 function valida_todas() {
-  return valida_inicial() && valida_prova_escrita() && valida_prova_didatica() && valida_titulos();
+  return (valida_inicial() && valida_prova_escrita() && valida_prova_didatica() && valida_titulos());
 }
 
 onPage('areas edit, areas update', function(){
@@ -262,9 +271,12 @@ onPage('areas edit, areas update', function(){
   // Desabilita botão enviar, inicialmente
   $("#enviar").hide();
   // Se estiver tudo ok, habilita o botão
-  if (valida_todas) {
+  if (valida_todas()) {
     $("#enviar").show();
     $(".mensagem-ok").html("Não existem mais pendências! Você pode enviar esta solicitação no botão no final da página.");
+    $(".mensagem-ok").show();
+  } else {
+    $(".mensagem-ok").hide();
   }
 
   //---------------------------------------------------------
