@@ -22,7 +22,7 @@ describe User do
 
     it "usuario com unidade" do
       unidade = FactoryGirl.create :unidade, sigla: "PEDRO"
-      user_u = FactoryGirl.create :user, :com_unidade, id_unidade: unidade.id, sigla_unidade: unidade.sigla
+      user_u = FactoryGirl.create :user, :com_unidade, sigla_unidade: unidade.sigla, unidade_id: unidade.id
       expect(user_u.email).to eq 'pedro@ufu.br'
       expect(user_u.unidade_id).to eq unidade.id
       expect(user_u.tipo).to eq 'u'

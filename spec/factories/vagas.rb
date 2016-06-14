@@ -1,10 +1,13 @@
 FactoryGirl.define do
   factory :vaga do
     codigo { Faker::Number.number(7) }
-    tipo { tipos_vaga.sample }
+    tipo { (vagas_efetivo + vagas_substituto).sample }
     nome { Faker::Name.name }
     data_inicio { Date.today }
-    situacao { situacao_vaga.sample }
+  end
+
+  after(:create) do |vaga|
+    situacao { self.SITUACOES.keys.sample }
   end
 
   trait :efetivo do
@@ -13,22 +16,6 @@ FactoryGirl.define do
 
   trait :substituto do
     tipo { vagas_substituto.sample }
-  end
-
-  trait :com_tipo do
-    transient do
-      tipo_passado 'Aposentadoria'
-    end
-
-    tipo { tipo_passado }
-  end
-
-  trait :com_situacao do
-    transient do
-      situacao_passada 'Aberta'
-    end
-
-    situacao { situacao_passada }
   end
 
 end
