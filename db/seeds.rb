@@ -45,4 +45,8 @@ unidades = [
 
 unidades.each do |sigla,nome|
   Unidade.create(sigla: sigla, nome: nome)
+  User.create (:com_unidade, id_unidade: unidade.id, sigla_unidade: unidade.sigla)
 end
+
+# Usuários
+User.create(:user_progep)

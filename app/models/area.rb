@@ -50,15 +50,19 @@ class Area < ActiveRecord::Base
 
   validate :campus_validos
   def campus_validos
-    if campus && !['Educação Física','Monte Carmelo','Patos de Minas','Santa Mônica','Umuarama'].include?(campus)
+    if campus && !['Educação Física','Glória','Monte Carmelo','Patos de Minas','Santa Mônica','Umuarama'].include?(campus)
       errors.add(:campus, "inválido!")
     end
   end
 
   validate :regime_de_trabalho
   def regime_de_trabalho
-    if regime && !['20','40','DE'].include?(regime)
-      errors.add(:regime, "deve ser 20h, 40h ou 40h-DE")
+    if regime
+      if tipo == 'concurso' && ['20','40','DE'].exclude?(regime)
+        errors.add(:regime, "deve ser 20h, 40h ou 40h-DE")
+      elsif tipo == 'processo' && ['20','40'].exclude?(regime)
+        errors.add(:regime, "deve ser 20h ou 40h (processo seletivo simplificado)")
+      end
     end
   end
 

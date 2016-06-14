@@ -16,9 +16,18 @@ describe Area do
     end
 
     it "regime de trabalho" do
+      area.tipo = 'concurso'
       area.regime = "oi"
       expect(area).to be_invalid
       area.regime = '20'
+      expect(area).to be_valid
+    end
+
+    it "regime de trabalho - processo seletivo" do
+      area.tipo = 'processo'
+      area.regime = 'DE'
+      expect(area).to be_invalid
+      area.regime = '40'
       expect(area).to be_valid
     end
   end

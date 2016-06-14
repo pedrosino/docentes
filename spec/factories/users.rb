@@ -21,5 +21,17 @@ FactoryGirl.define do
       email "progep@ufu.br"
       tipo 'p'
     end
+
+    trait :com_unidade do
+      transient do
+        id_unidade 1
+        sigla_unidade 'PEDRO'
+      end
+
+      unidade_id { id_unidade }
+      email { "#{sigla_unidade.downcase}@ufu.br" }
+      tipo 'u'
+    end
+
   end
 end
