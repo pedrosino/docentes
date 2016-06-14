@@ -50,3 +50,9 @@ end
 
 # Usuários
 User.create(:user_progep)
+
+# Vagas
+10.times do
+  Vaga.create(:efetivo)
+  Vaga.create(:substituto)
+end
