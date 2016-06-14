@@ -2,28 +2,36 @@
   <h4>Vagas</h4>
 
   <% if @vagas %>
-    <table class="table table-condensed">
+    <table class="table table-condensed index">
       <thead>
         <tr>
-          <th>Tipo</th>
+          <th>Unidade</th>
           <th>Nome</th>
           <th>Código</th>
-          <th>Unidade</th>
+          <th>Tipo</th>
+          <th>Data</th>
+          <th>Data fim</th>
           <th>Situação</th>
           <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <% @vagas.each do |vaga| %>
+        <% @vagas.each.sort_by{ |vaga| vaga[:unidade_id] }.each do |vaga| %>
           <tr>
-            <td><%= vaga.tipo %></td>
+            <td><%= vaga.unidade.sigla %></td>
             <td><%= vaga.nome %></td>
             <td><%= vaga.codigo %></td>
-            <td><%= vaga.unidade.sigla %></td>
-            <td><%= vaga.situacao %></td>
+            <td><%= vaga.tipo %></td>
+            <td><%=l vaga.data_inicio, format: :default %></td>
             <td>
-              <%= link_to edit_vaga_path(vaga), class: "btn btn-primary" do %>
+              <% if vaga.data_fim.present? %>
+                <%=l vaga.data_fim, format: :default %>
+              <% end %>
+            </td>
+            <td><%= situacao_vaga(vaga.situacao) %></td>
+            <td>
+              <%= link_to edit_vaga_path(vaga), class: "btn btn-primary btn-sm" do %>
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar
               <% end %>
             </td>

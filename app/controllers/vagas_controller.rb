@@ -40,6 +40,6 @@ class VagasController < ApplicationController
   end
 
   def vaga_params
-    vaga_params = params.require(:vaga).permit(:tipo, :nome, :codigo, :unidade_id, :situacao)
+    vaga_params = params.require(:vaga).permit(:tipo, :nome, :codigo, :unidade_id, :data_inicio, :data_fim, :situacao, :regime, :campus, :observacao)
   end
 end

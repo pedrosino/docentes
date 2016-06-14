@@ -7,7 +7,9 @@
     <%= f.input :nome, required: true %>
     <%= f.input :codigo, as: :string %>
     <%= f.input :unidade_id, as: :select, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
-    <%= f.input :situacao %>
+    <%= f.input :data_inicio, as: :date_picker, label: "Data início", wrapper_html: { class: "data-pequena" } %>
+    <%= f.input :data_fim, as: :date_picker, label: "Data término", hint: "Deixe em branco para vagas de efetivo", wrapper_html: { class: "data-pequena" } %>
+    <%= f.input :situacao, as: :select, collection: [['Aberta','a'],['Ocupada','o'],['Concurso','c'],['Redistribuída','r'],['Substituto','s'],['Nomeação','n']] %>
 
     <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>
     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
