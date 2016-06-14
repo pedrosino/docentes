@@ -4,10 +4,7 @@ FactoryGirl.define do
     tipo { (vagas_efetivo + vagas_substituto).sample }
     nome { Faker::Name.name }
     data_inicio { Date.today }
-  end
-
-  after(:create) do |vaga|
-    situacao { self.SITUACOES.keys.sample }
+    situacao { Vaga::SITUACOES.keys.sample }
   end
 
   trait :efetivo do

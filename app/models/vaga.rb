@@ -8,7 +8,7 @@ class Vaga < ActiveRecord::Base
 
   validate :situacoes_possiveis
   def situacoes_possiveis
-    if !self.SITUACOES.include?(situacao)
+    if situacao && !SITUACOES.include?(situacao)
       errors.add(:situacao, "inválida")
     end
   end
@@ -20,14 +20,12 @@ class Vaga < ActiveRecord::Base
     end
   end
 
-  def SITUACOES
-    {
-      "a" => "Aberta",
-      "o" => "Ocupada",
-      "r" => "Redistribuída",
-      "s" => "Substituto",
-      "c" => "Concurso",
-      "n" => "Nomeação"
-    }
-  end
+  SITUACOES = {
+    "a" => "Aberta",
+    "o" => "Ocupada",
+    "r" => "Redistribuída",
+    "s" => "Substituto",
+    "c" => "Concurso",
+    "n" => "Nomeação"
+  }
 end
