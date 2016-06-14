@@ -93,7 +93,7 @@
 
             <td class="vagas"><%= sprintf '%02d', area.vagas %></td>
             <td class="qualificacao"><%= area.qualificacao %></td>
-            <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
+            <td class="regime"><%= regime_de_trabalho_longo(area.regime) %></td>
           </tr>
         <% end %>
       </tbody>
@@ -149,7 +149,7 @@
               </td>
             <% end %>
             <td class="qualificacao"><%= highlight(area.qualificacao, /Graduação|Mestrado|Doutorado/, highlighter: '<strong>\1</strong>') %></td>
-            <td class="regime"><%= regime_de_trabalho(area.regime) %></td>
+            <td class="regime"><%= regime_de_trabalho_longo(area.regime) %></td>
           </tr>
         <% end %>
       </tbody>

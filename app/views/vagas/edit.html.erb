@@ -3,16 +3,15 @@
   <%= simple_form_for @vaga, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 
-    <%= f.input :tipo, required: true %>
+    <%= f.input :tipo, required: true, as: :grouped_select, collection: tipos_vaga, group_method: :last %>
     <%= f.input :nome, required: true %>
     <%= f.input :codigo, as: :string %>
     <%= f.input :unidade_id, as: :select, required: true, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
-    <%= f.input :campus, collection: ["Educação Física","Glória","Monte Carmelo","Patos de Minas","Pontal", "Santa Mônica", "Umuarama"] %>
-    <% regimes = [["20 horas","20"], ["40 horas","40"], ["Dedicação Exclusiva","DE"]] %>
-    <%= f.input :regime, as: :select, collection: regimes.map{|regime| [regime[0], regime[1]]} %>
+    <%= f.input :campus, collection: lista_campus %>
+    <%= f.input :regime, as: :select, collection: regime_de_trabalho.map{ |regime| [regime[1], regime[0]] } %>
     <%= f.input :data_inicio, as: :date_picker, required: true, label: "Data início", wrapper_html: { class: "data-pequena" } %>
     <%= f.input :data_fim, as: :date_picker, label: "Data término", hint: "Deixe em branco para vagas de efetivo", wrapper_html: { class: "data-pequena" } %>
-    <%= f.input :situacao, as: :select, collection: [['Aberta','a'],['Ocupada','o'],['Concurso','c'],['Redistribuída','r'],['Substituto','s'],['Nomeação','n']] %>
+    <%= f.input :situacao, as: :select, collection: situacao_vaga.map{ |situacao| [situacao[1], situacao[0]] } %>
     <%= f.input :observacao %>
 
     <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>

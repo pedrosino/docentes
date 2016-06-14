@@ -1,5 +1,5 @@
 module VagasHelper
-  def situacao_vaga(codigo)
+  def situacao_vaga
     {
       "a" => "Aberta",
       "o" => "Ocupada",
@@ -7,6 +7,6 @@ module VagasHelper
       "s" => "Substituto",
       "c" => "Concurso",
       "n" => "Nomeação"
-    }[codigo]
+    }
   end
 end

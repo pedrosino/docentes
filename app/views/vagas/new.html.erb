@@ -4,7 +4,7 @@
   <h1><%= yield(:title) %></h1>
 
   <%= simple_form_for @vaga do |f| %>
-    <%= f.input :tipo, required: true, autofocus: true %>
+    <%= f.input :tipo, required: true, as: :grouped_select, collection: tipos_vaga, group_method: :last %>
     <%= f.input :nome, required: true %>
 
     <button type="submit" class="btn btn-success">Criar</button>
