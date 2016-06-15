@@ -10,10 +10,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="nav col-md-6">
-      <%= link_to "Solicitar edital", new_area_path %>
-    </div>
-    <div class="login col-md-6">
+    <div class="login col-md-12">
       <% if user_signed_in? %>
         Bem-vindo,
         <%= link_to "#{current_user.nome}", edit_user_registration_path, :class => 'navbar-link' %> |
