@@ -2,8 +2,11 @@ class VagasController < ApplicationController
   before_action :authenticate_user!
   before_action -> { redireciona_usuario(:pode_criar_edital?) }
 
+  include ApplicationHelper
+
   def index
     @vagas = Vaga.all
+    @vagas_ocupadas, @vagas_abertas = @vagas.partition{ |vaga| vaga.situacao == 'o' }
   end
 
   def new

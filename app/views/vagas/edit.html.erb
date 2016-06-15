@@ -11,7 +11,7 @@
     <%= f.input :regime, as: :select, collection: regime_de_trabalho.map{ |regime| [regime[1], regime[0]] } %>
     <%= f.input :data_inicio, as: :date_picker, required: true, label: "Data início", wrapper_html: { class: "data-pequena" } %>
     <%= f.input :data_fim, as: :date_picker, label: "Data término", hint: "Deixe em branco para vagas de efetivo", wrapper_html: { class: "data-pequena" } %>
-    <%= f.input :situacao, as: :select, collection: situacao_vaga.map{ |situacao| [situacao[1], situacao[0]] } %>
+    <%= f.input :situacao, as: :select, collection: Vaga::SITUACOES.map{ |situacao| [situacao[1], situacao[0]] } %>
     <%= f.input :observacao %>
 
     <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>

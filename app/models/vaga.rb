@@ -26,6 +26,7 @@ class Vaga < ActiveRecord::Base
     "r" => "Redistribuída",
     "s" => "Substituto",
     "c" => "Concurso",
-    "n" => "Nomeação"
+    "n" => "Nomeação",
+    "c,s" => "Concurso e Substituto"
   }
 end
