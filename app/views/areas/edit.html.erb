@@ -56,7 +56,7 @@
             <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
           </div>
 
-          <button type="submit" class="btn btn-success" id="salvar-inicial"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+          <button type="submit" class="btn btn-success" id="salvar-inicial"><%= glyphicon("ok") %> Salvar</button>
         <% end %>
       </div>
 
@@ -97,7 +97,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-success" id="salvar-escrita"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+          <button type="submit" class="btn btn-success" id="salvar-escrita"><%= glyphicon("ok") %></span> Salvar</button>
         <% end %>
       </div>
 
@@ -176,7 +176,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-success" id="salvar-didatica"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+          <button type="submit" class="btn btn-success" id="salvar-didatica"><%= glyphicon("ok") %> Salvar</button>
         <% end %>
       </div>
 
@@ -260,7 +260,7 @@
             <p class="dica">(Para mesma pontuação, preencha 100)</p>
           </div>
 
-          <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+          <button type="submit" class="btn btn-success" id="salvar-titulos"><%= glyphicon("ok") %> Salvar</button>
         <% end %>
       </div>
 
@@ -285,15 +285,15 @@
       <% end %>
       <%= link_to icon("arrow-left", "Voltar"), areas_path, id: "voltar", class: "btn btn-warning" %>
       <% if current_user.pode_criar_edital? %>
-        <button type="submit" class="btn btn-success" id="salvar-titulos"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+        <button type="submit" class="btn btn-success" id="salvar-titulos"><%= glyphicon("ok") %> Salvar</button>
       <% end %>
       <% if (!@confirmada && @tem_acesso) || current_user.pode_criar_edital? %>
         <%= button_tag(type: 'submit', id: "enviar", name: "commit", value: "Confirm", class: "btn btn-primary", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
-          <span class="glyphicon glyphicon-share"></span> Enviar
+          <%= glyphicon("share") %> Enviar
         <% end %>
 
         <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, id: "excluir", class: "btn btn-danger" do %>
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+          <%= glyphicon("trash") %> Excluir
         <% end %>
       <% end %>
     <% end %>

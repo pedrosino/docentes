@@ -10,9 +10,9 @@
     <%= f.input :telefone %>
 
     <%= link_to icon("arrow-left", "Voltar"), unidades_path, class: "btn btn-warning" %>
-    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+    <button type="submit" class="btn btn-success"><%= glyphicon("ok") %> Salvar</button>
     <%= link_to @unidade, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
-      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+      <%= glyphicon("trash") %> Excluir
     <% end %>
   <% end %>
 

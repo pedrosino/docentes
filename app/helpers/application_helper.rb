@@ -48,4 +48,12 @@ module ApplicationHelper
       "Substitutos" => vagas_substituto
     }
   end
+
+  def icon_reverse(text, icon)
+    text.html_safe + " " + content_tag(:i, "", class: "fa fa-#{icon}")
+  end
+
+  def glyphicon(icon)
+    content_tag(:span, "", class: "glyphicon glyphicon-#{icon}")
+  end
 end

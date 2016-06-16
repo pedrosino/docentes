@@ -7,9 +7,9 @@
     <%= f.input :tipo, required: true, autofocus: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
     <%= f.input :numero, required: true %>
 
-    <button type="submit" class="btn btn-success">Criar</button>
+    <button type="submit" class="btn btn-success">Avançar</button>
     <%= link_to editais_path, class: "btn btn-danger" do %>
-      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+      <%= glyphicon("remove") %> Cancelar
     <% end %>
   <% end %>
 </div>
