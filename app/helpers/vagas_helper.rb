@@ -3,7 +3,6 @@ module VagasHelper
     {
       "a" => "ok-sign",
       "c" => "exclamation-sign",
-      "c,s" => "exclamation-sign",
       "n" => "minus-sign",
       "o" => "remove-sign",
       "r" => "share",
@@ -15,7 +14,6 @@ module VagasHelper
     {
       "a" => "alert-success",
       "c" => "alert-warning",
-      "c,s" => "alert-warning",
       "n" => "alert-danger",
       "o" => "alert-danger",
       "r" => "alert-info",

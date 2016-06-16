@@ -2,6 +2,8 @@ class Vaga < ActiveRecord::Base
 
   belongs_to :unidade
 
+  has_one :area
+
   validates :tipo, presence: true
   validates :nome, presence: true
   validates :data_inicio, presence: true, on: :update
@@ -26,7 +28,6 @@ class Vaga < ActiveRecord::Base
     "r" => "Redistribuída",
     "s" => "Substituto",
     "c" => "Concurso",
-    "n" => "Nomeação",
-    "c,s" => "Concurso e Substituto"
+    "n" => "Nomeação"
   }
 end

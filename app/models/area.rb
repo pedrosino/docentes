@@ -2,11 +2,10 @@ class Area < ActiveRecord::Base
 
   belongs_to :unidade
   belongs_to :edital
+  belongs_to :vaga
 
   has_many :criterios
   has_many :titulos
-
-  has_one :vaga
 
   attr_accessor :proximo
 
