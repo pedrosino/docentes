@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe UnidadesController do
-
   context "nao esta logado" do
     it "redireciona para login" do
       get :index
@@ -46,5 +45,4 @@ describe UnidadesController do
       end
     end
   end
-
 end

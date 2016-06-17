@@ -37,7 +37,7 @@ function onPage(pageSelector, fun) {
       fun();
     }
   });
-};
+}
 
 
 // Executes the given function on every page.

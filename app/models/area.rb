@@ -1,5 +1,4 @@
 class Area < ActiveRecord::Base
-
   belongs_to :unidade
   belongs_to :edital
   belongs_to :vaga
@@ -26,30 +25,28 @@ class Area < ActiveRecord::Base
     # 5 vagas * 10% = 0,5 => arredonda para 1
     # 1/5 = 20% => dentro do teto => reserva de uma vaga
     if vagas
-      self.vagas_negros = (self.vagas * 0.2).round
-      self.vagas_pcd = (self.vagas * 0.1).ceil
-      if (self.vagas_pcd / self.vagas.to_f) > 0.2
-        self.vagas_pcd -= 1
-      end
+      self.vagas_negros = (vagas * 0.2).round
+      self.vagas_pcd = (vagas * 0.1).ceil
+      self.vagas_pcd -= 1 if (vagas_pcd / vagas.to_f) > 0.2
     end
   end
 
-  validates :vagas, presence: true, if: -> { confirmada || proximo =='escrita' }
-  validates :nome, presence: true, if: -> { confirmada || proximo =='escrita' }
-  validates :qualificacao, presence: true, if: -> { confirmada || proximo =='escrita' }
-  validates :tipo_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
-  validates :nome_vaga, presence: true, if: -> { confirmada || proximo =='escrita' }
+  validates :vagas, presence: true, if: -> { confirmada || proximo == 'escrita' }
+  validates :nome, presence: true, if: -> { confirmada || proximo == 'escrita' }
+  validates :qualificacao, presence: true, if: -> { confirmada || proximo == 'escrita' }
+  validates :tipo_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
+  validates :nome_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
 
   validate :tipo_do_edital
   def tipo_do_edital
-    if tipo && !['concurso','processo'].include?(tipo)
-      errors.add(:tipo, "Inválido!")
+    if tipo && !['concurso', 'processo'].include?(tipo)
+      errors.add(:tipo, "inválido!")
     end
   end
 
   validate :campus_validos
   def campus_validos
-    if campus && !['Educação Física','Glória','Monte Carmelo','Patos de Minas','Santa Mônica','Umuarama'].include?(campus)
+    if campus && !['Educação Física', 'Glória', 'Monte Carmelo', 'Patos de Minas', 'Santa Mônica', 'Umuarama'].include?(campus)
       errors.add(:campus, "inválido!")
     end
   end
@@ -57,10 +54,10 @@ class Area < ActiveRecord::Base
   validate :regime_de_trabalho
   def regime_de_trabalho
     if regime
-      if tipo == 'concurso' && ['20','40','DE'].exclude?(regime)
-        errors.add(:regime, "deve ser 20h, 40h ou 40h-DE")
-      elsif tipo == 'processo' && ['20','40'].exclude?(regime)
-        errors.add(:regime, "deve ser 20h ou 40h (processo seletivo simplificado)")
+      if tipo == 'concurso' && ['20', '40', 'DE'].exclude?(regime)
+        errors.add(:regime, 'deve ser 20h, 40h ou 40h-DE')
+      elsif tipo == 'processo' && ['20', '40'].exclude?(regime)
+        errors.add(:regime, 'deve ser 20h ou 40h (processo seletivo simplificado)')
       end
     end
   end
@@ -131,7 +128,7 @@ class Area < ActiveRecord::Base
   end
 
   def maximo_atividades
-    if tipo == 'concurso' && unidade && ['ESEBA','ESTES'].exclude?(unidade.sigla)
+    if tipo == 'concurso' && unidade && ['ESEBA', 'ESTES'].exclude?(unidade.sigla)
       20
     else
       45
@@ -139,7 +136,7 @@ class Area < ActiveRecord::Base
   end
 
   def maximo_producao
-    if tipo == 'concurso' && unidade && ['ESEBA','ESTES'].exclude?(unidade.sigla)
+    if tipo == 'concurso' && unidade && ['ESEBA', 'ESTES'].exclude?(unidade.sigla)
       80
     else
       45
@@ -174,7 +171,7 @@ class Area < ActiveRecord::Base
   # 1 % 0.2 retorna 0.1999999999996
   # Não entendi bem por que...
   def modulo_especial(big, small)
-    big - small*(big/small).floor
+    big - small * (big / small).floor
   end
 
   validate :proporcao_titulos
@@ -187,10 +184,10 @@ class Area < ActiveRecord::Base
   end
 
   def criterios_da_prova(prova)
-    criterios.select{ |c| c.tipo_prova == prova}.reject(&:_destroy)
+    criterios.select { |c| c.tipo_prova == prova }.reject(&:_destroy)
   end
 
   def titulos_do_tipo(tipo)
-    titulos.select{ |t| t.tipo == tipo }.reject(&:_destroy)
+    titulos.select { |t| t.tipo == tipo }.reject(&:_destroy)
   end
 end

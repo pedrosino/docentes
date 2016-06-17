@@ -137,7 +137,7 @@ function valida_prova_didatica() {
   var validado_procedimental = true;
   var duracao = true;
   if ($("#area_prova_procedimental").is(":checked")) {
-    var confere = verifica_soma($(".criterios-procedimental"),"valor", 100, "criterios")
+    var confere = verifica_soma($(".criterios-procedimental"),"valor", 100, "criterios");
     if (confere == -1) {
       $(".panel.panel-default.procedimental>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("Preencha pelo menos dois critérios!");
       validado_procedimental = false;

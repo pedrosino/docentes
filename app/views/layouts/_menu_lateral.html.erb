@@ -1,0 +1,21 @@
+<!-- From https://github.com/cubing/worldcubeassociation.org/blob/master/WcaOnRails/app/views/admin/_nav.html.erb-->
+<div class="col-sm-3 col-md-2">
+  <div class="list-group menu">
+    <% items = [
+      { text: "Solicitações", path: areas_path, icon: "bell" },
+      { text: "Nova solicitação", path: new_area_path, icon: "plus" }, ] %>
+    <% if current_user.admin? %>
+      <% items = items | [
+        { text: "Editais", path: editais_path,  icon: "file-text-o" },
+        { text: "Novo edital", path: new_edital_path, icon: "plus" },
+        { text: "Vagas", path: vagas_path, icon: "group" },
+        { text: "Nova vaga", path: new_vaga_path, icon: "plus" }
+      ] %>
+    <% end %>
+    <% items.each do |item| %>
+      <%= link_to item[:path], class: "list-group-item" do %>
+        <%= icon("#{item[:icon]}") %> <%= item[:text] %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

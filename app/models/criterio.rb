@@ -1,5 +1,4 @@
 class Criterio < ActiveRecord::Base
-
   belongs_to :area
 
   validates :nome, presence: true
@@ -8,7 +7,7 @@ class Criterio < ActiveRecord::Base
 
   validate :tipo_prova_correto
   def tipo_prova_correto
-    if tipo_prova && !['escrita','didatica','procedimental'].include?(tipo_prova)
+    if tipo_prova && !['escrita', 'didatica', 'procedimental'].include?(tipo_prova)
       errors.add(:tipo_prova, "inválido!")
     end
   end
