@@ -15,5 +15,13 @@ describe Vaga do
       vaga.situacao = nil
       expect(vaga).to be_valid
     end
+
+    it "vaga de substituto nao pode ser ocupada" do
+      vaga = FactoryGirl.create(:vaga, tipo: "Cessão")
+      vaga.situacao = 'o'
+      expect(vaga).to be_invalid
+      vaga.situacao = 'c'
+      expect(vaga).to be_valid
+    end
   end
 end

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :vaga do
     codigo { Faker::Number.number(7) }
-    tipo { (vagas_efetivo + vagas_substituto).sample }
+    tipo { 'Aposentadoria' }
     nome { Faker::Name.name }
     data_inicio { Date.today }
     situacao { Vaga::SITUACOES.keys.sample }
@@ -13,5 +13,6 @@ FactoryGirl.define do
 
   trait :substituto do
     tipo { vagas_substituto.sample }
+    situacao { (Vaga::SITUACOES.keys - ['o']).sample }
   end
 end

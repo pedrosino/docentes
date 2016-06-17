@@ -1,4 +1,6 @@
 class Vaga < ActiveRecord::Base
+  include ApplicationHelper
+
   belongs_to :unidade
 
   has_one :area
@@ -18,6 +20,13 @@ class Vaga < ActiveRecord::Base
   def datas_inicio_e_fim
     if data_fim && data_inicio && data_fim <= data_inicio
       errors.add(:data_fim, "deve ser maior que a data de início")
+    end
+  end
+
+  validate :vaga_substituto_nao_ocupada
+  def vaga_substituto_nao_ocupada
+    if vagas_substituto.include?(tipo) && situacao == 'o'
+      errors.add(:situacao, "não pode ser 'ocupada' (vaga temporária)'")
     end
   end
 
