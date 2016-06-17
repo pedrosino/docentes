@@ -5,9 +5,9 @@ $(document).on('ready page:change', function() {
   });
 
   $('.datetimerange').each(function(){
-    var $this = $(this)
-    var range1 = $($this.find('.input-group')[0])
-    var range2 = $($this.find('.input-group')[1])
+    var $this = $(this);
+    var range1 = $($this.find('.input-group')[0]);
+    var range2 = $($this.find('.input-group')[1]);
 
     if(range1.data("DateTimePicker").date() != null)
       range2.data("DateTimePicker").minDate(range1.data("DateTimePicker").date());
@@ -28,5 +28,5 @@ $(document).on('ready page:change', function() {
       else
         range1.data("DateTimePicker").maxDate(false);
     });
-  })
+  });
 });
