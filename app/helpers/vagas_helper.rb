@@ -12,7 +12,7 @@ module VagasHelper
 
   def classe_situacao
     {
-      'a' => 'alert-success',
+      'a' => 'alert-verde',
       'c' => 'alert-warning',
       'n' => 'alert-danger',
       'o' => 'alert-danger',

@@ -49,11 +49,12 @@ unidades.each do |sigla, nome|
 end
 
 # Usuários
-User.create(:user_progep)
-User.create(email: 'pedrosg@ufu.br', password: 'pedroufu', password_confirmation: 'pedroufu', tipo: 'a')
+FactoryGirl.create(:user_progep)
+User.create(email: 'pedrosg@ufu.br', password: 'pedroufu', password_confirmation: 'pedroufu', nome: 'Pedro', tipo: 'a')
+User.create(email: 'louane@ufu.br', password: 'louaneufu', password_confirmation: 'louaneufu', nome: 'Louane', tipo: 'p')
 
 # Vagas
 10.times do
-  Vaga.create(:efetivo)
-  Vaga.create(:substituto)
+  FactoryGirl.create(:vaga, :efetivo, unidade_id: Unidade.find((1..32).to_a.sample).id)
+  FactoryGirl.create(:vaga, :substituto, unidade_id: Unidade.find((1..32).to_a.sample).id)
 end
