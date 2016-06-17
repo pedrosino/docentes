@@ -5,5 +5,4 @@ FactoryGirl.define do
     comeca_inscricao { 10.days.from_now }
     termina_inscricao { 24.days.from_now }
   end
-
 end

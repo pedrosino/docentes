@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe EditaisController do
-
   context "nao esta logado" do
     it "redireciona para login" do
       get :index
@@ -68,5 +67,4 @@ describe EditaisController do
       end
     end
   end
-
 end

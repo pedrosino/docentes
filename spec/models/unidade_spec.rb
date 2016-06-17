@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Unidade do
   it "Factory valida" do
-    expect(FactoryGirl.create :unidade).to be_valid
+    expect(FactoryGirl.create(:unidade)).to be_valid
   end
 
   describe "criando unidade" do
@@ -14,5 +14,4 @@ describe Unidade do
       expect(unidade).to be_valid
     end
   end
-
 end

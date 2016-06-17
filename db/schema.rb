@@ -12,7 +12,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20160614002114) do
-
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",          limit: 4
     t.string   "campus",              limit: 255

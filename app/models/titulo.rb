@@ -1,5 +1,4 @@
 class Titulo < ActiveRecord::Base
-
   belongs_to :area
 
   validates :descricao, presence: true
@@ -9,15 +8,13 @@ class Titulo < ActiveRecord::Base
 
   validate :tipo_do_titulo
   def tipo_do_titulo
-    if tipo && !['atividades','producao'].include?(tipo)
+    if tipo && !['atividades', 'producao'].include?(tipo)
       errors.add(:tipo, "inválido!")
     end
   end
 
   validate :valor_versus_maximo
   def valor_versus_maximo
-    if valor > maximo
-      errors.add(:valor, "não pode ser maior que o máximo")
-    end
+    errors.add(:valor, "não pode ser maior que o máximo") if valor > maximo
   end
 end

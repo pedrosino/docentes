@@ -1,5 +1,4 @@
 class Vaga < ActiveRecord::Base
-
   belongs_to :unidade
 
   has_one :area
@@ -23,11 +22,11 @@ class Vaga < ActiveRecord::Base
   end
 
   SITUACOES = {
-    "a" => "Aberta",
-    "o" => "Ocupada",
-    "r" => "Redistribuída",
-    "s" => "Substituto",
-    "c" => "Concurso",
-    "n" => "Nomeação"
-  }
+    'a' => 'Aberta',
+    'o' => 'Ocupada',
+    'r' => 'Redistribuída',
+    's' => 'Substituto',
+    'c' => 'Concurso',
+    'n' => 'Nomeação'
+  }.freeze
 end

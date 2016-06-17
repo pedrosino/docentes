@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Edital do
   it "Factory valida" do
-    expect(FactoryGirl.create :edital).to be_valid
+    expect(FactoryGirl.create(:edital)).to be_valid
   end
 
   describe "criando edital" do
@@ -14,5 +14,4 @@ describe Edital do
       expect(edital).to be_valid
     end
   end
-
 end

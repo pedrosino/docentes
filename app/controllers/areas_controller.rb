@@ -17,20 +17,19 @@ class AreasController < ApplicationController
   def create
     @area = Area.new(area_params)
     # No concurso público a prova didática (pedagógica) é obrigatória
-    if @area.tipo == 'concurso'
-      @area.prova_didatica = true
-    end
+    @area.prova_didatica = true if @area.tipo == 'concurso'
+
     if @area.save
-      flash[:success] = "Criado com sucesso."
+      flash[:success] = 'Criado com sucesso.'
       redirect_to edit_area_path(@area)
     else
-      flash[:danger] = "Falha no cadastro."
+      flash[:danger] = 'Falha no cadastro.'
       render :new
     end
   end
 
   def edit
-    params[:secao] ||= "inicial"
+    params[:secao] ||= 'inicial'
     @area = Area.find(params[:id])
   end
 
@@ -58,15 +57,15 @@ class AreasController < ApplicationController
     @area = Area.find(params[:id])
     # Direciona para a próxima etapa quando salvar
     if @area.update_attributes(area_params)
-      if params[:commit] == "Confirm"
-        flash[:success] = "Solicitação enviada!"
+      if params[:commit] == 'Confirm'
+        flash[:success] = 'Solicitação enviada!'
         redirect_to areas_path
       else
-        flash[:success] = "Dados salvos!"
+        flash[:success] = 'Dados salvos!'
         redirect_to edit_area_path(@area, secao: area_params[:proximo])
       end
     else
-      flash[:danger] = "Falha ao salvar!"
+      flash[:danger] = 'Falha ao salvar!'
       render :edit, secao: params[:secao]
     end
   end
@@ -74,20 +73,21 @@ class AreasController < ApplicationController
   def destroy
     @area = Area.find(params[:id])
     if @area.destroy
-      flash[:success] = "Área excluída."
+      flash[:success] = 'Área excluída.'
       redirect_to areas_path
     else
-      flash[:warning] = "Falha na exclusão."
+      flash[:warning] = 'Falha na exclusão.'
       render :edit
     end
   end
 
   def area_params
     area_params = params.require(:area).permit(:unidade_id, :tipo_vaga, :nome_vaga, :nome, :subarea, :curso, :tipo, :campus, :qualificacao, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :min_procedimental, :max_procedimental, :coautoria, :confirmada,
-      criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy], titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
-    if params[:commit] == "Confirm"
-      area_params[:confirmada] = true
-    end
+      criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy],
+      titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
+
+    area_params[:confirmada] = true if params[:commit] == 'Confirm'
+
     secao = params[:secao]
     case secao
     when 'inicial'

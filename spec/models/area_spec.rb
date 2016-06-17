@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Area do
   it "Factory valida" do
-    expect(FactoryGirl.create :area).to be_valid
+    expect(FactoryGirl.create(:area)).to be_valid
   end
 
   let(:area) { FactoryGirl.create :area }
@@ -65,7 +65,7 @@ describe Area do
     it "prova escrita precisa de criterios" do
       area.proximo = "didatica"
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois critérios da prova escrita."]})
+      expect(area.errors.messages).to eq(base: ["Você deve preencher pelo menos dois critérios da prova escrita."])
     end
 
     it "soma dos criterios deve ser 100" do
@@ -74,7 +74,7 @@ describe Area do
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 30)
       area.proximo = "didatica"
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova escrita não é igual 100 pontos."]})
+      expect(area.errors.messages).to eq(base: ["A soma dos critérios da prova escrita não é igual 100 pontos."])
 
       # Cria mais criterios
       FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 20)
@@ -89,7 +89,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_didatica = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois critérios da prova didática pedagógica."]})
+      expect(area.errors.messages).to eq(base: ["Você deve preencher pelo menos dois critérios da prova didática pedagógica."])
     end
 
     it "soma dos criterios deve ser 100" do
@@ -100,7 +100,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_didatica = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática pedagógica não é igual 100 pontos."]})
+      expect(area.errors.messages).to eq(base: ["A soma dos critérios da prova didática pedagógica não é igual 100 pontos."])
 
       # Cria mais criterios
       FactoryGirl.create(:criterio, :didatica, area_id: area.id, valor: 40)
@@ -115,7 +115,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_procedimental = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois critérios da prova didática procedimental."]})
+      expect(area.errors.messages).to eq(base: ["Você deve preencher pelo menos dois critérios da prova didática procedimental."])
     end
 
     it "soma dos criterios deve ser 100" do
@@ -126,7 +126,7 @@ describe Area do
       area.tipo = 'processo'
       area.prova_procedimental = true
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma dos critérios da prova didática procedimental não é igual 100 pontos."]})
+      expect(area.errors.messages).to eq(base: ["A soma dos critérios da prova didática procedimental não é igual 100 pontos."])
 
       # Cria mais criterios
       FactoryGirl.create(:criterio, :procedimental, area_id: area.id, valor: 45)
@@ -139,8 +139,8 @@ describe Area do
     it "pelo menos dois itens de titulos" do
       area.proximo = "inicial"
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.",
-                                                 "Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
+      expect(area.errors.messages).to eq(base: ["Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.",
+                                                "Você deve preencher pelo menos dois itens de produção científica e/ou artística."])
     end
 
     it "soma dos titulos deve ser igual ao maximo" do
@@ -154,15 +154,15 @@ describe Area do
       area.proximo = "inicial"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma da pontuação das atividades didáticas e/ou profissionais não é igual ao valor máximo.",
-                                                 "Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
+      expect(area.errors.messages).to eq(base: ["A soma da pontuação das atividades didáticas e/ou profissionais não é igual ao valor máximo.",
+                                                "Você deve preencher pelo menos dois itens de produção científica e/ou artística."])
 
       # Cria mais atividades
       FactoryGirl.create(:titulo, :atividades, area_id: area.id, valor: 0.2, maximo: 1)
       # A associação fica em cache, então precisa resetar
       area.titulos.reset
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de produção científica e/ou artística."]})
+      expect(area.errors.messages).to eq(base: ["Você deve preencher pelo menos dois itens de produção científica e/ou artística."])
 
       # Precisa de pelo menos dois itens de produção
       FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 5, maximo: 40)
@@ -170,7 +170,7 @@ describe Area do
       area.proximo = "inicial"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo."]})
+      expect(area.errors.messages).to eq(base: ["A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo."])
 
       # Cria mais itens de produção
       FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 0.5, maximo: 10)
@@ -190,8 +190,8 @@ describe Area do
       area.proximo = "inicial"
       area.titulos.reload
       area.valid?
-      expect(area.errors.messages).to eq({base: ["Você deve preencher pelo menos dois itens de produção científica e/ou artística.",
-                                                 "A proporção entre a pontuação individual e a pontuação máxima não está correta."]})
+      expect(area.errors.messages).to eq(base: ["Você deve preencher pelo menos dois itens de produção científica e/ou artística.",
+                                                "A proporção entre a pontuação individual e a pontuação máxima não está correta."])
     end
   end
 
@@ -263,5 +263,4 @@ describe Area do
       expect(area.vagas_pcd).to eq 6
     end
   end
-
 end

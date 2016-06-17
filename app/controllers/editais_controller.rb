@@ -15,10 +15,10 @@ class EditaisController < ApplicationController
   def create
     @edital = Edital.new(edital_params)
     if @edital.save
-      flash[:success] = "Criado com successo."
+      flash[:success] = 'Criado com successo.'
       redirect_to edit_edital_path(@edital)
     else
-      flash[:danger] = "Falha no cadastro."
+      flash[:danger] = 'Falha no cadastro.'
       render :new
     end
   end
@@ -38,14 +38,14 @@ class EditaisController < ApplicationController
     end
 
     # Remove as áreas que foram desmarcadas
-    difference = @edital.areas.pluck(:id) - ( params[:areas] ? params[:areas].map(&:to_i) : [] )
+    difference = @edital.areas.pluck(:id) - (params[:areas] ? params[:areas].map(&:to_i) : [])
     Area.where(id: difference).update_all(edital_id: nil)
 
     if @edital.update_attributes(edital_params)
-      flash[:success] = "Salvo com sucesso!"
+      flash[:success] = 'Salvo com sucesso!'
       redirect_to edit_edital_path(@edital)
     else
-      flash[:danger] = "Falha ao salvar."
+      flash[:danger] = 'Falha ao salvar.'
       render :edit
     end
   end
@@ -53,10 +53,10 @@ class EditaisController < ApplicationController
   def destroy
     @edital = Edital.find(params[:id])
     if @edital.destroy
-      flash[:success] = "Edital excluído."
+      flash[:success] = 'Edital excluído.'
       redirect_to editais_path
     else
-      flash[:warning] = "Falha na exclusão."
+      flash[:warning] = 'Falha na exclusão.'
       render :edit
     end
   end
@@ -74,13 +74,13 @@ class EditaisController < ApplicationController
         doc = DocxReplace::Doc.new("#{Rails.root}/lib/docx_templates/my_template.docx", "#{Rails.root}/tmp")
 
         # Replace
-        doc.replace("$numero$", @edital.numero)
-        doc.replace("$data$", @edital.data)
-        doc.replace("$tipo$", @edital.tipo == 'concurso' ? "CONCURSO PÚBLICO" : "PROCESSO SELETIVO SIMPLIFICADO")
-        doc.replace("$area$", @edital.areas.first.nome)
-        doc.replace("$vagas$", @edital.areas.first.vagas)
-        doc.replace("$qualificacao$", @edital.areas.first.qualificacao)
-        doc.replace("$regime$", @edital.areas.first.regime)
+        doc.replace('$numero$', @edital.numero)
+        doc.replace('$data$', @edital.data)
+        doc.replace('$tipo$', @edital.tipo == 'concurso' ? 'CONCURSO PÚBLICO' : 'PROCESSO SELETIVO SIMPLIFICADO')
+        doc.replace('$area$', @edital.areas.first.nome)
+        doc.replace('$vagas$', @edital.areas.first.vagas)
+        doc.replace('$qualificacao$', @edital.areas.first.qualificacao)
+        doc.replace('$regime$', @edital.areas.first.regime)
 
         # Write the document back to a temporary file
         tmp_file = Tempfile.new('word_template', "#{Rails.root}/tmp")
@@ -105,5 +105,4 @@ class EditaisController < ApplicationController
     end
     edital_params
   end
-
 end

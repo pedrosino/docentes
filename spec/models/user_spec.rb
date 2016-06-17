@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe User do
   it "Factory valida" do
-    expect(FactoryGirl.create :user).to be_valid
+    expect(FactoryGirl.create(:user)).to be_valid
   end
 
   describe "cria usuarios" do
@@ -28,5 +28,4 @@ describe User do
       expect(user_u.tipo).to eq 'u'
     end
   end
-
 end

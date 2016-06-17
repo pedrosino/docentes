@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Vaga do
   it "Factory valida" do
-    expect(FactoryGirl.create :vaga).to be_valid
+    expect(FactoryGirl.create(:vaga)).to be_valid
   end
 
   describe "criando vaga" do
@@ -16,5 +16,4 @@ describe Vaga do
       expect(vaga).to be_valid
     end
   end
-
 end

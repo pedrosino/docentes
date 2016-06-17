@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe AreasController do
-
   context "nao esta logado" do
     it "redireciona para login" do
       get :index
@@ -74,5 +73,4 @@ describe AreasController do
       end
     end
   end
-
 end

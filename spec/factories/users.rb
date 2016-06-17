@@ -30,6 +30,5 @@ FactoryGirl.define do
       email { "#{sigla_unidade.downcase}@ufu.br" }
       tipo 'u'
     end
-
   end
 end

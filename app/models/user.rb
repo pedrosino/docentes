@@ -17,18 +17,18 @@ class User < ActiveRecord::Base
   end
 
   def pode_publicar_normas?
-    tipo == 'p' || tipo == 'u'|| admin?
+    tipo == 'p' || tipo == 'u' || admin?
   end
 
   def pode_publicar_resultado?
-    tipo == 'p' || tipo = 'd'|| admin?
+    tipo == 'p' || tipo == 'd' || admin?
   end
 
   def pode_criar_area?
-    tipo == 'p' || tipo == 'u'|| admin?
+    tipo == 'p' || tipo == 'u' || admin?
   end
 
   def pode_criar_unidade?
-    tipo == 'p'|| admin?
+    tipo == 'p' || admin?
   end
 end

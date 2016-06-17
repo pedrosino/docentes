@@ -14,5 +14,4 @@ FactoryGirl.define do
   trait :substituto do
     tipo { vagas_substituto.sample }
   end
-
 end
