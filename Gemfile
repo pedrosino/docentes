@@ -65,9 +65,13 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'rubocop', '0.36', require: false
+  gem 'pre-commit'
 end
 
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'rake'
 end
