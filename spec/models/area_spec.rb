@@ -1,8 +1,40 @@
 require 'rails_helper'
 
 describe Area do
-  it "Factory valida" do
-    expect(FactoryGirl.create(:area)).to be_valid
+  describe "Factories validas" do
+    it "Factory basica" do
+      expect(FactoryGirl.create(:area)).to be_valid
+    end
+
+    it "Trait :escrita_ok" do
+      area = FactoryGirl.create(:area, :escrita_ok)
+      area.proximo = 'didatica'
+      expect(area).to be_valid
+    end
+
+    it "Trait :didatica_ok" do
+      area = FactoryGirl.create(:area, :didatica_ok)
+      area.proximo = 'titulos'
+      expect(area).to be_valid
+    end
+
+    it "Trait :titulos_ok" do
+      area = FactoryGirl.create(:area, :titulos_ok)
+      area.proximo = 'inicial'
+      expect(area).to be_valid
+    end
+
+    it "Trait :verificada" do
+      area = FactoryGirl.create(:area, :verificada)
+      area.confirmada = true
+      expect(area).to be_valid
+    end
+
+    it "Trait :enviada" do
+      area = FactoryGirl.create(:area, :enviada)
+      debugger
+      expect(area).to be_valid
+    end
   end
 
   let(:area) { FactoryGirl.create :area }

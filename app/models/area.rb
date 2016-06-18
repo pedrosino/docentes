@@ -128,18 +128,18 @@ class Area < ActiveRecord::Base
   end
 
   def maximo_atividades
-    if tipo == 'concurso' && unidade && ['ESEBA', 'ESTES'].exclude?(unidade.sigla)
-      20
-    else
+    if tipo == 'processo' || (unidade && ['ESEBA', 'ESTES'].include?(unidade.sigla))
       45
+    else
+      20
     end
   end
 
   def maximo_producao
-    if tipo == 'concurso' && unidade && ['ESEBA', 'ESTES'].exclude?(unidade.sigla)
-      80
-    else
+    if tipo == 'processo' || (unidade && ['ESEBA', 'ESTES'].include?(unidade.sigla))
       45
+    else
+      80
     end
   end
 
