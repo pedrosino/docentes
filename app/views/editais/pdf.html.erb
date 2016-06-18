@@ -286,10 +286,10 @@
         <% numero = 1 %>
         <% @edital.areas.first.criterios.select{ |c| c.tipo_prova == 'escrita' }.each do |criterio| %>
           <tr>
-            <td><%= numero %></td>
-            <td><%= criterio.nome %></td>
-            <td><%= criterio.descricao %></td>
-            <td><%= criterio.valor %></td>
+            <td class="numero"><%= numero %></td>
+            <td class="criterio"><%= criterio.nome %></td>
+            <td class="descricao"><%= criterio.descricao %></td>
+            <td class="valor"><%= criterio.valor %></td>
           </tr>
 
           <% numero += 1 %>

@@ -170,6 +170,22 @@ table.index.editais {
     padding: 5px;
     text-align: center;
   }
+
+  td.numero {
+    width: 10%;
+  }
+
+  td.criterio {
+    width: 30%;
+  }
+
+  td.descricao {
+    width: 45%;
+  }
+
+  td.valor {
+    width: 15%;
+  }
 }
 
 .titulos {
@@ -186,11 +202,11 @@ table.index.editais {
   }
 
   td.item {
-    width: 10%;
+    width: 8%;
   }
 
   td.descricao {
-    width: 50%;
+    width: 57%;
   }
 
   td.pontuacao {
@@ -198,6 +214,6 @@ table.index.editais {
   }
 
   td.maximo {
-    width: 20%
+    width: 15%
   }
 }
