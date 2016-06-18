@@ -15,7 +15,7 @@
 
   <tbody>
     <% vagas.each.sort_by{ |vaga| vaga[:unidade_id] }.each do |vaga| %>
-      <tr class="<%= classe_situacao[vaga.situacao] %>">
+      <tr class="<%= classe_situacao_vaga[vaga.situacao] %>">
         <td class="unidade"><%= vaga.unidade.sigla %></td>
         <td class="nome"><%= vaga.nome %></td>
         <td class="codigo"><%= vaga.codigo %></td>
@@ -26,7 +26,7 @@
             <%=l vaga.data_fim, format: :default %>
           <% end %>
         </td>
-        <td class="situacao"><%= glyphicon("#{icones_situacao[vaga.situacao]}") %> <%= Vaga::SITUACOES[vaga.situacao] %></td>
+        <td class="situacao"><%= glyphicon("#{icones_situacao_vaga[vaga.situacao]}") %> <%= Vaga::SITUACOES[vaga.situacao] %></td>
         <td class="concurso">
           <% if vaga.area %>
             <% if vaga.area.edital %>

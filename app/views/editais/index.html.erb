@@ -17,13 +17,13 @@
 
         <tbody>
         <% @editais.each do |edital| %>
-          <tr>
+          <tr class="<%= classe_situacao_edital[edital.situacao] %>">
             <td class="numero"><%= edital.numero %></td>
             <td class="tipo"><%= edital.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
             <td class="areas">
               <%= edital.areas.map(&:nome).to_sentence if edital.areas %>
             </td>
-            <td class="situacao"></td>
+            <td class="situacao"><%= icon("#{icones_situacao_edital[edital.situacao]}") %> <%= Edital::SITUACOES[edital.situacao] %></td>
             <td>
               <%= link_to edit_edital_path(edital), class: "btn btn-primary btn-sm" do %>
                 <%= glyphicon("pencil") %> Editar

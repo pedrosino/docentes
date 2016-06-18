@@ -54,7 +54,11 @@ Style/Documentation:
 # Cop supports --auto-correct.
 Style/EmptyLines:
   Exclude:
-    - 'db/migrate/20160514125645_devise_create_users.rb'
+    - 'db/**/*'
+
+Style/EmptyLinesAroundBlockBody:
+  Exclude:
+    - 'db/**/*'
 
 # Offense count: 7
 # Cop supports --auto-correct.

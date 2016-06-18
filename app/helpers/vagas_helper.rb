@@ -1,5 +1,5 @@
 module VagasHelper
-  def icones_situacao
+  def icones_situacao_vaga
     {
       'a' => 'ok-sign',
       'c' => 'exclamation-sign',
@@ -9,7 +9,7 @@ module VagasHelper
     }
   end
 
-  def classe_situacao
+  def classe_situacao_vaga
     {
       'a' => 'alert-success',
       'c' => 'alert-warning',

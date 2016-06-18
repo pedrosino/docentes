@@ -11,17 +11,17 @@ module EditaisHelper
     }[campus]
   end
 
-  def icones_situacao
+  def icones_situacao_edital
     {
       'uni' => 'envelope-o',
       'apr' => 'check',
       'pro' => 'external-link-square',
-      'pub' => 'file-o',
-      'enc' => 'ok-sign'
+      'pub' => 'newspaper-o',
+      'enc' => 'check-square-o'
     }
   end
 
-  def classe_situacao
+  def classe_situacao_edital
     {
       'uni' => 'alert-warning',
       'apr' => 'alert-warning',
