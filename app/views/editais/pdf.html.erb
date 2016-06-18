@@ -171,13 +171,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Adjunto-A</td>
-        <td>Doutorado</td>
-        <td>R$ 4.014,00</td>
-        <td>R$ 4.625,50</td>
-        <td>R$ 8.639,50</td>
-      </tr>
+      <% regime = @edital.areas.first.regime %>
+      <% (@edital.titulacao..4).to_a.each do |titulacao| %>
+        <tr>
+          <td><%= classes_superior[titulacao] %></td>
+          <td><%= titulos[titulacao] %></td>
+          <td><%= number_to_currency(vencimento_basico(regime)) %></td>
+          <td><%= retribuicao_titulacao(regime, titulacao) == 0 ? '-' : number_to_currency(retribuicao_titulacao(regime, titulacao)) %></td>
+          <td><%= number_to_currency(vencimento_basico(regime) + retribuicao_titulacao(regime, titulacao)) %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 

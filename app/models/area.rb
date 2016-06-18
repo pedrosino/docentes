@@ -202,4 +202,34 @@ class Area < ActiveRecord::Base
     q_array << 'Doutorado em ' + descricao_doutorado if doutorado
     q_array.join(' com ')
   end
+
+  def titulacao_minima
+    if doutorado
+      # Procura se tem prorrogação
+      if prorrogar
+        return 3 if qualif_prorrogar.include? "Mestrado"
+        return 2 if qualif_prorrogar.include? "Especialização"
+        return 0 if qualif_prorrogar.include? "Graduação"
+      end
+      return 4
+    end
+
+    if mestrado
+      # Procura se tem prorrogação
+      if prorrogar
+        return 2 if qualif_prorrogar.include? "Especialização"
+        return 0 if qualif_prorrogar.include? "Graduação"
+      end
+      return 3
+    end
+
+    if especializacao
+      if prorrogar
+        return 0 if qualif_prorrogar.include? "Graduação"
+      end
+      return 2
+    end
+
+    return 0 if graduacao
+  end
 end

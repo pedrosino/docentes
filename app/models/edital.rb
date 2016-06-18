@@ -31,4 +31,8 @@ class Edital < ActiveRecord::Base
     'pub' => 'Publicado',
     'enc' => 'Encerrado'
   }.freeze
+
+  def titulacao
+    areas.map(&:titulacao_minima).min
+  end
 end
