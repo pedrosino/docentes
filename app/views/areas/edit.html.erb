@@ -47,9 +47,27 @@
             <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
             <%= f.input :curso, label: "Curso (OPCIONAL)" %>
             <%= f.input :campus, required: true, collection: lista_campus %>
-            <%= f.input :qualificacao, required: true, label: "Qualificação mínima exigida" %>
+            <div class="qualificacao">
+              <strong>Qualificação Mínima Exigida</strong>
+              <div>
+                <%= f.input :graduacao, label: "Graduação" %>
+                <%= f.input :descricao_graduacao, label: "em" %>
+              </div>
+              <div>
+                <%= f.input :especializacao, label: "Especialização" %>
+                <%= f.input :descricao_especializacao, label: "em" %>
+              </div>
+              <div>
+                <%= f.input :mestrado %>
+                <%= f.input :descricao_mestrado, label: "em" %>
+              </div>
+              <div>
+                <%= f.input :doutorado %>
+                <%= f.input :descricao_doutorado, label: "em" %>
+              </div>
+            </div>
             <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
-            <%= f.input :regime, required: true, as: :select, collection: regimes.map{|regime| [regime[1], regime[0]]} %>
+            <%= f.input :regime, label: "Regime de Trabalho", required: true, as: :select, collection: regimes.map{|regime| [regime[1], regime[0]]} %>
             <div id="aviso-regime"></div>
             <%= f.input :vagas, as: :string, required: true, wrapper_html: { class: "vagas" } %>
             <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>

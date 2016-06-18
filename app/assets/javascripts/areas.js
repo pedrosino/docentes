@@ -16,6 +16,16 @@ function ativa_procedimental() {
   }
 }
 
+function mostra_qualificacao($qual) {
+  var nome = ($qual.prop('id').split('_'))[1];
+  $text_area = $("#area_descricao_" + nome);
+  if ($qual.is(":checked")) {
+    $text_area.parent("div").show();
+  } else {
+    $text_area.parent("div").hide();
+  }
+}
+
 function verifica_soma($objeto, $campo, $total, $tipo) {
   var soma = 0;
   var contar = 0;
@@ -284,10 +294,24 @@ onPage('areas edit, areas update', function(){
   //---------------------------------------------------------
   //------------- Informações básicas da área ---------------
   //---------------------------------------------------------
+  // Esconde caixas da qualificação
+  $(".qualificacao").find('textarea').each(function() {
+    $(this).parent("div").hide();
+  });
+
+  // Percorre checkboxes e mostra textarea se necessário
+  $(".qualificacao").find('input.boolean').each(function() {
+    mostra_qualificacao($(this));
+  });
+
+  $(".qualificacao").find('input.boolean').change(function() {
+    mostra_qualificacao($(this));
+  });
+
   var qual = $("#area_qualif_prorrogar").parent("div");
   qual.hide();
 
-  $("#area_prorrogar").change(function(){
+  $("#area_prorrogar").change(function() {
     if($(this).is(":checked")) {
       qual.show();
       qual.prop("disabled", "");
@@ -296,7 +320,7 @@ onPage('areas edit, areas update', function(){
     }
   });
 
-  $("#area_regime").on('change', function(){
+  $("#area_regime").on('change', function() {
     $tipo = $("#area_tipo").val();
     $regime = $(this).val();
     if ($tipo == 'concurso' && $regime == '40') {
