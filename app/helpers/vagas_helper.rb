@@ -4,7 +4,6 @@ module VagasHelper
       'a' => 'ok-sign',
       'c' => 'exclamation-sign',
       'n' => 'minus-sign',
-      'o' => 'remove-sign',
       'r' => 'share',
       's' => 'remove-sign'
     }
@@ -12,10 +11,9 @@ module VagasHelper
 
   def classe_situacao
     {
-      'a' => 'alert-verde',
+      'a' => 'alert-success',
       'c' => 'alert-warning',
       'n' => 'alert-danger',
-      'o' => 'alert-danger',
       'r' => 'alert-info',
       's' => 'alert-danger'
     }

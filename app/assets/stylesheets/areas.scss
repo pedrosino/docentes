@@ -2,6 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+table.index.areas {
+  td.area,
+  td.subarea {
+    width: 18%;
+  }
+
+  td.unidade {
+    width: 7%;
+  }
+
+  td.tipo {
+    width: 15%;
+  }
+
+  td.situacao {
+    width: 12%;
+  }
+}
+
 .table.criterios,
 .table.titulos {
   border: none;

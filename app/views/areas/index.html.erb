@@ -1,11 +1,10 @@
-<!--div class="container"-->
-<div class="row">
+<div class="row menu">
   <%= render 'layouts/menu_lateral' %>
-  <div class="col-sm-9 col-md-10">
+  <div class="colunas-menu">
     <h4>Áreas</h4>
 
     <% if @areas != nil %>
-      <table class="table table-condensed index">
+      <table class="table table-condensed index areas">
         <thead>
           <tr>
             <th>Unidade</th>
@@ -19,6 +18,7 @@
 
         <tbody>
         <% @areas.sort_by{ |area| area[:unidade_id] }.each do |area| %>
+          <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == @area.unidade_id %>
           <% if area.confirmada
             mensagem = "Enviada"
             classe = "alert-success"
@@ -36,11 +36,11 @@
               end
             end %>
           <tr class="<%= classe %>">
-            <td><%= area.unidade.sigla %></td>
-            <td><%= area.nome %></td>
-            <td><%= area.subarea %></td>
-            <td><%= area.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
-            <td>
+            <td class="unidade"><%= area.unidade.sigla %></td>
+            <td class="area"><%= area.nome %></td>
+            <td class="area"><%= area.subarea %></td>
+            <td class="tipo"><%= area.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
+            <td class="situacao">
               <span class="<%= icone %>"></span> <%= mensagem %>
             </td>
             <td>
@@ -51,7 +51,7 @@
                     <%= glyphicon("pencil") %></span> Editar
                   <% end %>
                 <% end %>
-                <% if mensagem == "Verificada" && current_user.unidade_id == area.unidade_id %>
+                <% if mensagem == "Verificada" && (@tem_acesso || current_user.pode_criar_edital?) %>
                   <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-success btn-sm", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
                     <%= glyphicon("share") %> Enviar
                   <% end %>

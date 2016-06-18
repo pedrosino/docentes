@@ -108,17 +108,73 @@ table.table.table-condensed.index {
 .list-group.menu {
   margin: 0;
   left: -30px;
+
   .list-group-item {
+    padding: 8px;
     background-color: #eee;
     color: #000;
   }
   .list-group-item:hover {
     background-color: #ccc;
   }
+
+  .icone {
+    width: 20px;
+    text-align: right;
+    display: inline-block;
+  }
+  .texto {
+    margin-left: 10px;
+  }
+
+  .pequeno {
+    font-size: 13px;
+    padding-left: 20px;
+  }
 }
 
-.alert-verde {
-  background-color: #CBF2BB;
-  color: #3C763D;
-  border-color: #D6E9C6;
+.row.menu {
+  margin: 0;
+}
+
+.coluna-menu {
+  padding: 0;
+  float: left;
+  width: 100%;
+}
+
+.colunas-menu {
+  padding: 10px;
+  float: left;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .coluna-menu {
+    width: 18%;
+  }
+
+  .colunas-menu {
+    width: 82%;
+  }
+}
+
+@media (min-width: 992px) {
+  .coluna-menu {
+    width: 18%;
+  }
+
+  .colunas-menu {
+    width: 82%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .coluna-menu {
+    width: 18%;
+  }
+
+  .colunas-menu {
+    width: 82%;
+  }
 }

@@ -1,17 +1,16 @@
-<!--div class="container"-->
-<div class="row">
+<div class="row menu">
   <%= render 'layouts/menu_lateral' %>
-  <div class="col-sm-9 col-md-10">
+  <div class="colunas-menu">
     <h4>Editais</h4>
 
     <% if @editais != nil %>
-      <table class="table table-condensed index">
+      <table class="table table-condensed index editais">
         <thead>
           <tr>
             <th>Número</th>
             <th>Tipo</th>
             <th>Área(s)</th>
-            <th>Publicação</th>
+            <th>Situação</th>
             <th></th>
           </tr>
         </thead>
@@ -19,18 +18,18 @@
         <tbody>
         <% @editais.each do |edital| %>
           <tr>
-            <td><%= edital.numero %></td>
-            <td><%= edital.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
-            <td>
+            <td class="numero"><%= edital.numero %></td>
+            <td class="tipo"><%= edital.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
+            <td class="areas">
               <%= edital.areas.map(&:nome).to_sentence if edital.areas %>
             </td>
-            <td></td>
+            <td class="situacao"></td>
             <td>
-              <%= link_to edit_edital_path(edital), class: "btn btn-primary" do %>
+              <%= link_to edit_edital_path(edital), class: "btn btn-primary btn-sm" do %>
                 <%= glyphicon("pencil") %> Editar
               <% end %>
-              <%= link_to icon("file-word-o", "Word"), edital_word_path(edital), class: "btn btn-success" %>
-              <%= link_to icon("file-pdf-o", "PDF"), edital_pdf_path(edital), class: "btn btn-warning" %>
+              <%= link_to icon("file-word-o", "Word"), edital_word_path(edital), class: "btn btn-success btn-sm" %>
+              <%= link_to icon("file-pdf-o", "PDF"), edital_pdf_path(edital), class: "btn btn-warning btn-sm" %>
             </td>
           </tr>
         <% end %>

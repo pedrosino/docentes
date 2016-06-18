@@ -1,26 +1,26 @@
 <!-- From https://github.com/cubing/worldcubeassociation.org/blob/master/WcaOnRails/app/views/admin/_nav.html.erb-->
-<div class="col-sm-3 col-md-2">
+<div class="coluna-menu">
   <div class="list-group menu">
     <% items = [
       { text: "Solicitações de edital", path: "", icon: "bell" },
-      { text: "Minhas solicitações", path: areas_path, icon: "bell-o" },
-      { text: "Nova solicitação", path: new_area_path, icon: "sticky-note-o" },
+      { text: "Minhas solicitações", path: areas_path, icon: "bell-o", tamanho: "pequeno" },
+      { text: "Nova solicitação", path: new_area_path, icon: "sticky-note-o", tamanho: "pequeno" },
       { text: "Normas complementares", path: "", icon: "newspaper-o" },
       { text: "Comissão Julgadora", path: "", icon: "group" },
-      { text: "Datas de prova", path: "", icon: "calendar" }
+      { text: "Cronograma", path: "", icon: "calendar" }
     ] %>
     <% if current_user.pode_criar_edital? %>
       <% items = items | [
         { text: "Editais", path: editais_path,  icon: "file-text-o" },
-        { text: "Novo edital", path: new_edital_path, icon: "file-o" },
+        { text: "Novo edital", path: new_edital_path, icon: "file-o", tamanho: "pequeno" },
         { text: "Vagas", path: vagas_path, icon: "user" },
-        { text: "Nova vaga", path: new_vaga_path, icon: "plus" },
-        { text: "Resultado", path: "", icon: "list-ol" }
+        { text: "Nova vaga", path: new_vaga_path, icon: "user-plus", tamanho: "pequeno" },
+        { text: "Resultados", path: "", icon: "list-ol" }
       ] %>
     <% end %>
     <% items.each do |item| %>
-      <%= link_to item[:path], class: "list-group-item" do %>
-        <%= icon("#{item[:icon]} fa-lg") %> <%= item[:text] %>
+      <%= link_to item[:path], class: "list-group-item #{item[:tamanho]}" do %>
+        <span class="icone"><%= icon("#{item[:icon]} fa-lg") %></span><span class="texto"><%= item[:text] %></span>
       <% end %>
     <% end %>
   </div>

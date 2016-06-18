@@ -1,18 +1,21 @@
-<div class="container">
-  <h4>Vagas abertas</h4>
+<div class="row menu">
+  <%= render 'layouts/menu_lateral' %>
+  <div class="colunas-menu">
+    <h4>Vagas abertas</h4>
 
-  <% if @vagas_abertas.length > 0 %>
-    <%= render 'index_table', vagas: @vagas_abertas %>
-  <% end %>
+    <% if @vagas_abertas.length > 0 %>
+      <%= render 'index_table', vagas: @vagas_abertas %>
+    <% end %>
 
-  <br />
-  <h4>Vagas ocupadas</h4>
+    <br />
+    <h4>Vagas ocupadas</h4>
 
-  <% if @vagas_ocupadas.length > 0 %>
-    <%= render 'index_table', vagas: @vagas_ocupadas %>
-  <% end %>
+    <% if @vagas_ocupadas.length > 0 %>
+      <%= render 'index_table', vagas: @vagas_ocupadas %>
+    <% end %>
 
-  <%= link_to new_vaga_path, class: "btn btn-success" do %>
-    <%= glyphicon("plus") %> Nova vaga
-  <% end %>
+    <%= link_to new_vaga_path, class: "btn btn-success" do %>
+      <%= glyphicon("plus") %> Nova vaga
+    <% end %>
+  </div>
 </div>

@@ -2,6 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+table.index.editais {
+  td.numero {
+    width: 7%;
+  }
+
+  td.tipo {
+    width: 15%;
+  }
+
+  td.areas {
+    width: 35%;
+  }
+
+  td.situacao {
+    width: 15%;
+  }
+}
+
 .edital {
   /*width: 17cm;*/
   width: 21cm;
