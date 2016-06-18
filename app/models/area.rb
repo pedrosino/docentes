@@ -63,6 +63,21 @@ class Area < ActiveRecord::Base
 
   validate :especificacao_qualificacao
   def especificacao_qualificacao
+    if graduacao && descricao_graduacao == ''
+      errors.add(:descricao_graduacao, "deve ser preenchida")
+    end
+
+    if especializacao && descricao_especializacao == ''
+      errors.add(:descricao_especializacao, "deve ser preenchida")
+    end
+
+    if mestrado && descricao_mestrado == ''
+      errors.add(:descricao_mestrado, "deve ser preenchida")
+    end
+
+    if doutorado && descricao_doutorado == ''
+      errors.add(:descricao_doutorado, "deve ser preenchida")
+    end
   end
 
   validate :concurso_tem_prova_didatica, if: -> { confirmada || proximo == 'titulos' }
