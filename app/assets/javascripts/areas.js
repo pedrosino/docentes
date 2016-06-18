@@ -25,7 +25,8 @@ function verifica_soma($objeto, $campo, $total, $tipo) {
     var destroy = $("input[name='area[" + $tipo + "_attributes][" + numero + "][_destroy]']").val();
     // destroy vem como string "false" ou "1"
     if (destroy == "false") {
-      soma += parseFloat($(this).val());
+      // troca virgula por ponto, se houver
+      soma += parseFloat($(this).val().replace(',','.'));
       contar += 1;
     }
   });
@@ -37,8 +38,9 @@ function verifica_soma($objeto, $campo, $total, $tipo) {
 
 function verifica_proporcao($objeto) {
   var numero = ($objeto.prop('id').split('_'))[3];
-  $maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]']").val();
-  $individual = $("input[name*='[titulos_attributes]["+numero+"][valor]']").val();
+  // troca virgula por ponto, se houver
+  $maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]']").val().replace(',','.');
+  $individual = $("input[name*='[titulos_attributes]["+numero+"][valor]']").val().replace(',','.');
   $correto = (($maximo % $individual) == 0);
   return $correto;
 }
