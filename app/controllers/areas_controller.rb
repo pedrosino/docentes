@@ -88,6 +88,13 @@ class AreasController < ApplicationController
 
     area_params[:confirmada] = true if params[:commit] == 'Confirm'
 
+    # Se o usuário usou vírgula, temos que trocar por ponto decimal
+    if area_params[:criterios_attributes].length > 0
+      area_params[:criterios_attributes].each do |criterio|
+        criterio[1][:valor] = criterio[1][:valor].sub(',', '.')
+      end
+    end
+
     secao = params[:secao]
     case secao
     when 'inicial'

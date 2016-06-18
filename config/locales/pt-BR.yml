@@ -118,7 +118,7 @@ pt-BR:
       decimal_units:
         format: "%n %u"
         units:
-          unit: ""     
+          unit: ""
           thousand: "mil"
           million:
             one: milhão
