@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618175021) do
+ActiveRecord::Schema.define(version: 20160618191231) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",               limit: 4
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160618175021) do
     t.boolean  "doutorado"
     t.text     "descricao_doutorado",      limit: 65535
     t.text     "observacao",               limit: 65535
+    t.boolean  "mantem_qualificacao"
   end
 
   add_index "areas", ["unidade_id"], name: "fk_rails_7e4c0346f5", using: :btree
