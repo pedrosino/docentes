@@ -82,7 +82,11 @@ class AreasController < ApplicationController
   end
 
   def area_params
-    area_params = params.require(:area).permit(:unidade_id, :tipo_vaga, :nome_vaga, :nome, :subarea, :curso, :tipo, :campus, :graduacao, :descricao_graduacao, :especializacao, :descricao_especializacao, :mestrado, :descricao_mestrado, :doutorado, :descricao_doutorado, :disciplinas, :regime, :vagas, :prorrogar, :qualif_prorrogar, :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :min_procedimental, :max_procedimental, :coautoria, :confirmada,
+    area_params = params.require(:area).permit(:unidade_id, :tipo_vaga, :nome_vaga, :nome, :subarea, :curso, :tipo,
+      :campus, :graduacao, :descricao_graduacao, :especializacao, :descricao_especializacao, :mestrado, :descricao_mestrado,
+      :doutorado, :descricao_doutorado, :disciplinas, :regime, :vagas, :prorrogar, :mantem_qualificacao, :qualif_prorrogar,
+      :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :min_procedimental, :max_procedimental,
+      :coautoria, :confirmada,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy],
       titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :_destroy])
 

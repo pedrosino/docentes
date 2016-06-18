@@ -38,6 +38,14 @@ function monta_qualificacao() {
   $("#area_qualif_prorrogar").val($.trim(completa.substr(0, completa.length-5)));
 }
 
+function mostra_prorrogacao() {
+  if($("#area_prorrogar").is(":checked") && $("#area_mantem_qualificacao_false").is(":checked")) {
+    $("#area_qualif_prorrogar").parent("div").show();
+  } else {
+    $("#area_qualif_prorrogar").parent("div").hide();
+  }
+}
+
 function verifica_soma($objeto, $campo, $total, $tipo) {
   var soma = 0;
   var contar = 0;
@@ -325,18 +333,15 @@ onPage('areas edit, areas update', function(){
     monta_qualificacao();
   })
 
-  var qual = $("#area_qualif_prorrogar").parent("div");
-  if (!$("#area_prorrogar").is(":checked")) {
-    qual.hide();
-  }
+  // Mostra caixa da prorrogação
+  mostra_prorrogacao();
 
   $("#area_prorrogar").change(function() {
-    if($(this).is(":checked")) {
-      qual.show();
-      qual.prop("disabled", "");
-    } else {
-      qual.hide();
-    }
+    mostra_prorrogacao();
+  });
+
+  $(".area_mantem_qualificacao").click(function() {
+    mostra_prorrogacao();
   });
 
   $("#area_regime").on('change', function() {

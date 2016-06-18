@@ -71,8 +71,8 @@
             <div id="aviso-regime"></div>
             <%= f.input :vagas, as: :string, required: true, wrapper_html: { class: "vagas" } %>
             <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
-            <%= radio_button_tag %>
-            <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
+            <%= f.input :mantem_qualificacao, as: :radio_buttons, collection: [['Mantendo a mesma qualificação', true],['Alterando a qualificação para:', false]], label: false %>
+            <%= f.input :qualif_prorrogar, label: false %>
           </div>
 
           <button type="submit" class="btn btn-success" id="salvar-inicial"><%= glyphicon("ok") %> Salvar</button>
