@@ -39,10 +39,15 @@ function monta_qualificacao() {
 }
 
 function mostra_prorrogacao() {
-  if($("#area_prorrogar").is(":checked") && $("#area_mantem_qualificacao_false").is(":checked")) {
-    $("#area_qualif_prorrogar").parent("div").show();
+  if($("#area_prorrogar").is(":checked")) {
+    $("div.radio_buttons.area_mantem_qualificacao").show();
+    if ($("#area_mantem_qualificacao_false").is(":checked")) {
+      $("#area_qualif_prorrogar").parent("div").show();
+    } else {
+      $("#area_qualif_prorrogar").parent("div").hide();
+    }
   } else {
-    $("#area_qualif_prorrogar").parent("div").hide();
+    $("div.radio_buttons.area_mantem_qualificacao").hide();
   }
 }
 

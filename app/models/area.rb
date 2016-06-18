@@ -193,4 +193,13 @@ class Area < ActiveRecord::Base
   def titulos_do_tipo(tipo)
     titulos.select { |t| t.tipo == tipo }.reject(&:_destroy)
   end
+
+  def qualificacao
+    q_array = []
+    q_array << 'Graduação em ' + descricao_graduacao if graduacao
+    q_array << 'Especialização em ' + descricao_especializacao if especializacao
+    q_array << 'Mestrado em ' + descricao_mestrado if mestrado
+    q_array << 'Doutorado em ' + descricao_doutorado if doutorado
+    q_array.join(' com ')
+  end
 end
