@@ -64,19 +64,19 @@ class Area < ActiveRecord::Base
   validate :especificacao_qualificacao
   def especificacao_qualificacao
     if graduacao && descricao_graduacao == ''
-      errors.add(:descricao_graduacao, "deve ser preenchida")
+      errors.add(:descricao_graduacao, 'deve ser preenchida')
     end
 
     if especializacao && descricao_especializacao == ''
-      errors.add(:descricao_especializacao, "deve ser preenchida")
+      errors.add(:descricao_especializacao, 'deve ser preenchida')
     end
 
     if mestrado && descricao_mestrado == ''
-      errors.add(:descricao_mestrado, "deve ser preenchida")
+      errors.add(:descricao_mestrado, 'deve ser preenchida')
     end
 
     if doutorado && descricao_doutorado == ''
-      errors.add(:descricao_doutorado, "deve ser preenchida")
+      errors.add(:descricao_doutorado, 'deve ser preenchida')
     end
   end
 
@@ -222,7 +222,7 @@ class Area < ActiveRecord::Base
     if doutorado
       # Procura se tem prorrogação
       if prorrogar
-        return 3 if qualif_prorrogar.include? "Mestrado"
+        return 3 if qualif_prorrogar.include? 'Mestrado'
         return 2 if qualif_prorrogar.include? "Especialização"
         return 0 if qualif_prorrogar.include? "Graduação"
       end
@@ -239,9 +239,7 @@ class Area < ActiveRecord::Base
     end
 
     if especializacao
-      if prorrogar
-        return 0 if qualif_prorrogar.include? "Graduação"
-      end
+      return 0 if prorrogar && qualif_prorrogar.include?("Graduação")
       return 2
     end
 
