@@ -53,8 +53,21 @@ FactoryGirl.create(:user_progep)
 User.create(email: 'pedrosg@ufu.br', password: 'pedroufu', password_confirmation: 'pedroufu', nome: 'Pedro', tipo: 'a')
 User.create(email: 'louane@ufu.br', password: 'louaneufu', password_confirmation: 'louaneufu', nome: 'Louane', tipo: 'p')
 
+# Áreas
+3.times do
+  FactoryGirl.create(:area, :processo, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:area, :concurso, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:area, :concurso, :escrita_ok, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:area, :concurso, :didatica_ok, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:area, :concurso, :titulos_ok, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:area, :verificada, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:area, :enviada, unidade_id: Unidade.all.sample.id)
+end
+
+# Editais
+
 # Vagas
 10.times do
-  FactoryGirl.create(:vaga, :efetivo, unidade_id: Unidade.find((1..32).to_a.sample).id)
-  FactoryGirl.create(:vaga, :substituto, unidade_id: Unidade.find((1..32).to_a.sample).id)
+  FactoryGirl.create(:vaga, :efetivo, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:vaga, :substituto, unidade_id: Unidade.all.sample.id)
 end
