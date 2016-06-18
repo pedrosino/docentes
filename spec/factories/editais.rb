@@ -4,5 +4,6 @@ FactoryGirl.define do
     data { Faker::Date.forward(10) }
     comeca_inscricao { 10.days.from_now }
     termina_inscricao { 24.days.from_now }
+    situacao { Edital::SITUACOES.keys.sample }
   end
 end

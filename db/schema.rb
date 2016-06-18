@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614002114) do
+ActiveRecord::Schema.define(version: 20160618123731) do
+
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",          limit: 4
     t.string   "campus",              limit: 255
@@ -65,6 +66,8 @@ ActiveRecord::Schema.define(version: 20160614002114) do
     t.date     "publicacao"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.string   "situacao",          limit: 255
+    t.string   "num_processo",      limit: 255
   end
 
   create_table "titulos", force: :cascade do |t|

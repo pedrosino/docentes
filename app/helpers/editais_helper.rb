@@ -10,4 +10,24 @@ module EditaisHelper
       'Umuarama' => 'Uberlândia'
     }[campus]
   end
+
+  def icones_situacao
+    {
+      'uni' => 'envelope-o',
+      'apr' => 'check',
+      'pro' => 'external-link-square',
+      'pub' => 'file-o',
+      'enc' => 'ok-sign'
+    }
+  end
+
+  def classe_situacao
+    {
+      'uni' => 'alert-warning',
+      'apr' => 'alert-warning',
+      'pro' => 'alert-warning',
+      'pub' => 'alert-info',
+      'enc' => 'alert-success'
+    }
+  end
 end

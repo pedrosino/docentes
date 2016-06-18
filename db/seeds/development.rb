@@ -54,7 +54,7 @@ User.create(email: 'pedrosg@ufu.br', password: 'pedroufu', password_confirmation
 User.create(email: 'louane@ufu.br', password: 'louaneufu', password_confirmation: 'louaneufu', nome: 'Louane', tipo: 'p')
 
 # Áreas
-3.times do
+5.times do
   FactoryGirl.create(:area, :processo, unidade_id: Unidade.all.sample.id)
   FactoryGirl.create(:area, :concurso, unidade_id: Unidade.all.sample.id)
   FactoryGirl.create(:area, :concurso, :escrita_ok, unidade_id: Unidade.all.sample.id)
@@ -65,6 +65,11 @@ User.create(email: 'louane@ufu.br', password: 'louaneufu', password_confirmation
 end
 
 # Editais
+Area.all.select(&:confirmada).each do |area|
+  edital = FactoryGirl.create(:edital, tipo: area.tipo)
+  area.edital_id = edital.id
+  area.save!
+end
 
 # Vagas
 10.times do

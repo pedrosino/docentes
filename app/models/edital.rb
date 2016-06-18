@@ -9,4 +9,26 @@ class Edital < ActiveRecord::Base
       errors.add(:numero, 'deve incluir o ano (p. ex. 2016)')
     end
   end
+
+  validate :situacoes_possiveis
+  def situacoes_possiveis
+    if situacao && !SITUACOES.include?(situacao)
+      errors.add(:situacao, "inválida")
+    end
+  end
+
+  validate :numero_processo
+  def numero_processo
+    if num_processo && num_processo.exclude?('23117')
+      warnings.add(:num_processo, "é de outra Universidade?")
+    end
+  end
+
+  SITUACOES = {
+    'uni' => 'Unidade',
+    'apr' => 'Aprovado',
+    'pro' => 'Procuradoria',
+    'pub' => 'Publicado',
+    'enc' => 'Encerrado'
+  }.freeze
 end
