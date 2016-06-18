@@ -26,6 +26,18 @@ function mostra_qualificacao($qual) {
   }
 }
 
+function monta_qualificacao() {
+  var completa = "";
+  $(".qualificacao").find('input.boolean').each(function() {
+    if ($(this).is(":checked")) {
+      var nome = ($(this).prop('id').split('_'))[1];
+      completa += ($(this).parent("label").html().split('>'))[1] + " em " + $("#area_descricao_" + nome).val() + " com\n";
+    }
+  });
+
+  $("#area_qualif_prorrogar").val($.trim(completa.substr(0, completa.length-5)));
+}
+
 function verifica_soma($objeto, $campo, $total, $tipo) {
   var soma = 0;
   var contar = 0;
@@ -306,10 +318,17 @@ onPage('areas edit, areas update', function(){
 
   $(".qualificacao").find('input.boolean').change(function() {
     mostra_qualificacao($(this));
+    monta_qualificacao();
   });
 
+  $("textarea[name*='area[descricao']").change(function() {
+    monta_qualificacao();
+  })
+
   var qual = $("#area_qualif_prorrogar").parent("div");
-  qual.hide();
+  if (!$("#area_prorrogar").is(":checked")) {
+    qual.hide();
+  }
 
   $("#area_prorrogar").change(function() {
     if($(this).is(":checked")) {

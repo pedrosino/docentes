@@ -51,19 +51,19 @@
               <strong>Qualificação Mínima Exigida</strong>
               <div>
                 <%= f.input :graduacao, label: "Graduação" %>
-                <%= f.input :descricao_graduacao, label: "em" %>
+                <%= f.input :descricao_graduacao, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
               </div>
               <div>
                 <%= f.input :especializacao, label: "Especialização" %>
-                <%= f.input :descricao_especializacao, label: "em" %>
+                <%= f.input :descricao_especializacao, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
               </div>
               <div>
                 <%= f.input :mestrado %>
-                <%= f.input :descricao_mestrado, label: "em" %>
+                <%= f.input :descricao_mestrado, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
               </div>
               <div>
                 <%= f.input :doutorado %>
-                <%= f.input :descricao_doutorado, label: "em" %>
+                <%= f.input :descricao_doutorado, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
               </div>
             </div>
             <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
@@ -71,6 +71,7 @@
             <div id="aviso-regime"></div>
             <%= f.input :vagas, as: :string, required: true, wrapper_html: { class: "vagas" } %>
             <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
+            <%= radio_button_tag %>
             <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
           </div>
 
