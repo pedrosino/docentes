@@ -2,7 +2,6 @@ FactoryGirl.define do
   factory :area do
     nome { Faker::Lorem.sentence(2, true, 2) }
     campus { ['Educação Física', 'Glória', 'Monte Carmelo', 'Patos de Minas', 'Santa Mônica', 'Umuarama'].sample }
-    qualificacao { Faker::Lorem.sentence }
     vagas { Faker::Number.between(1, 5) }
     tipo_vaga { (vagas_substituto + vagas_efetivo).sample }
     nome_vaga { Faker::Name.name }

@@ -24,11 +24,12 @@ describe AreasController do
 
       it "edita uma area" do
         area = FactoryGirl.create(:area)
-        post :update, id: area.id, area: { nome: "Pedro", campus: "Santa Mônica", qualificacao: "Doutorado", regime: "20", vagas: "1" }
+        post :update, id: area.id, area: { nome: "Pedro", campus: "Santa Mônica", doutorado: true, descricao_doutorado: "Doutorado em Física", regime: "20", vagas: "1" }
         area.reload
         expect(area.nome).to eq "Pedro"
         expect(area.campus).to eq "Santa Mônica"
-        expect(area.qualificacao).to eq "Doutorado"
+        expect(area.doutorado).to eq true
+        expect(area.descricao_doutorado).to eq "Doutorado em Física"
         expect(area.regime).to eq "20"
         expect(area.vagas).to eq 1
       end
@@ -57,11 +58,12 @@ describe AreasController do
 
       it "edita uma area" do
         area = FactoryGirl.create(:area)
-        post :update, id: area.id, area: { nome: "Pedro", campus: "Santa Mônica", qualificacao: "Doutorado", regime: "20", vagas: "1" }
+        post :update, id: area.id, area: { nome: "Pedro", campus: "Santa Mônica", doutorado: true, descricao_doutorado: "Doutorado em Física", regime: "20", vagas: "1" }
         area.reload
         expect(area.nome).to eq "Pedro"
         expect(area.campus).to eq "Santa Mônica"
-        expect(area.qualificacao).to eq "Doutorado"
+        expect(area.doutorado).to eq true
+        expect(area.descricao_doutorado).to eq "Doutorado em Física"
         expect(area.regime).to eq "20"
         expect(area.vagas).to eq 1
       end
