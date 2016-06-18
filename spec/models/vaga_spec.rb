@@ -17,7 +17,7 @@ describe Vaga do
     end
 
     it "vaga de substituto nao pode ser ocupada" do
-      vaga = FactoryGirl.create(:vaga, tipo: "Cessão")
+      vaga = FactoryGirl.create(:vaga, :substituto, tipo: "Cessão")
       vaga.situacao = 'o'
       expect(vaga).to be_invalid
       vaga.situacao = 'c'
