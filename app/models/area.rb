@@ -33,7 +33,6 @@ class Area < ActiveRecord::Base
 
   validates :vagas, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :nome, presence: true, if: -> { confirmada || proximo == 'escrita' }
-  validates :qualificacao, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :tipo_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :nome_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
 
@@ -60,6 +59,10 @@ class Area < ActiveRecord::Base
         errors.add(:regime, 'deve ser 20h ou 40h (processo seletivo simplificado)')
       end
     end
+  end
+
+  validate :especificacao_qualificacao
+  def especificacao_qualificacao
   end
 
   validate :concurso_tem_prova_didatica, if: -> { confirmada || proximo == 'titulos' }
