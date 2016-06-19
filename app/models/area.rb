@@ -260,5 +260,5 @@ class Area < ActiveRecord::Base
     return 0 if graduacao
   end
 
-  UNIDADES = ['ano','semestre','aluno','artigo','trabalho','livro','capítulo','tradução','parecer','disciplina','trabalho','resumo','evento','participação','aprovação','banca','orientação','publicação','patente','registro','projeto','premiação','maquete','obra','relatório','direção'].freeze
+  UNIDADES = ['ano', 'semestre', 'aluno', 'artigo', 'trabalho', 'livro', 'capítulo', 'tradução', 'parecer', 'disciplina', 'trabalho', 'resumo', 'evento', 'participação', 'aprovação', 'banca', 'orientação', 'publicação', 'patente', 'registro', 'projeto', 'premiação', 'maquete', 'obra', 'relatório', 'direção'].freeze
 end
