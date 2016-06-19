@@ -387,7 +387,7 @@
     <% end %>
       <tr>
         <th colspan=3>Total máximo</th>
-        <th>20 pontos</th>
+        <th><%= @edital.areas.first.maximo_atividades %> pontos</th>
       </tr>
     </tbody>
   </table>
@@ -404,7 +404,7 @@
     </thead>
     <tbody>
     <% item = 1 %>
-    <% @edital.areas.first.titulos.where(tipo: 'producao').each do |titulo| %>
+    <% @edital.areas.first.titulos.where(tipo: 'producao', prorrogacao: false).each do |titulo| %>
       <tr>
         <td class="item"><%= item %></td>
         <td class="descricao"><%= titulo.descricao %></td>
@@ -415,10 +415,41 @@
     <% end %>
       <tr>
         <th colspan=3>Total máximo</th>
-        <th>80 pontos</th>
+        <th><%= @edital.areas.first.maximo_producao %> pontos</th>
       </tr>
     </tbody>
   </table>
+
+  <% if @edital.areas.first.prorrogar && !@edital.areas.first.mantem_qualificacao %>
+    <p><strong>Tabela 3: Produção Científica e/ou Artística nos últimos 5 anos (exigência inferior a Doutorado)</strong></p>
+    <table class="titulos">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Descrição</th>
+          <th>Pontuação</th>
+          <th>Pontuação máxima</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% item = 1 %>
+      <% @edital.areas.first.titulos.where(tipo: 'producao', prorrogacao: true).each do |titulo| %>
+        <tr>
+          <td class="item"><%= item %></td>
+          <td class="descricao"><%= titulo.descricao %></td>
+          <td class="pontuacao"><%= titulo.valor %> pontos<br />por <%= titulo.unidade_medida %></td>
+          <td class="maximo"><%= titulo.maximo %> pontos</td>
+        </tr>
+        <% item += 1 %>
+      <% end %>
+        <tr>
+          <th colspan=3>Total máximo</th>
+          <th>70 pontos</th>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+
   <p><strong>Observação:</strong> Os trabalhos publicados em coautoria receberão a mesma pontuação dos trabalhos de autoria exclusiva do candidato.</p>
   <br />
   <div class="item">
