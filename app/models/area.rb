@@ -174,7 +174,7 @@ class Area < ActiveRecord::Base
       end
     end
 
-    producao = titulos_do_tipo('producao')
+    producao = titulos_do_tipo('producao').reject(&:prorrogacao)
     if producao.length < 2
       errors.add(:base, "Você deve preencher pelo menos dois itens de produção científica e/ou artística.")
     end
@@ -182,6 +182,20 @@ class Area < ActiveRecord::Base
       soma = producao.sum(&:maximo)
       if soma != maximo_producao
         errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo.")
+      end
+    end
+
+    if prorrogar && !mantem_qualificacao
+      # Soma deve ser 70 pontos
+      producao_pro = titulos_do_tipo('producao').select(&:prorrogacao)
+      if producao_pro.length < 2
+        errors.add(:base, "Você deve preencher pelo menos dois itens de produção científica e/ou artística.")
+      end
+      if producao_pro.length > 1
+        soma = producao_pro.sum(&:maximo)
+        if soma != 70
+          errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo.")
+        end
       end
     end
   end
@@ -221,7 +235,7 @@ class Area < ActiveRecord::Base
   def titulacao_minima
     if doutorado
       # Procura se tem prorrogação
-      if prorrogar
+      if prorrogar && !mantem_qualificacao
         return 3 if qualif_prorrogar.include? 'Mestrado'
         return 2 if qualif_prorrogar.include? "Especialização"
         return 0 if qualif_prorrogar.include? "Graduação"
@@ -231,7 +245,7 @@ class Area < ActiveRecord::Base
 
     if mestrado
       # Procura se tem prorrogação
-      if prorrogar
+      if prorrogar && !mantem_qualificacao
         return 2 if qualif_prorrogar.include? "Especialização"
         return 0 if qualif_prorrogar.include? "Graduação"
       end
@@ -239,7 +253,7 @@ class Area < ActiveRecord::Base
     end
 
     if especializacao
-      return 0 if prorrogar && qualif_prorrogar.include?("Graduação")
+      return 0 if prorrogar && !mantem_qualificacao && qualif_prorrogar.include?("Graduação")
       return 2
     end
 
