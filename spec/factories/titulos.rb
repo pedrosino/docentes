@@ -3,7 +3,7 @@ FactoryGirl.define do
     descricao { Faker::Lorem.paragraph }
     valor { Faker::Number.between(1, 10) }
     maximo { Faker::Number.between(10, 50) }
-    unidade_medida { Faker::Lorem.word }
+    unidade_medida { Area::UNIDADES.sample }
 
     trait :atividades do
       tipo 'atividades'
