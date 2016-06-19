@@ -40,6 +40,14 @@ class VagasController < ApplicationController
   end
 
   def destroy
+    @vaga = Vaga.find(params[:id])
+    if @vaga.destroy
+      flash[:success] = 'Unidade excluída.'
+      redirect_to vagas_path
+    else
+      flash[:warning] = 'Falha na exclusão.'
+      render :edit
+    end
   end
 
   def vaga_params
