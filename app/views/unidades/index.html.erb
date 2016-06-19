@@ -1,6 +1,10 @@
 <div class="container">
   <h4>Unidades Acadêmicas e Unidades Especiais de Ensino</h4>
 
+  <%= link_to new_unidade_path, class: "btn btn-success" do %>
+    <%= glyphicon("plus") %> Nova Unidade
+  <% end %>
+
   <% if @unidades %>
     <table class="table table-condensed">
       <thead>
@@ -31,8 +35,5 @@
         <% end %>
       </tbody>
     </table>
-  <% end %>
-  <%= link_to new_unidade_path, class: "btn btn-success" do %>
-    <%= glyphicon("plus") %> Nova Unidade
   <% end %>
 </div>

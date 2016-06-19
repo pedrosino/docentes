@@ -3,6 +3,10 @@
   <div class="colunas-menu">
     <h4>Editais</h4>
 
+    <%= link_to new_edital_path, class: "btn btn-success" do %>
+      <%= glyphicon("plus") %> Novo Edital
+    <% end %>
+
     <% if @editais != nil %>
       <table class="table table-condensed index editais">
         <thead>
@@ -37,9 +41,6 @@
       </table>
     <% else %>
       Nada!
-    <% end %>
-    <%= link_to new_edital_path, class: "btn btn-success" do %>
-      <%= glyphicon("plus") %> Novo Edital
     <% end %>
   </div>
 </div>
