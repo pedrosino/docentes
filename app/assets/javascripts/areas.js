@@ -16,6 +16,41 @@ function ativa_procedimental() {
   }
 }
 
+function mostra_qualificacao($qual) {
+  var nome = ($qual.prop('id').split('_'))[1];
+  $text_area = $("#area_descricao_" + nome);
+  if ($qual.is(":checked")) {
+    $text_area.parent("div").show();
+  } else {
+    $text_area.parent("div").hide();
+  }
+}
+
+function monta_qualificacao() {
+  var completa = "";
+  $(".qualificacao").find('input.boolean').each(function() {
+    if ($(this).is(":checked")) {
+      var nome = ($(this).prop('id').split('_'))[1];
+      completa += ($(this).parent("label").html().split('>'))[1] + " em " + $("#area_descricao_" + nome).val() + " com\n";
+    }
+  });
+
+  $("#area_qualif_prorrogar").val($.trim(completa.substr(0, completa.length-5)));
+}
+
+function mostra_prorrogacao() {
+  if($("#area_prorrogar").is(":checked")) {
+    $("div.radio_buttons.area_mantem_qualificacao").show();
+    if ($("#area_mantem_qualificacao_false").is(":checked")) {
+      $("#area_qualif_prorrogar").parent("div").show();
+    } else {
+      $("#area_qualif_prorrogar").parent("div").hide();
+    }
+  } else {
+    $("div.radio_buttons.area_mantem_qualificacao").hide();
+  }
+}
+
 function verifica_soma($objeto, $campo, $total, $tipo) {
   var soma = 0;
   var contar = 0;
@@ -223,6 +258,26 @@ function valida_titulos() {
     $(".panel.panel-default.producao>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
   }
 
+  // Se tiver prorrogação alterando a qualificação (e for concurso público),
+  // tem uma segunda tabela da produção científica e/ou artística, com máximo de 70 pontos.
+  if ($(".table.producao-prorrogacao").length) {
+    var validado_producao_pro = true;
+    var confere_producao_pro = verifica_soma($(".table.producao-prorrogacao"),"maximo", 70, "titulos");
+    if (confere_producao_pro == -1) {
+      $(".panel.panel-default.producao-prorrogacao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("Preencha pelo menos dois itens!");
+      validado_producao_pro = false;
+      rolar_para($(".panel.panel-default.producao-prorrogacao>.panel-body>.mensagem-erro"));
+    } else if (!confere_producao_pro) {
+      $(".panel.panel-default.producao-prorrogacao>.panel-body>.mensagem-erro").addClass('alert alert-danger').html("A soma dos itens não é igual a pontuação máxima!");
+      validado_producao_pro = false;
+      rolar_para($(".panel.panel-default.producao-prorrogacao>.panel-body>.mensagem-erro"));
+    } else {
+      $(".panel.panel-default.producao-prorrogacao>.panel-body>.mensagem-erro").removeClass('alert alert-danger').html("");
+    }
+  } else {
+    var validado_producao_pro = true;
+  }
+
   // Verifica proporções
   var validado_proporcao = true;
   $("input[name*='[maximo]'][name*='[titulos_attributes]']").each(function(){
@@ -250,7 +305,7 @@ function valida_titulos() {
     }
   });
 
-  if (!validado_atividades || !validado_producao || !validado_proporcao || !coautoria || !preenchidos) {
+  if (!validado_atividades || !validado_producao || !validado_producao_pro || !validado_proporcao || !coautoria || !preenchidos) {
     return false;
   }
   return true;
@@ -284,19 +339,37 @@ onPage('areas edit, areas update', function(){
   //---------------------------------------------------------
   //------------- Informações básicas da área ---------------
   //---------------------------------------------------------
-  var qual = $("#area_qualif_prorrogar").parent("div");
-  qual.hide();
-
-  $("#area_prorrogar").change(function(){
-    if($(this).is(":checked")) {
-      qual.show();
-      qual.prop("disabled", "");
-    } else {
-      qual.hide();
-    }
+  // Esconde caixas da qualificação
+  $(".qualificacao").find('textarea').each(function() {
+    $(this).parent("div").hide();
   });
 
-  $("#area_regime").on('change', function(){
+  // Percorre checkboxes e mostra textarea se necessário
+  $(".qualificacao").find('input.boolean').each(function() {
+    mostra_qualificacao($(this));
+  });
+
+  $(".qualificacao").find('input.boolean').change(function() {
+    mostra_qualificacao($(this));
+    monta_qualificacao();
+  });
+
+  $("textarea[name*='area[descricao']").change(function() {
+    monta_qualificacao();
+  })
+
+  // Mostra caixa da prorrogação
+  mostra_prorrogacao();
+
+  $("#area_prorrogar").change(function() {
+    mostra_prorrogacao();
+  });
+
+  $(".area_mantem_qualificacao").click(function() {
+    mostra_prorrogacao();
+  });
+
+  $("#area_regime").on('change', function() {
     $tipo = $("#area_tipo").val();
     $regime = $(this).val();
     if ($tipo == 'concurso' && $regime == '40') {
@@ -385,6 +458,31 @@ onPage('areas edit, areas update', function(){
     if (nao_salvas) {
       return window.confirm("Você perderá qualquer alteração que não foi salva. Continuar?");
     }
+  });
+
+  // http://stackoverflow.com/a/3752331/5656749
+  $("#clonar").click(function() {
+    $("table.titulos.producao > tbody > tr").each(function() {
+      $clone = $(this).clone(true);
+      $clone.find(':input').each(function() {
+        // Muda id e name
+        $numero = ($(this).prop('id').split('_'))[3];
+        $(this).prop('id', $(this).prop('id').replace($numero, $numero+123));
+        $(this).prop('name', $(this).prop('name').replace($numero, $numero+123));
+        // Altera valor conforme necessário
+        if ($(this).is("input") && $(this).attr('type') == 'text') {
+          // Multiplica por 0.875
+          $valor_antigo = parseFloat($(this).val().replace(',', '.'));
+          $(this).val($valor_antigo * 0.875);
+        }
+        if ($(this).is("input") && $(this).prop('name').indexOf('prorrogacao') >= 0) {
+          // Muda para true
+          $(this).val('true');
+        }
+      });
+      $clone.appendTo("table.titulos.producao-prorrogacao > tbody");
+    });
+    //return false;
   });
 
   //------- Verifica alterações não salvas ----------

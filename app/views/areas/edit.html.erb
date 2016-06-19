@@ -47,13 +47,32 @@
             <%= f.input :subarea, label: "Subárea (OPCIONAL)" %>
             <%= f.input :curso, label: "Curso (OPCIONAL)" %>
             <%= f.input :campus, required: true, collection: lista_campus %>
-            <%= f.input :qualificacao, required: true, label: "Qualificação mínima exigida" %>
+            <div class="qualificacao">
+              <strong>Qualificação Mínima Exigida</strong>
+              <div>
+                <%= f.input :graduacao, label: "Graduação" %>
+                <%= f.input :descricao_graduacao, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
+              </div>
+              <div>
+                <%= f.input :especializacao, label: "Especialização" %>
+                <%= f.input :descricao_especializacao, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
+              </div>
+              <div>
+                <%= f.input :mestrado %>
+                <%= f.input :descricao_mestrado, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
+              </div>
+              <div>
+                <%= f.input :doutorado %>
+                <%= f.input :descricao_doutorado, placeholder: "Use 'ou' para separar as possíveis opções", label: "em" %>
+              </div>
+            </div>
             <%= f.input :disciplinas, label: "Disciplinas a serem ministradas (OPCIONAL)" %>
-            <%= f.input :regime, required: true, as: :select, collection: regimes.map{|regime| [regime[1], regime[0]]} %>
+            <%= f.input :regime, label: "Regime de Trabalho", required: true, as: :select, collection: regimes.map{|regime| [regime[1], regime[0]]} %>
             <div id="aviso-regime"></div>
             <%= f.input :vagas, as: :string, required: true, wrapper_html: { class: "vagas" } %>
             <%= f.input :prorrogar, label: "Prorrogar inscrições?", hint: "Por mais 7 (sete) dias" %>
-            <%= f.input :qualif_prorrogar, label: "Alterar qualificação para" %>
+            <%= f.input :mantem_qualificacao, as: :radio_buttons, collection: [['Mantendo a mesma qualificação', true],['Alterando a qualificação para:', false]], label: false %>
+            <%= f.input :qualif_prorrogar, label: false %>
           </div>
 
           <button type="submit" class="btn btn-success" id="salvar-inicial"><%= glyphicon("ok") %> Salvar</button>
@@ -203,7 +222,7 @@
                 Valoração das atividades didáticas e/ou profissionais nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= max_atividades %> pontos</strong>
               </div>
               <div class="panel-body">
-              <div class="mensagem-erro"></div>
+                <div class="mensagem-erro"></div>
                 <table class="table titulos atividades">
                   <thead>
                     <tr>
@@ -215,13 +234,13 @@
                   </thead>
                   <tbody>
                     <%= f.fields_for :titulos, @area.titulos.where(tipo: 'atividades') do |options_form| %>
-                      <%= render 'titulo_fields', f: options_form, tipo: "atividades" %>
+                      <%= render 'titulo_fields', f: options_form, tipo: "atividades", prorrogacao: false %>
                     <% end %>
                   </tbody>
                 </table>
 
                 <div class="links">
-                  <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades' } }, data: { association_insertion_node: '.table.atividades', association_insertion_method: 'append' } %>
+                  <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'atividades', prorrogacao: false } }, data: { association_insertion_node: '.table.atividades', association_insertion_method: 'append' } %>
                 </div>
               </div>
             </div>
@@ -231,7 +250,7 @@
                 Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: <%= max_producao %> pontos</strong>
               </div>
               <div class="panel-body">
-              <div class="mensagem-erro"></div>
+                <div class="mensagem-erro"></div>
                 <table class="table titulos producao">
                   <thead>
                     <tr>
@@ -242,17 +261,50 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <%= f.fields_for :titulos, @area.titulos.where(tipo: 'producao') do |options_form| %>
-                      <%= render 'titulo_fields', f: options_form, tipo: "producao" %>
+                    <%= f.fields_for :titulos, @area.titulos.where(tipo: 'producao', prorrogacao: false) do |options_form| %>
+                      <%= render 'titulo_fields', f: options_form, tipo: "producao", prorrogacao: false %>
                     <% end %>
                   </tbody>
                 </table>
 
                 <div class="links">
-                  <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao' } }, data: { association_insertion_node: '.table.producao', association_insertion_method: 'append' } %>
+                  <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao', prorrogacao: false } }, data: { association_insertion_node: '.table.producao', association_insertion_method: 'append' } %>
                 </div>
               </div>
             </div>
+            <button type="button" id="clonar">Clonar!</button>
+
+            <% if @area.tipo == 'concurso' && ['ESEBA','ESTES'].exclude?(@area.unidade.sigla) && @area.prorrogar && !@area.mantem_qualificacao %>
+              <div class="alert alert-warning">Como as inscrições podem ser prorrogadas, você deve definir uma outra tabela de pontuação com máximo de 70 pontos. Abaixo está uma tabela preenchida com os mesmos itens e a pontuação ajustada proporcionalmente. Você pode fazer as alterações que achar necessárias</div>
+
+              <div class="panel panel-default producao producao-prorrogacao">
+                <div class="panel-heading">
+                  Valoração da produção científica e/ou artística nos últimos 5 (cinco) anos. <strong style="margin-left: 20px; font-size: 16px;">Máximo: 70 pontos</strong>
+                </div>
+                <div class="panel-body">
+                  <div class="mensagem-erro"></div>
+                  <table class="table titulos producao-prorrogacao">
+                    <thead>
+                      <tr>
+                        <td class="borda">Descrição</td>
+                        <td class="borda">Pontuação individual</td>
+                        <td class="borda">Pontuação máxima</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%= f.fields_for :titulos, @area.titulos.where(tipo: 'producao', prorrogacao: true) do |options_form| %>
+                        <%= render 'titulo_fields', f: options_form, tipo: "producao", prorrogacao: true %>
+                      <% end %>
+                    </tbody>
+                  </table>
+
+                  <div class="links">
+                    <%= link_to_add_association button_tag(icon("plus", "Item"), type: "button", class: "btn btn-primary add"), f, :titulos, render_options: { locals: { tipo: 'producao', prorrogacao: true } }, data: { association_insertion_node: '.table.producao-prorrogacao', association_insertion_method: 'append' } %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
           </div>
 
           <div id="coautoria">

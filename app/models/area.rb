@@ -33,7 +33,6 @@ class Area < ActiveRecord::Base
 
   validates :vagas, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :nome, presence: true, if: -> { confirmada || proximo == 'escrita' }
-  validates :qualificacao, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :tipo_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :nome_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
 
@@ -59,6 +58,25 @@ class Area < ActiveRecord::Base
       elsif tipo == 'processo' && ['20', '40'].exclude?(regime)
         errors.add(:regime, 'deve ser 20h ou 40h (processo seletivo simplificado)')
       end
+    end
+  end
+
+  validate :especificacao_qualificacao
+  def especificacao_qualificacao
+    if graduacao && descricao_graduacao == ''
+      errors.add(:descricao_graduacao, 'deve ser preenchida')
+    end
+
+    if especializacao && descricao_especializacao == ''
+      errors.add(:descricao_especializacao, 'deve ser preenchida')
+    end
+
+    if mestrado && descricao_mestrado == ''
+      errors.add(:descricao_mestrado, 'deve ser preenchida')
+    end
+
+    if doutorado && descricao_doutorado == ''
+      errors.add(:descricao_doutorado, 'deve ser preenchida')
     end
   end
 
@@ -156,7 +174,7 @@ class Area < ActiveRecord::Base
       end
     end
 
-    producao = titulos_do_tipo('producao')
+    producao = titulos_do_tipo('producao').reject(&:prorrogacao)
     if producao.length < 2
       errors.add(:base, "Você deve preencher pelo menos dois itens de produção científica e/ou artística.")
     end
@@ -164,6 +182,20 @@ class Area < ActiveRecord::Base
       soma = producao.sum(&:maximo)
       if soma != maximo_producao
         errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo.")
+      end
+    end
+
+    if prorrogar && !mantem_qualificacao
+      # Soma deve ser 70 pontos
+      producao_pro = titulos_do_tipo('producao').select(&:prorrogacao)
+      if producao_pro.length < 2
+        errors.add(:base, "Você deve preencher pelo menos dois itens de produção científica e/ou artística.")
+      end
+      if producao_pro.length > 1
+        soma = producao_pro.sum(&:maximo)
+        if soma != 70
+          errors.add(:base, "A soma da pontuação da produção científica e/ou artística não é igual ao valor máximo.")
+        end
       end
     end
   end
@@ -190,4 +222,43 @@ class Area < ActiveRecord::Base
   def titulos_do_tipo(tipo)
     titulos.select { |t| t.tipo == tipo }.reject(&:_destroy)
   end
+
+  def qualificacao
+    q_array = []
+    q_array << 'Graduação em ' + descricao_graduacao if graduacao
+    q_array << 'Especialização em ' + descricao_especializacao if especializacao
+    q_array << 'Mestrado em ' + descricao_mestrado if mestrado
+    q_array << 'Doutorado em ' + descricao_doutorado if doutorado
+    q_array.join(' com ')
+  end
+
+  def titulacao_minima
+    if doutorado
+      # Procura se tem prorrogação
+      if prorrogar && !mantem_qualificacao
+        return 3 if qualif_prorrogar.include? 'Mestrado'
+        return 2 if qualif_prorrogar.include? "Especialização"
+        return 0 if qualif_prorrogar.include? "Graduação"
+      end
+      return 4
+    end
+
+    if mestrado
+      # Procura se tem prorrogação
+      if prorrogar && !mantem_qualificacao
+        return 2 if qualif_prorrogar.include? "Especialização"
+        return 0 if qualif_prorrogar.include? "Graduação"
+      end
+      return 3
+    end
+
+    if especializacao
+      return 0 if prorrogar && !mantem_qualificacao && qualif_prorrogar.include?("Graduação")
+      return 2
+    end
+
+    return 0 if graduacao
+  end
+
+  UNIDADES = ['ano', 'semestre', 'aluno', 'artigo', 'trabalho', 'livro', 'capítulo', 'tradução', 'parecer', 'disciplina', 'trabalho', 'resumo', 'evento', 'participação', 'aprovação', 'banca', 'orientação', 'publicação', 'patente', 'registro', 'projeto', 'premiação', 'maquete', 'obra', 'relatório', 'direção'].freeze
 end

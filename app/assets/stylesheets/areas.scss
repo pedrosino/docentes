@@ -148,3 +148,21 @@ div.vaga {
     width: 100%;
   }
 }
+
+div.qualificacao {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+
+  div.form-group.boolean {
+    /* Div do checkbox*/
+    width: 12%;
+    display: inline-block;
+  }
+
+  div.form-group.text {
+    /* Div da textarea */
+    display: inline-block;
+    width: 85%;
+  }
+}
