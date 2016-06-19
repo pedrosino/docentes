@@ -22,7 +22,7 @@
 
         <tbody>
         <% @areas.sort_by{ |area| area[:unidade_id] }.each do |area| %>
-          <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == @area.unidade_id %>
+          <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == area.unidade_id %>
           <% if area.confirmada
             mensagem = "Enviada"
             classe = "alert-success"
