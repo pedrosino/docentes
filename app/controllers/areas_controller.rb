@@ -2,6 +2,11 @@ class AreasController < ApplicationController
   before_action :authenticate_user!
   before_action -> { redireciona_usuario(:pode_criar_area?) }
 
+  def autocomplete_titulo_unidade_medida
+    # Emulating 'full: true' and 'limit: 10' options from the gem
+    render json: Area::UNIDADES.grep(/#{params[:term]}/).sort[0..9]
+  end
+
   def index
     if current_user.pode_criar_edital?
       @areas = Area.all
