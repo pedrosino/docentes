@@ -272,10 +272,10 @@
                 </div>
               </div>
             </div>
-            <button type="button" id="clonar">Clonar!</button>
 
             <% if @area.tipo == 'concurso' && ['ESEBA','ESTES'].exclude?(@area.unidade.sigla) && @area.prorrogar && !@area.mantem_qualificacao %>
-              <div class="alert alert-warning">Como as inscrições podem ser prorrogadas, você deve definir uma outra tabela de pontuação com máximo de 70 pontos. Abaixo está uma tabela preenchida com os mesmos itens e a pontuação ajustada proporcionalmente. Você pode fazer as alterações que achar necessárias</div>
+              <div class="alert alert-warning">Como as inscrições podem ser prorrogadas, você deve definir uma outra tabela de pontuação com máximo de 70 pontos. Clique no botão abaixo para copiar os itens e a pontuação ajustada proporcionalmente. Você pode fazer as alterações que achar necessárias</div>
+              <button type="button" id="clonar" class="button-primary">Copiar</button>
 
               <div class="panel panel-default producao producao-prorrogacao">
                 <div class="panel-heading">
