@@ -48,6 +48,7 @@ function mostra_prorrogacao() {
     }
   } else {
     $("div.radio_buttons.area_mantem_qualificacao").hide();
+    $("#area_qualif_prorrogar").parent("div").hide();
   }
 }
 
