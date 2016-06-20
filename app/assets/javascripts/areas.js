@@ -71,12 +71,16 @@ function verifica_soma($objeto, $campo, $total, $tipo) {
   return (soma == $total);
 }
 
+function modulo_especial(big, small) {
+  return ((big * 100) % (small * 100)) / 100;
+}
+
 function verifica_proporcao($objeto) {
   var numero = ($objeto.prop('id').split('_'))[3];
   // troca virgula por ponto, se houver
-  $maximo = $("input[name*='[titulos_attributes]["+numero+"][maximo]']").val().replace(',','.');
-  $individual = $("input[name*='[titulos_attributes]["+numero+"][valor]']").val().replace(',','.');
-  $correto = (($maximo % $individual) == 0);
+  $maximo = parseFloat($("input[name*='[titulos_attributes]["+numero+"][maximo]']").val().replace(',','.'));
+  $individual = parseFloat($("input[name*='[titulos_attributes]["+numero+"][valor]']").val().replace(',','.'));
+  $correto = (modulo_especial($maximo, $individual) == 0);
   return $correto;
 }
 

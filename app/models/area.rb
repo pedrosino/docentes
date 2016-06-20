@@ -201,7 +201,7 @@ class Area < ActiveRecord::Base
   end
 
   # 1 % 0.2 retorna 0.1999999999996
-  # Não entendi bem por que...
+  # Floats não funcionam com modulo...
   def modulo_especial(big, small)
     big - small * (big / small).floor
   end
