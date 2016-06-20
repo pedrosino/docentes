@@ -5,6 +5,7 @@ FactoryGirl.define do
     vagas { Faker::Number.between(1, 5) }
     tipo_vaga { (vagas_substituto + vagas_efetivo).sample }
     nome_vaga { Faker::Name.name }
+    unidade_id { FactoryGirl.create(:unidade).id }
 
     trait :concurso do
       tipo 'concurso'
