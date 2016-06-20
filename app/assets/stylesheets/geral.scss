@@ -188,7 +188,7 @@ table.table.table-condensed.index {
   display: none;
   min-width: 160px;
   _width: 160px;
-  padding: 4px 0;
+  padding: 4px 5px;
   margin: 2px 0 0 0;
   list-style: none;
   background-color: #ffffff;
@@ -208,6 +208,7 @@ table.table.table-condensed.index {
   *border-right-width: 2px;
   *border-bottom-width: 2px;
 
+  /* ?? */
   .ui-menu-item > a.ui-corner-all {
     display: block;
     padding: 3px 15px;
@@ -221,6 +222,7 @@ table.table.table-condensed.index {
 
 .ui-widget-content .ui-state-focus {
   color: #ffffff;
+  cursor: pointer;
   text-decoration: none;
   background-color: #0088cc;
   border-radius: 0px;
