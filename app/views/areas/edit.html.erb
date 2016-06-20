@@ -273,7 +273,7 @@
               </div>
             </div>
 
-            <% if @area.tipo == 'concurso' && ['ESEBA','ESTES'].exclude?(@area.unidade.sigla) && @area.prorrogar && !@area.mantem_qualificacao %>
+            <% if @area.tabela_producao_adicional? %>
               <div class="alert alert-warning">Como as inscrições podem ser prorrogadas, você deve definir uma outra tabela de pontuação com máximo de 70 pontos. Clique no botão abaixo para copiar os itens e a pontuação ajustada proporcionalmente. Você pode fazer as alterações que achar necessárias</div>
               <button type="button" id="clonar" class="button-primary">Copiar</button>
 

@@ -185,7 +185,8 @@ class Area < ActiveRecord::Base
       end
     end
 
-    if prorrogar && !mantem_qualificacao
+    # Somente faz essa parte se for necessária outra tabela
+    if tabela_producao_adicional?
       # Soma deve ser 70 pontos
       producao_pro = titulos_do_tipo('producao').select(&:prorrogacao)
       if producao_pro.length < 2
@@ -232,6 +233,13 @@ class Area < ActiveRecord::Base
     q_array.join(' com ')
   end
 
+  def titulacao_maxima
+    return 4 if doutorado
+    return 3 if mestrado
+    return 2 if especializacao
+    return 0 if graduacao
+  end
+
   def titulacao_minima
     if doutorado
       # Procura se tem prorrogação
@@ -258,6 +266,10 @@ class Area < ActiveRecord::Base
     end
 
     return 0 if graduacao
+  end
+
+  def tabela_producao_adicional?
+    tipo == 'concurso' && ['ESEBA', 'ESTES'].exclude?(unidade.sigla) && prorrogar && !mantem_qualificacao
   end
 
   UNIDADES = ['ano', 'semestre', 'aluno', 'artigo', 'trabalho', 'livro', 'capítulo', 'tradução', 'parecer', 'disciplina', 'trabalho', 'resumo', 'evento', 'participação', 'aprovação', 'banca', 'orientação', 'publicação', 'patente', 'registro', 'projeto', 'premiação', 'maquete', 'obra', 'relatório', 'direção'].freeze

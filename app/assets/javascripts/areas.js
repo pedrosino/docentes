@@ -265,7 +265,7 @@ function valida_titulos() {
 
   // Se tiver prorrogação alterando a qualificação (e for concurso público),
   // tem uma segunda tabela da produção científica e/ou artística, com máximo de 70 pontos.
-  if ($(".table.producao-prorrogacao").length) {
+  if ($(".table.producao-prorrogacao").length > 0) {
     var validado_producao_pro = true;
     var confere_producao_pro = verifica_soma($(".table.producao-prorrogacao"),"maximo", 70, "titulos");
     if (confere_producao_pro == -1) {
