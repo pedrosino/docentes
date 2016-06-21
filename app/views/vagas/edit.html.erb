@@ -1,24 +1,28 @@
-<div class="container">
+<% provide(:title, "Vaga") %>
 
-  <%= simple_form_for @vaga, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
+<div class="row menu">
+  <%= render 'layouts/menu_lateral' %>
+  <div class="colunas-menu">
+    <h3><%= yield(:title) %></h3>
+    <%= simple_form_for @vaga, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
 
-    <%= f.input :tipo, required: true, as: :grouped_select, collection: tipos_vaga, group_method: :last %>
-    <%= f.input :nome, required: true %>
-    <%= f.input :codigo, as: :string %>
-    <%= f.input :unidade_id, as: :select, required: true, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
-    <%= f.input :campus, collection: lista_campus %>
-    <%= f.input :regime, as: :select, collection: regime_de_trabalho.map{ |regime| [regime[1], regime[0]] } %>
-    <%= f.input :data_inicio, as: :date_picker, required: true, label: "Data início", wrapper_html: { class: "data-pequena" } %>
-    <%= f.input :data_fim, as: :date_picker, label: "Data término", hint: "Deixe em branco para vagas de efetivo", wrapper_html: { class: "data-pequena" } %>
-    <%= f.input :situacao, as: :select, collection: Vaga::SITUACOES.map{ |situacao| [situacao[1], situacao[0]] } %>
-    <%= f.input :observacao %>
-
-    <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>
-    <button type="submit" class="btn btn-success"><%= glyphicon("ok") %> Salvar</button>
-    <%= link_to @vaga, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
-      <%= glyphicon("trash") %> Excluir
+      <%= f.input :tipo, required: true, as: :grouped_select, collection: tipos_vaga, group_method: :last %>
+      <%= f.input :nome, required: true %>
+      <%= f.input :codigo, label: "Código", as: :string %>
+      <%= f.input :unidade_id, as: :select, required: true, collection: Unidade.all.map{ |unidade| [unidade.sigla, unidade.id] } %>
+      <%= f.input :campus, collection: lista_campus %>
+      <%= f.input :regime, label: "Regime de trabalho", as: :select, collection: regime_de_trabalho.map{ |regime| [regime[1], regime[0]] } %>
+      <%= f.input :data_inicio, as: :date_picker, required: true, label: "Data início", wrapper_html: { class: "data-pequena" } %>
+      <%= f.input :data_fim, as: :date_picker, label: "Data término", hint: "Deixe em branco para vagas de efetivo", wrapper_html: { class: "data-pequena" } %>
+      <%= f.input :situacao, label: "Situação", as: :select, collection: Vaga::SITUACOES.map{ |situacao| [situacao[1], situacao[0]] } %>
+      <%= f.input :observacao, label: "Observação" %>
+      <br />
+      <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>
+      <button type="submit" class="btn btn-success"><%= glyphicon("ok") %> Salvar</button>
+      <%= link_to @vaga, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
+        <%= glyphicon("trash") %> Excluir
+      <% end %>
     <% end %>
-  <% end %>
-
+  </div>
 </div>

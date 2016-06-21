@@ -99,6 +99,21 @@
   cursor: pointer;
 }
 
+div[class*='regime'],
+div[class*='campus'],
+div[class*='tipo'],
+div[class*='unidade'],
+div[class*='codigo'],
+div[class*='situacao'],
+div[class*='numero'],
+div[class*='data'] {
+  width: 25%;
+}
+
+div.date.datetimepicker {
+  width: 20%;
+}
+
 table.table.table-condensed.index {
   td {
     vertical-align: middle;
@@ -147,6 +162,10 @@ table.table.table-condensed.index {
   padding: 10px;
   float: left;
   width: 100%;
+
+  .form-group {
+    margin: 0;
+  }
 }
 
 @media (min-width: 768px) {

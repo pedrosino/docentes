@@ -4,19 +4,13 @@
     <%= render 'shared/error_messages', object: f.object %>
 
     <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
-    <%= f.input :numero, required: true %>
+    <%= f.input :numero, required: true, label: "Número" %>
     <%= f.input :data %>
-    <div class="col-sm-4">
-      <%= f.input :comeca_inscricao, as: :date_picker %>
-    </div>
-    <div class="col-sm-4">
-      <%= f.input :termina_inscricao, as: :date_picker %>
-    </div>
-    <div class="col-sm-4">
-      <%= f.input :publicacao, as: :date_picker %>
-    </div>
+    <%= f.input :comeca_inscricao, label: "Início das inscrições", as: :date_picker %>
+    <%= f.input :termina_inscricao, label: "Término das inscrições", as: :date_picker %>
+    <%= f.input :publicacao, label: "Data da publicação", as: :date_picker %>
 
-    <h3>Selecionar areas:</h3>
+    <h3>Selecionar áreas:</h3>
     <table class="table table-condensed">
       <thead>
         <tr>

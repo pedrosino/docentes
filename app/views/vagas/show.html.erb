@@ -1,0 +1,17 @@
+<% provide(:title, "Código de vaga: #{@vaga.codigo}") %>
+
+<div class="row menu">
+  <%= render 'layouts/menu_lateral' %>
+  <div class="colunas-menu">
+    <h4><%= yield(:title) %></h4>
+    <%= @vaga.tipo %> de <strong><%= @vaga.nome %></strong><br />
+    <%= @vaga.unidade.nome %>, Campus <%= @vaga.campus %><br />
+    Regime: <%= @vaga.regime %><br />
+    Data: <%=l @vaga.data_inicio, format: :default %>
+    <%= @vaga.data_fim.present? ? " a #{I18n.l @vaga.data_fim, format: :default}" : "" %><br />
+    Situação: <%= Vaga::SITUACOES[@vaga.situacao] %>
+    <%= @vaga.observacao %>
+    <br /><br />
+    <%= link_to icon("arrow-left", "Voltar"), vagas_path, class: "btn btn-warning" %>
+  </div>
+</div>

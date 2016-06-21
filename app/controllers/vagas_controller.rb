@@ -39,6 +39,10 @@ class VagasController < ApplicationController
     end
   end
 
+  def show
+    @vaga = Vaga.find(params[:id])
+  end
+
   def destroy
     @vaga = Vaga.find(params[:id])
     if @vaga.destroy
