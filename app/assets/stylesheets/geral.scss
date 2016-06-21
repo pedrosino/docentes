@@ -33,10 +33,8 @@
 
   .texto {
     display: inline;
-    /*line-height: 20px;*/
     padding-top: 15px;
     padding-bottom: 15px;
-    /*text-align: center;*/
     left: 20px;
   }
 
@@ -95,10 +93,7 @@
   margin-top: 10px;
 }
 
-.input-group.date {
-  cursor: pointer;
-}
-
+/* Larguras menores para os campos pequenos */
 div[class*='regime'],
 div[class*='campus'],
 div[class*='tipo'],
@@ -110,16 +105,24 @@ div[class*='data'] {
   width: 25%;
 }
 
+/* Estilos para os datetimepickers */
 div.date.datetimepicker {
   width: 20%;
 }
 
+.input-group.date {
+  cursor: pointer;
+}
+
+/* Algumas linhas da tabela tem 2 linhas de altura */
+/* O alinhamento no topo ficava estranho */
 table.table.table-condensed.index {
   td {
     vertical-align: middle;
   }
 }
 
+/* Estilo do menu lateral */
 .list-group.menu {
   margin: 0;
   left: -30px;
@@ -152,6 +155,7 @@ table.table.table-condensed.index {
   margin: 0;
 }
 
+/* O menu ocupa 100% da largura em telas pequenas */
 .coluna-menu {
   padding: 0;
   float: left;
@@ -168,6 +172,7 @@ table.table.table-condensed.index {
   }
 }
 
+/* Nos outros tamanhos, 18% */
 @media (min-width: 768px) {
   .coluna-menu {
     width: 18%;
