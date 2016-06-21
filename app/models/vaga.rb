@@ -25,7 +25,7 @@ class Vaga < ActiveRecord::Base
 
   validate :vaga_substituto_situacoes
   def vaga_substituto_situacoes
-    if vagas_substituto.include?(tipo) && ['o','r','n'].include?(situacao)
+    if vagas_substituto.include?(tipo) && ['o', 'r', 'n'].include?(situacao)
       errors.add(:situacao, "não pode ser 'ocupada' (vaga temporária)'")
     end
   end
