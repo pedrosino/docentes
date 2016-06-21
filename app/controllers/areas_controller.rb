@@ -1,6 +1,7 @@
 class AreasController < ApplicationController
   before_action :authenticate_user!
   before_action -> { redireciona_usuario(:pode_criar_area?) }
+  before_action -> { redireciona_usuario(:pode_criar_edital?) }, only: [:vaga]
 
   def index
     if current_user.pode_criar_edital?
@@ -35,9 +36,7 @@ class AreasController < ApplicationController
 
   def vaga
     @area = Area.find(params[:id])
-    params_nome = @area.nome_vaga.split(' ').map { |nome| "%#{nome}%" }
-    query = params_nome.map { |nome| "nome like '%#{nome}%'" }.join(' OR ')
-    @vagas = Vaga.where(query)
+    @vagas = Vaga.all.sort_by { |vaga| vaga.nome.similar(@area.nome_vaga) }.reverse
   end
 
   def update
