@@ -36,7 +36,7 @@ class AreasController < ApplicationController
   def vaga
     @area = Area.find(params[:id])
     params_nome = @area.nome_vaga.split(' ').map { |nome| "%#{nome}%" }
-    query = params_nome.map { |nome| "nome like '%#{nome}%'"}.join(" OR ")
+    query = params_nome.map { |nome| "nome like '%#{nome}%'" }.join(' OR ')
     @vagas = Vaga.where(query)
   end
 

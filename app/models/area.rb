@@ -35,7 +35,7 @@ class Area < ActiveRecord::Base
   validates :nome, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :tipo_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :nome_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }
-  validates :coautoria, presence: true, if: -> { confirmada || proximo == 'inicial'}
+  validates :coautoria, presence: true, if: -> { confirmada || proximo == 'inicial' }
 
   validate :tipo_do_edital
   def tipo_do_edital

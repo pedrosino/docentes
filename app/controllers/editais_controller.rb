@@ -25,6 +25,7 @@ class EditaisController < ApplicationController
 
   def edit
     @edital = Edital.find(params[:id])
+    @areas = Area.where('(edital_id is null or edital_id = ?) and tipo = ? and confirmada = ?', @edital.id, @edital.tipo, true).sort_by { |area| area[:unidade_id] }
   end
 
   def update
