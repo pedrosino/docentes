@@ -46,6 +46,8 @@ FactoryGirl.define do
 
         FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 5, maximo: 40)
         FactoryGirl.create(:titulo, :producao, area_id: area.id, valor: 4, maximo: 40)
+        area.coautoria = 100
+        area.save!
         area.reload
       end
     end
