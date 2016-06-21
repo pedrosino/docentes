@@ -3,74 +3,36 @@
   <div class="colunas-menu">
     <h4>Áreas</h4>
 
-    <%= link_to new_area_path, class: "btn btn-success" do %>
-      <%= glyphicon("plus") %> Nova Área
-    <% end %>
+    <div class="row">
+    <div class="col-md-6">
+      <%= link_to new_area_path, class: "btn btn-success" do %>
+        <%= glyphicon("plus") %> Nova Área
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= form_tag areas_path, method: :get, remote: true, class: "form-inline", id: "areas-form" do %>
+        <div class="form-group">
+          <%= label_tag("Buscar") %>
+          <div id="search-field">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                    title="Name, city, venue, country or month">
+                <%= icon('search') %>
+              </span>
+              <%= text_field_tag "search", params[:search], class: "form-control", placeholder: "Unidade ou área" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    </div>
 
     <% if @areas != nil %>
-      <table class="table table-condensed index areas">
-        <thead>
-          <tr>
-            <th>Unidade</th>
-            <th>Área</th>
-            <th>Subárea</th>
-            <th>Tipo</th>
-            <th>Situação</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-        <% @areas.sort_by{ |area| area[:unidade_id] }.each do |area| %>
-          <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == area.unidade_id %>
-          <% if area.confirmada
-            mensagem = "Enviada"
-            classe = "alert-success"
-            icone = "glyphicon glyphicon-share"
-            else
-              area.confirmada = true
-              if area.valid?
-                mensagem = "Verificada"
-                classe = "alert-info"
-                icone = "glyphicon glyphicon-ok-sign"
-              else
-                mensagem = "Pendências"
-                classe = "alert-danger"
-                icone = "glyphicon glyphicon-exclamation-sign"
-              end
-            end %>
-          <tr class="<%= classe %>">
-            <td class="unidade"><%= area.unidade.sigla %></td>
-            <td class="area"><%= area.nome %></td>
-            <td class="area"><%= area.subarea %></td>
-            <td class="tipo"><%= area.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
-            <td class="situacao">
-              <span class="<%= icone %>"></span> <%= mensagem %>
-            </td>
-            <td>
-              <%= simple_form_for area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
-                <%= f.hidden_field :tipo %>
-                <% if mensagem == "Pendências" || mensagem == "Verificada" || current_user.pode_criar_edital? %>
-                  <%= link_to edit_area_path(area), class: "btn btn-primary btn-sm" do %>
-                    <%= glyphicon("pencil") %></span> Editar
-                  <% end %>
-                <% end %>
-                <% if mensagem == "Verificada" && (@tem_acesso || current_user.pode_criar_edital?) %>
-                  <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-success btn-sm", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
-                    <%= glyphicon("share") %> Enviar
-                  <% end %>
-                <% end %>
-                <% if mensagem != "Enviada" %>
-                  <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger btn-sm" do %>
-                    <%= glyphicon("trash") %> Excluir
-                  <% end %>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
+      <div class="row">
+      <div id="lista-areas">
+        <%= render 'lista_areas', areas: @areas %>
+      </div>
+      </div>
     <% else %>
       Nada!
     <% end %>

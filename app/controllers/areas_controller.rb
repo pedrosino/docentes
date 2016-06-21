@@ -13,6 +13,17 @@ class AreasController < ApplicationController
     else
       @areas = Area.where(unidade_id: current_user.unidade_id)
     end
+
+    if params[:search].present?
+      @areas = @areas.select { |area| area.contem?(params[:search]) }
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.js do
+        render 'index'
+      end
+    end
   end
 
   def new
