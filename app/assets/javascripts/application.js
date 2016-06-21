@@ -60,5 +60,5 @@ $(function() {
     $this.datetimepicker(datetimepickerOptions);
   });
 
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
 });
