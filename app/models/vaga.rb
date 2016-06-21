@@ -33,7 +33,7 @@ class Vaga < ActiveRecord::Base
   SITUACOES = {
     'a' => 'Aberta',
     'o' => 'Ocupada',
-    'r' => 'Redistribuída',
+    'r' => 'Redistribuição',
     's' => 'Substituto',
     'c' => 'Concurso',
     'n' => 'Nomeação'

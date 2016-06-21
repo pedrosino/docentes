@@ -1,0 +1,33 @@
+<table class="table table-condensed index">
+  <thead>
+    <tr>
+      <th>Unidade</th>
+      <th>Nome</th>
+      <th>Código</th>
+      <th>Tipo</th>
+      <th>Data</th>
+      <th>Ocupante</th>
+      <th>Data ocupação</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% vagas.each.sort_by{ |vaga| vaga[:unidade_id] }.each do |vaga| %>
+      <tr>
+        <td class="unidade"><%= vaga.unidade.sigla %></td>
+        <td class="nome"><%= vaga.nome %></td>
+        <td class="codigo"><%= vaga.codigo %></td>
+        <td class="tipo"><%= vaga.tipo %></td>
+        <td class="data"><%=l vaga.data_inicio, format: :default %></td>
+        <td></td>
+        <td></td>
+        <td>
+          <%= link_to edit_vaga_path(vaga), class: "btn btn-primary btn-sm" do %>
+            <%= glyphicon("eye-open") %> Ver
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
