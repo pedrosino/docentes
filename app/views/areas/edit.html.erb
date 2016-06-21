@@ -30,7 +30,7 @@
           <%= hidden_field_tag "secao", "inicial" %>
 
           <div class="bloco-inicial">
-            <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
+            <%= f.input :tipo, required: true, as: :select, collection: tipo_certame.map { |tipo| [tipo[1], tipo[0]] } %>
             <% if @area.tipo == 'concurso' %>
               <% regimes = regime_de_trabalho %>
               <% tipos_vaga = vagas_efetivo %>

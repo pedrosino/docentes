@@ -23,7 +23,7 @@
         <% @editais.each do |edital| %>
           <tr class="<%= classe_situacao_edital[edital.situacao] %>">
             <td class="numero"><%= edital.numero %></td>
-            <td class="tipo"><%= edital.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
+            <td class="tipo"><%= tipo_certame[edital.tipo] %></td>
             <td class="areas">
               <%= edital.areas.map(&:nome).to_sentence if edital.areas %>
             </td>

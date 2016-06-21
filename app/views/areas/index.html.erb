@@ -44,7 +44,7 @@
             <td class="unidade"><%= area.unidade.sigla %></td>
             <td class="area"><%= area.nome %></td>
             <td class="area"><%= area.subarea %></td>
-            <td class="tipo"><%= area.tipo == 'concurso' ? 'Concurso Público' : 'Processo Seletivo Simplificado' %></td>
+            <td class="tipo"><%= tipo_certame[area.tipo] %></td>
             <td class="situacao">
               <span class="<%= icone %>"></span> <%= mensagem %>
             </td>
