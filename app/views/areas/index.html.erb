@@ -22,7 +22,8 @@
 
         <tbody>
         <% @areas.sort_by{ |area| area[:unidade_id] }.each do |area| %>
-          <% @tem_acesso = current_user.pode_criar_edital? || current_user.unidade_id == area.unidade_id %>
+          <% @admin = current_user.pode_criar_edital? %>
+          <% @tem_acesso = @admin || current_user.unidade_id == area.unidade_id %>
           <% if area.confirmada
             mensagem = "Enviada"
             classe = "alert-success"
@@ -50,19 +51,24 @@
             <td>
               <%= simple_form_for area, html: { class: 'form-horizontal are-you-sure no-submit-on-enter' } do |f| %>
                 <%= f.hidden_field :tipo %>
-                <% if mensagem == "Pendências" || mensagem == "Verificada" || current_user.pode_criar_edital? %>
-                  <%= link_to edit_area_path(area), class: "btn btn-primary btn-sm" do %>
-                    <%= glyphicon("pencil") %></span> Editar
+                <% if mensagem == "Pendências" || mensagem == "Verificada" || @admin %>
+                  <%= link_to edit_area_path(area), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-primary btn-sm", title: 'Editar' do %>
+                    <%= glyphicon("pencil") %>
                   <% end %>
                 <% end %>
-                <% if mensagem == "Verificada" && (@tem_acesso || current_user.pode_criar_edital?) %>
-                  <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-success btn-sm", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.' }) do %>
-                    <%= glyphicon("share") %> Enviar
+                <% if mensagem == "Verificada" && (@tem_acesso || @admin) %>
+                  <%= button_tag(type: 'submit', name: "commit", value: "Confirm", class: "btn btn-success btn-sm", data: { confirm: 'Tem certeza que deseja finalizar? Não será possível editar as informações.', toggle: 'tooltip', placement: 'top' }, title: "Enviar") do %>
+                    <%= glyphicon("share") %>
                   <% end %>
                 <% end %>
-                <% if mensagem != "Enviada" %>
-                  <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger btn-sm" do %>
-                    <%= glyphicon("trash") %> Excluir
+                <% if mensagem != "Enviada" || @admin %>
+                  <%= link_to @area, method: :delete, data: { confirm: "Tem certeza que deseja excluir?", toggle: 'tooltip', placement: 'top' }, class: "btn btn-danger btn-sm", title: 'Excluir' do %>
+                    <%= glyphicon("trash") %>
+                  <% end %>
+                <% end %>
+                <% if @admin %>
+                  <%= link_to edit_area_path(area), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-info btn-sm", title: 'Vaga' do %>
+                    <%= glyphicon("user") %>
                   <% end %>
                 <% end %>
               <% end %>

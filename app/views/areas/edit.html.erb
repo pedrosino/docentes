@@ -22,10 +22,10 @@
     <div class="alert alert-warning">Você não tem acesso para editar esta área.</div>
   <% else %>
     <div class="tab-content" id="editar-area">
+      <div class="mensagem-ok alert alert-success"></div>
       <div class="tab-pane active" id="inicial">
         <%= simple_form_for @area do |f| %>
           <%= render 'shared/error_messages', object: f.object %>
-          <div class="mensagem-ok alert alert-success"></div>
 
           <%= hidden_field_tag "secao", "inicial" %>
 
@@ -274,8 +274,10 @@
             </div>
 
             <% if @area.tabela_producao_adicional? %>
-              <div class="alert alert-warning">Como as inscrições podem ser prorrogadas, você deve definir uma outra tabela de pontuação com máximo de 70 pontos. Clique no botão abaixo para copiar os itens e a pontuação ajustada proporcionalmente. Você pode fazer as alterações que achar necessárias</div>
-              <button type="button" id="clonar" class="button-primary">Copiar</button>
+              <div class="alert alert-warning">Como as inscrições podem ser prorrogadas, você deve definir uma outra tabela de pontuação com máximo de 70 pontos. <% @area.titulos.where(tipo: 'producao', prorrogacao: true).length < 1 ? "Clique no botão abaixo para copiar os itens e a pontuação ajustada proporcionalmente. Você pode fazer as alterações que achar necessárias" : "" %></div>
+              <% if @area.titulos.where(tipo: 'producao', prorrogacao: true).length < 1 %>
+                <button type="button" id="clonar" class="btn btn-info">Copiar</button>
+              <% end %>
 
               <div class="panel panel-default producao producao-prorrogacao">
                 <div class="panel-heading">

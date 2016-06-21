@@ -33,24 +33,11 @@ class AreasController < ApplicationController
     @area = Area.find(params[:id])
   end
 
-  # O formulário de edição da área é dividido em partes.
-  # Cada parte tem uma ação para carregar a view, mas todas
-  # chamam a ação 'update', que salva o que foi passado e
-  # redireciona para a próxima etapa.
-  def inicial
+  def vaga
     @area = Area.find(params[:id])
-  end
-
-  def escrita
-    @area = Area.find(params[:id])
-  end
-
-  def didatica
-    @area = Area.find(params[:id])
-  end
-
-  def titulos
-    @area = Area.find(params[:id])
+    params_nome = @area.nome_vaga.split(' ').map { |nome| "%#{nome}%" }
+    query = params_nome.map { |nome| "nome like '%#{nome}%'"}.join(" OR ")
+    @vagas = Vaga.where(query)
   end
 
   def update
@@ -59,6 +46,9 @@ class AreasController < ApplicationController
     if @area.update_attributes(area_params)
       if params[:commit] == 'Confirm'
         flash[:success] = 'Solicitação enviada!'
+        redirect_to areas_path
+      elsif params[:commit] == 'vaga'
+        flash[:success] = 'Vaga salva!'
         redirect_to areas_path
       else
         flash[:success] = 'Dados salvos!'
@@ -86,7 +76,7 @@ class AreasController < ApplicationController
       :campus, :graduacao, :descricao_graduacao, :especializacao, :descricao_especializacao, :mestrado, :descricao_mestrado,
       :doutorado, :descricao_doutorado, :disciplinas, :regime, :vagas, :prorrogar, :mantem_qualificacao, :qualif_prorrogar,
       :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :min_procedimental, :max_procedimental,
-      :coautoria, :confirmada,
+      :coautoria, :confirmada, :vaga_id,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy],
       titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :prorrogacao, :_destroy])
 
