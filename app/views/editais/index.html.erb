@@ -33,7 +33,7 @@
                 <%= glyphicon("pencil") %> Editar
               <% end %>
               <%= link_to icon("file-word-o", "Word"), edital_word_path(edital), class: "btn btn-success btn-sm" %>
-              <%= link_to icon("file-pdf-o", "PDF"), edital_pdf_path(edital), class: "btn btn-warning btn-sm" %>
+              <%= link_to icon("file-pdf-o", "PDF"), edital_pdf_path(edital), class: "btn btn-warning btn-sm", target: "_blank" %>
             </td>
           </tr>
         <% end %>

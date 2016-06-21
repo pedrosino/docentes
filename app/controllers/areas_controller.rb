@@ -3,6 +3,8 @@ class AreasController < ApplicationController
   before_action -> { redireciona_usuario(:pode_criar_area?) }
   before_action -> { redireciona_usuario(:pode_criar_edital?) }, only: [:vaga]
 
+  include ApplicationHelper
+
   def index
     if current_user.pode_criar_edital?
       @areas = Area.all
@@ -36,7 +38,9 @@ class AreasController < ApplicationController
 
   def vaga
     @area = Area.find(params[:id])
-    @vagas = Vaga.all.sort_by { |vaga| vaga.nome.similar(@area.nome_vaga) }.reverse
+    tipos = vagas_efetivo if @area.tipo == 'concurso'
+    tipos = vagas_substituto if @area.tipo == 'processo'
+    @vagas = Vaga.where(tipo: tipos).sort_by { |vaga| vaga.nome.similar(@area.nome_vaga) }.reverse
   end
 
   def update
