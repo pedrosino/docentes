@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'posts#index'
 
-  resources :unidades, only: [:index, :edit, :new, :create, :update, :destroy]
+  resources :unidades, only: [:index, :edit, :new, :create, :update, :show, :destroy]
+  resources :posts, only: [:index, :edit, :new, :create, :update, :show, :destroy]
 
   resources :areas, only: [:index, :new, :edit, :create, :update, :destroy]
   resources :areas do
@@ -14,9 +15,10 @@ Rails.application.routes.draw do
   end
   get 'areas/:id/vaga' => 'areas#vaga', as: 'area_vaga'
 
-  resources :editais, only: [:index, :new, :edit, :create, :update, :destroy]
+  resources :editais, only: [:index, :new, :edit, :create, :update, :show, :destroy]
   get 'editais/:id/word' => 'editais#word', format: 'docx', as: 'edital_word'
   get 'editais/:id/pdf' => 'editais#pdf', as: 'edital_pdf'
+  get 'editais/:id/publicar' => 'editais#publicar', as: 'publicar_edital'
 
   resources :vagas, only: [:index, :new, :create, :edit, :update, :show, :destroy]
 

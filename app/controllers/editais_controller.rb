@@ -1,6 +1,6 @@
 class EditaisController < ApplicationController
-  before_action :authenticate_user!
-  before_action -> { redireciona_usuario(:pode_criar_edital?) }
+  before_action :authenticate_user!, except: [:show]
+  before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:show]
 
   respond_to :docx
 
@@ -49,6 +49,15 @@ class EditaisController < ApplicationController
       flash[:danger] = 'Falha ao salvar.'
       render :edit
     end
+  end
+
+  def show
+    @edital = Edital.find(params[:id])
+  end
+
+  def publicar
+    @edital = Edital.find(params[:id])
+    post = Post.new
   end
 
   def destroy

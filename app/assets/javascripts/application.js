@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require cocoon
@@ -19,7 +20,6 @@
 //= require bootstrap-datetimepicker
 //= require pickers
 //= require pt-br
-//= require jquery-ui
 //= require autocomplete-rails
 //= require_self
 //= require_tree .
