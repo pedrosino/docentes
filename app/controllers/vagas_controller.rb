@@ -6,7 +6,18 @@ class VagasController < ApplicationController
 
   def index
     @vagas = Vaga.all
+    if params[:search].present?
+      @vagas = @vagas.where('nome like ?', "%#{params[:search]}%")
+    end
+
     @vagas_ocupadas, @vagas_abertas = @vagas.partition { |vaga| vaga.situacao == 'o' }
+
+    respond_to do |format|
+      format.html {}
+      format.js do
+        render 'index'
+      end
+    end
   end
 
   def new
