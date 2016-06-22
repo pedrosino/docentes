@@ -1,38 +1,20 @@
-<div class="container">
-  <div class="titulo">
-    Editais
+<div class="row menu">
+  <div class="col-md-6">
+    <% @posts.each do |post| %>
+      <div class="post">
+        <div class="post-titulo">
+          <%= post.titulo %>
+        </div>
+        <div class="post-corpo">
+          <%= raw post.corpo %>
+        </div>
+        <div class="post-data">
+          Publicado em <%=l post.data, format: :long %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
-  <ul class="lista abertas list-group col-md-4">
-    <li class="primeiro list-group-item">Inscrições abertas</li>
-    <li class="list-group-item">Edital 025/2016</li>
-    <li class="list-group-item">Edital 024/2016</li>
-    <li class="list-group-item">Edital 022/2016</li>
-    <li class="list-group-item">Edital 021/2016</li>
-    <li class="list-group-item">Edital 018/2016</li>
-  </ul>
-
-  <ul class="lista encerradas list-group col-md-4">
-    <li class="primeiro list-group-item">Inscrições deferidas</li>
-    <li class="list-group-item">Edital 023/2016</li>
-    <li class="list-group-item">Edital 020/2016</li>
-    <li class="list-group-item">Edital 019/2016</li>
-  </ul>
-
-  <ul class="lista resultados list-group col-md-4">
-    <li class="primeiro list-group-item">Resultados</li>
-    <li class="list-group-item">Edital 017/2016</li>
-    <li class="list-group-item">Edital 016/2016</li>
-    <li class="list-group-item">Edital 015/2016</li>
-    <li class="list-group-item">Edital 014/2016</li>
-    <li class="list-group-item">Edital 013/2016</li>
-    <a href="#">Ver mais...</a>
-  </ul>
-
-  <%= simple_form_for :user do |f| %>
-    <div class="col-sm-6">
-      <%= f.input :created_at, as: :date_picker %>
-    </div>
-  <% end %>
+  <div class="col-md-6">
+  </div>
 </div>
-

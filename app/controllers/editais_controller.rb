@@ -2,6 +2,9 @@ class EditaisController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:show]
 
+  include ApplicationHelper
+  include ActionView::Helpers::UrlHelper
+
   respond_to :docx
 
   def index
@@ -56,8 +59,30 @@ class EditaisController < ApplicationController
   end
 
   def publicar
-    @edital = Edital.find(params[:id])
-    post = Post.new
+    edital = Edital.find(params[:id])
+    edital.publicacao = Date.today
+    edital.save
+
+    tipo = tipo_certame[edital.tipo]
+    unidade = edital.areas.first.unidade.nome
+    link = raw link_to('Edital ' + edital.numero, edital_path(edital))
+    titulo = "#{tipo} - #{unidade}"
+    corpo = "Publicado edital de #{tipo} para professor n#{unidade[0] == 'F' ? "a" : "o"} #{unidade}<br />"
+    corpo += "#{"Área".pluralize(edital.areas.length)}: #{edital.areas.map(&:nome).to_sentence}<br />"
+    corpo += "Veja mais informações: #{raw link}"
+
+    post_redireciona(titulo: titulo, corpo: corpo.html_safe, data: Date.today)
+  end
+
+  def post_redireciona(post_atrs)
+    @post = Post.new(post_atrs)
+    if @post.save
+      flash[:success] = "Edital publicado!"
+      redirect_to editais_path
+    else
+      flash[:danger] = "Falha na publicação"
+      render :edit
+    end
   end
 
   def destroy
