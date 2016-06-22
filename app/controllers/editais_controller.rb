@@ -67,7 +67,7 @@ class EditaisController < ApplicationController
     unidade = edital.areas.first.unidade.nome
     link = raw link_to('Edital ' + edital.numero, edital_path(edital))
     titulo = "#{tipo} - #{unidade}"
-    corpo = "Publicado edital de #{tipo} para professor n#{unidade[0] == 'F' ? "a" : "o"} #{unidade}<br />"
+    corpo = "Publicado edital de #{tipo} para professor n#{unidade[0] == 'F' ? 'a' : 'o'} #{unidade}<br />"
     corpo += "#{"Área".pluralize(edital.areas.length)}: #{edital.areas.map(&:nome).to_sentence}<br />"
     corpo += "Veja mais informações: #{raw link}"
 
@@ -77,7 +77,7 @@ class EditaisController < ApplicationController
   def post_redireciona(post_atrs)
     @post = Post.new(post_atrs)
     if @post.save
-      flash[:success] = "Edital publicado!"
+      flash[:success] = 'Edital publicado!'
       redirect_to editais_path
     else
       flash[:danger] = "Falha na publicação"

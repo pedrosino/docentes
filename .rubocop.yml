@@ -9,6 +9,9 @@ Style/StringLiterals:
 Style/GuardClause:
   Enabled: false
 
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: false
+
 Metrics/ClassLength:
   Enabled: false
 
