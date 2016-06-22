@@ -4,7 +4,7 @@
   <h4>Edital <%= @edital.numero %></h4>
 
   <p><h4><strong><%= "Área".pluralize(@edital.areas.length) %>: <%= @edital.areas.map(&:nome).to_sentence %></strong></h4></p>
-  <p>Data da publicação: <%= @edital.publicacao %></p>
+  <p>Data da publicação: <%=l @edital.publicacao, format: :default %></p>
 
   <br />
   <p>Unidade: <%= @edital.areas.first.unidade.nome %></p>

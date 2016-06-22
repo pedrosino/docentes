@@ -8,7 +8,6 @@
     <%= f.input :data %>
     <%= f.input :comeca_inscricao, label: "Início das inscrições", as: :date_picker %>
     <%= f.input :termina_inscricao, label: "Término das inscrições", as: :date_picker %>
-    <%= f.input :publicacao, label: "Data da publicação", as: :date_picker %>
 
     <h3>Selecionar áreas:</h3>
     <table class="table table-condensed">
@@ -32,6 +31,11 @@
 
     <%= link_to icon("arrow-left", "Voltar"), editais_path, class: "btn btn-warning" %>
     <button type="submit" class="btn btn-success"><%= glyphicon("ok") %> Salvar</button>
+    <% unless @edital.publicacao.present? %>
+      <%= link_to publicar_edital_path(@edital), data: { confirm: "Tem certeza que deseja publicar o edital?" }, class: "btn btn-info", title: 'Publicar' do %>
+        <%= glyphicon("share") %> Publicar
+      <% end %>
+    <% end %>
     <%= link_to @edital, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" do %>
       <%= glyphicon("trash") %> Excluir
     <% end %>

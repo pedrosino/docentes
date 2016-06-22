@@ -2,10 +2,13 @@ class EditaisController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:show]
 
+  include ApplicationHelper
+  include ActionView::Helpers::UrlHelper
+
   respond_to :docx
 
   def index
-    @editais = Edital.all
+    @editais = Edital.all.sort_by(&:data)
   end
 
   def new
@@ -56,8 +59,36 @@ class EditaisController < ApplicationController
   end
 
   def publicar
-    @edital = Edital.find(params[:id])
-    post = Post.new
+    edital = Edital.find(params[:id])
+    # Atualiza o edital edital
+    edital.publicacao = Date.today
+    edital.situacao = 'pub'
+    edital.save
+
+    tipo = tipo_certame[edital.tipo]
+    unidade = edital.areas.first.unidade.nome
+    link = raw link_to('Edital ' + edital.numero, edital_path(edital))
+    titulo = "#{tipo} para docente n#{unidade[0] == 'F' ? 'a' : 'o'} #{unidade}"
+    corpo = "#{"Área".pluralize(edital.areas.length)}: #{edital.areas.map(&:nome).to_sentence}<br />"
+    corpo += "Veja mais informações: #{raw link}"
+
+    if edital.publicacao.present?
+      flash[:warning] = "Edital já foi publicado!"
+      redirect_to editais_path
+    else
+      post_redireciona(titulo: titulo, corpo: corpo.html_safe, data: Date.today)
+    end
+  end
+
+  def post_redireciona(post_atrs)
+    @post = Post.new(post_atrs)
+    if @post.save
+      flash[:success] = 'Edital publicado!'
+      redirect_to posts_path
+    else
+      flash[:danger] = "Falha na publicação"
+      render :edit
+    end
   end
 
   def destroy
