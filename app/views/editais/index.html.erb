@@ -1,11 +1,31 @@
 <div class="row menu">
   <%= render 'layouts/menu_lateral' %>
   <div class="colunas-menu">
-    <h4>Editais</h4>
+    <div class="row menu">
+      <div class="col-md-6">
+        <h4>Editais</h4>
 
-    <%= link_to new_edital_path, class: "btn btn-success" do %>
-      <%= glyphicon("plus") %> Novo Edital
-    <% end %>
+        <%= link_to new_edital_path, class: "btn btn-success" do %>
+          <%= glyphicon("plus") %> Novo Edital
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <%= form_tag vagas_path, method: :get, remote: true, class: "form-inline", id: "vagas-form" do %>
+          <div class="form-group">
+            <%= label_tag("Buscar") %>
+            <div id="search-field">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <%= icon('search') %>
+                </span>
+                <%= text_field_tag "search", params[:search], class: "form-control", placeholder: "Unidade ou área" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <br />
 
     <% if @editais != nil %>
       <table class="table table-condensed index editais">
@@ -34,8 +54,10 @@
               <% end %>
               <%= link_to icon("file-word-o"), edital_word_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-success btn-sm", title: 'Gerar arquivo Word' %>
               <%= link_to icon("file-pdf-o"), edital_pdf_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-warning btn-sm", target: "_blank", title: 'Gerar PDF' %>
-              <%= link_to publicar_edital_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-info btn-sm", title: 'Publicar' do %>
-                <%= glyphicon("share") %>
+              <% unless edital.publicacao.present? %>
+                <%= link_to publicar_edital_path(edital), data: { confirm: "Você tem certeza que deseja publicar o edital?", toggle: 'tooltip', placement: 'top' }, class: "btn btn-info btn-sm", title: 'Publicar' do %>
+                  <%= glyphicon("share") %>
+                <% end %>
               <% end %>
             </td>
           </tr>

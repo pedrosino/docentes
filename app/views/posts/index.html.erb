@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <% @posts.each do |post| %>
       <div class="post">
-        <div class="post-titulo">
+        <div class="post-titulo alert-info">
           <%= post.titulo %>
         </div>
         <div class="post-corpo">
@@ -16,5 +16,20 @@
   </div>
 
   <div class="col-md-6">
+    <% @editais.each do |edital| %>
+      <div class="post">
+        <div class="post-data">
+          <%=l edital.publicacao, format: :default %>
+        </div>
+        <div class="post-titulo">
+          <%= link_to edital_path(edital) do %>
+            <%= tipo_certame[edital.tipo] %> para docente d<%= edital.areas.first.unidade.nome[0] == 'F' ? 'a' : 'o' %> <%= edital.areas.first.unidade.nome %>
+          <% end %>
+        </div>
+        <div class="post-corpo">
+          <strong><%= "Área".pluralize(edital.areas.length) %>:</strong> <%= edital.areas.map(&:nome).to_sentence %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
