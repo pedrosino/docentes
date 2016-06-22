@@ -273,5 +273,9 @@ class Area < ActiveRecord::Base
     tipo == 'concurso' && ['ESEBA', 'ESTES'].exclude?(unidade.sigla) && prorrogar && !mantem_qualificacao
   end
 
-  UNIDADES = ['ano', 'semestre', 'aluno', 'artigo', 'trabalho', 'livro', 'capítulo', 'tradução', 'parecer', 'disciplina', 'trabalho', 'resumo', 'evento', 'participação', 'aprovação', 'banca', 'orientação', 'publicação', 'patente', 'registro', 'projeto', 'premiação', 'maquete', 'obra', 'relatório', 'direção'].freeze
+  def contem?(busca)
+    nome.downcase.include?(busca.downcase) || unidade.sigla.downcase.include?(busca.downcase)
+  end
+
+  UNIDADES = ['ano', 'semestre', 'aluno', 'artigo', 'trabalho', 'livro', 'capítulo', 'tradução', 'parecer', 'disciplina', 'resumo', 'evento', 'participação', 'aprovação', 'banca', 'orientação', 'publicação', 'patente', 'registro', 'projeto', 'premiação', 'maquete', 'obra', 'relatório', 'direção'].freeze
 end

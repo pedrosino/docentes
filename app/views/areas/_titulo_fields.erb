@@ -2,7 +2,7 @@
   <td class="descricao borda"><%= f.text_area :descricao, required: true, class: "form-control required" %></td>
   <td class="valor borda">
     <%= f.text_field :valor, required: true, class: "form-control required", value: number_with_precision(f.object.valor, precision: 3, strip_insignificant_zeros: true) %>
-    pontos por <%= f.select :unidade_medida, Area::UNIDADES.sort, {}, { required: true, class: "required" } %>
+    pontos por <%= f.autocomplete_field :unidade_medida, autocomplete_titulo_unidade_medida_areas_path, :full => true, 'data-showNoMatches' => false, 'data-noMatchesLabel' => 'nenhum item encontrado', 'data-min-length' => 1 %>
   </td>
   <td class="maximo borda">
     <%= f.text_field :maximo, required: true, class: "form-control required", value: number_with_precision(f.object.maximo, precision: 3, strip_insignificant_zeros: true) %> pontos

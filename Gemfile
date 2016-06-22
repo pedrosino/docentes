@@ -39,6 +39,8 @@ gem 'cocoon'
 gem 'momentjs-rails', '~> 2.9', github: 'derekprior/momentjs-rails'
 gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
 
+gem 'jquery-ui-rails'
+gem 'rails-jquery-autocomplete'
 gem 'similar_text'
 
 # Use ActiveModel has_secure_password

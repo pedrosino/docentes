@@ -507,3 +507,21 @@ onPage('areas edit, areas update', function(){
     return true;
   }
 });
+
+onPage('areas index', function() {
+  var $form = $('#areas-form');
+  function enviaForm() {
+    $form.submit();
+  }
+
+  //$form.on('input', '#search', function() {
+  $('#search').on('input', enviaForm);
+
+  $('#areas-form').on('ajax:send', function() {
+    $('#lista-areas').addClass('carregando');
+  })
+
+  $('#areas-form').on('ajax:complete', function() {
+    $('#lista-areas').removeClass('carregando');
+  })
+});

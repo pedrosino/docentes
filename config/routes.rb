@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :unidades, only: [:index, :edit, :new, :create, :update, :destroy]
 
   resources :areas, only: [:index, :new, :edit, :create, :update, :destroy]
+  resources :areas do
+    get :autocomplete_titulo_unidade_medida, on: :collection
+  end
   get 'areas/:id/vaga' => 'areas#vaga', as: 'area_vaga'
 
   resources :editais, only: [:index, :new, :edit, :create, :update, :destroy]

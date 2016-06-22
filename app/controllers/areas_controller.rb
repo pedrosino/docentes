@@ -5,11 +5,27 @@ class AreasController < ApplicationController
 
   include ApplicationHelper
 
+  def autocomplete_titulo_unidade_medida
+    # Emulating 'full: true' and 'limit: 10' options from the gem
+    render json: Area::UNIDADES.grep(/#{params[:term]}/).sort[0..9]
+  end
+
   def index
     if current_user.pode_criar_edital?
       @areas = Area.all
     else
       @areas = Area.where(unidade_id: current_user.unidade_id)
+    end
+
+    if params[:search].present?
+      @areas = @areas.select { |area| area.contem?(params[:search]) }
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.js do
+        render 'index'
+      end
     end
   end
 

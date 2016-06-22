@@ -19,6 +19,8 @@
 //= require bootstrap-datetimepicker
 //= require pickers
 //= require pt-br
+//= require jquery-ui
+//= require autocomplete-rails
 //= require_self
 //= require_tree .
 
