@@ -7,7 +7,7 @@ class AreasController < ApplicationController
 
   def autocomplete_titulo_unidade_medida
     # Emulating 'full: true' and 'limit: 10' options from the gem
-    render json: Area::UNIDADES.grep(/#{params[:term]}/).sort[0..9]
+    render json: (Area::UNIDADES.grep(/#{params[:term]}/) | Titulo.select('distinct unidade_medida').where('LOWER(unidade_medida) like LOWER(?)', "%#{params[:term]}%").map(&:unidade_medida)).sort[0..9]
   end
 
   def index
