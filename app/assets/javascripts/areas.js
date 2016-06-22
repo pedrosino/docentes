@@ -81,8 +81,11 @@ function verifica_proporcao($objeto) {
   // troca virgula por ponto, se houver
   $maximo = parseFloat($("input[name*='[titulos_attributes]["+numero+"][maximo]']").val().replace(',','.'));
   $individual = parseFloat($("input[name*='[titulos_attributes]["+numero+"][valor]']").val().replace(',','.'));
-  $correto = (modulo_especial($maximo, $individual) == 0);
-  return $correto;
+  if (isNaN($maximo)) {
+    return true;
+  } else {
+    return (modulo_especial($maximo, $individual) == 0);
+  }
 }
 
 function erro_proporcao($objeto, $correto) {
