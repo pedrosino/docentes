@@ -1,0 +1,20 @@
+<% provide(:title, 'Associar vaga') %>
+
+<div class="container">
+  <h3><%= yield(:title) %></h3>
+  <strong><%= tipo_certame[@area.tipo] %></strong>
+  <br />
+  <strong>Área:</strong> <%= @area.nome %>
+  <br />
+  <strong>Vaga informada:</strong> <%= @area.tipo_vaga %> de <%= @area.nome_vaga %>
+  <br /><br />
+  <%= simple_form_for @area do |f| %>
+    Selecione: <%= f.input :vaga_id, required: true, autofocus: true, label: false, as: :select, collection: @vagas.map { |vaga| ["#{vaga.tipo} de #{vaga.nome}", vaga.id] } %>
+    <%= button_tag(type: 'submit', id: "enviar", name: "commit", value: "vaga", class: "btn btn-success") do %>
+      <%= glyphicon("ok") %> Salvar
+    <% end %>
+    <%= link_to areas_path, class: "btn btn-danger" do %>
+      <%= glyphicon("remove") %> Cancelar
+    <% end %>
+  <% end %>
+</div>

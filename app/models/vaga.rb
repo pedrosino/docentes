@@ -23,9 +23,9 @@ class Vaga < ActiveRecord::Base
     end
   end
 
-  validate :vaga_substituto_nao_ocupada
-  def vaga_substituto_nao_ocupada
-    if vagas_substituto.include?(tipo) && situacao == 'o'
+  validate :vaga_substituto_situacoes
+  def vaga_substituto_situacoes
+    if vagas_substituto.include?(tipo) && ['o', 'r', 'n'].include?(situacao)
       errors.add(:situacao, "não pode ser 'ocupada' (vaga temporária)'")
     end
   end
@@ -33,7 +33,7 @@ class Vaga < ActiveRecord::Base
   SITUACOES = {
     'a' => 'Aberta',
     'o' => 'Ocupada',
-    'r' => 'Redistribuída',
+    'r' => 'Redistribuição',
     's' => 'Substituto',
     'c' => 'Concurso',
     'n' => 'Nomeação'

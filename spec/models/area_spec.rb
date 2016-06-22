@@ -169,6 +169,7 @@ describe Area do
     # Testar soma dos títulos
     it "pelo menos dois itens de titulos" do
       area.proximo = "inicial"
+      area.coautoria = 100
       area.valid?
       expect(area.errors.messages).to eq(base: ["Você deve preencher pelo menos dois itens de atividades didáticas e/ou profissionais.",
                                                 "Você deve preencher pelo menos dois itens de produção científica e/ou artística."])
@@ -176,6 +177,7 @@ describe Area do
 
     it "soma dos titulos deve ser igual ao maximo" do
       area.tipo = 'concurso'
+      area.coautoria = 100
       # Cria uma unidade que não é ESEBA nem ESTES
       unidade = FactoryGirl.create :unidade, sigla: 'PEDRO'
       area.unidade_id = unidade.id
@@ -212,6 +214,7 @@ describe Area do
 
     it "proporcao entre valor individual e maximo" do
       area.tipo = 'concurso'
+      area.coautoria = 100
       # Cria uma unidade que não é ESEBA nem ESTES
       unidade = FactoryGirl.create :unidade, sigla: 'PEDRO'
       area.unidade_id = unidade.id

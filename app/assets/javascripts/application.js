@@ -61,4 +61,6 @@ $(function() {
     };
     $this.datetimepicker(datetimepickerOptions);
   });
+
+  $('[data-toggle="tooltip"]').tooltip();
 });

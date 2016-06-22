@@ -13,6 +13,6 @@ FactoryGirl.define do
 
   trait :substituto do
     tipo { vagas_substituto.sample }
-    situacao { (Vaga::SITUACOES.keys - ['o']).sample }
+    situacao { (Vaga::SITUACOES.keys - ['o', 'r', 'n']).sample }
   end
 end

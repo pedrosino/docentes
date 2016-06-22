@@ -1,6 +1,9 @@
 class AreasController < ApplicationController
   before_action :authenticate_user!
   before_action -> { redireciona_usuario(:pode_criar_area?) }
+  before_action -> { redireciona_usuario(:pode_criar_edital?) }, only: [:vaga]
+
+  include ApplicationHelper
 
   def autocomplete_titulo_unidade_medida
     # Emulating 'full: true' and 'limit: 10' options from the gem
@@ -49,24 +52,11 @@ class AreasController < ApplicationController
     @area = Area.find(params[:id])
   end
 
-  # O formulário de edição da área é dividido em partes.
-  # Cada parte tem uma ação para carregar a view, mas todas
-  # chamam a ação 'update', que salva o que foi passado e
-  # redireciona para a próxima etapa.
-  def inicial
+  def vaga
     @area = Area.find(params[:id])
-  end
-
-  def escrita
-    @area = Area.find(params[:id])
-  end
-
-  def didatica
-    @area = Area.find(params[:id])
-  end
-
-  def titulos
-    @area = Area.find(params[:id])
+    tipos = vagas_efetivo if @area.tipo == 'concurso'
+    tipos = vagas_substituto if @area.tipo == 'processo'
+    @vagas = Vaga.where(tipo: tipos).sort_by { |vaga| vaga.nome.similar(@area.nome_vaga) }.reverse
   end
 
   def update
@@ -75,6 +65,9 @@ class AreasController < ApplicationController
     if @area.update_attributes(area_params)
       if params[:commit] == 'Confirm'
         flash[:success] = 'Solicitação enviada!'
+        redirect_to areas_path
+      elsif params[:commit] == 'vaga'
+        flash[:success] = 'Vaga salva!'
         redirect_to areas_path
       else
         flash[:success] = 'Dados salvos!'
@@ -102,7 +95,7 @@ class AreasController < ApplicationController
       :campus, :graduacao, :descricao_graduacao, :especializacao, :descricao_especializacao, :mestrado, :descricao_mestrado,
       :doutorado, :descricao_doutorado, :disciplinas, :regime, :vagas, :prorrogar, :mantem_qualificacao, :qualif_prorrogar,
       :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :min_procedimental, :max_procedimental,
-      :coautoria, :confirmada,
+      :coautoria, :confirmada, :vaga_id,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy],
       titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :prorrogacao, :_destroy])
 

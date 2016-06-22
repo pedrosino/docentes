@@ -30,6 +30,13 @@ module ApplicationHelper
     }
   end
 
+  def tipo_certame
+    {
+      'concurso' => 'Concurso Público',
+      'processo' => 'Processo Seletivo Simplificado'
+    }
+  end
+
   def lista_campus
     ['Educação Física', 'Glória', 'Monte Carmelo', 'Patos de Minas', 'Pontal', 'Santa Mônica', 'Umuarama']
   end

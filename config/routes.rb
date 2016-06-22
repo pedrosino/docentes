@@ -9,19 +9,16 @@ Rails.application.routes.draw do
   resources :unidades, only: [:index, :edit, :new, :create, :update, :destroy]
 
   resources :areas, only: [:index, :new, :edit, :create, :update, :destroy]
-  get 'areas/:id/inicial' => 'areas#inicial', as: 'editar_area'
-  get 'areas/:id/escrita' => 'areas#escrita', as: 'escrita_area'
-  get 'areas/:id/didatica' => 'areas#didatica', as: 'didatica_area'
-  get 'areas/:id/titulos' => 'areas#titulos', as: 'titulos_area'
   resources :areas do
     get :autocomplete_titulo_unidade_medida, on: :collection
   end
+  get 'areas/:id/vaga' => 'areas#vaga', as: 'area_vaga'
 
   resources :editais, only: [:index, :new, :edit, :create, :update, :destroy]
   get 'editais/:id/word' => 'editais#word', format: 'docx', as: 'edital_word'
   get 'editais/:id/pdf' => 'editais#pdf', as: 'edital_pdf'
 
-  resources :vagas, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :vagas, only: [:index, :new, :create, :edit, :update, :show, :destroy]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

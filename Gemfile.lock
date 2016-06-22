@@ -218,6 +218,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    similar_text (0.0.4)
     simple_form (3.2.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
@@ -281,6 +282,7 @@ DEPENDENCIES
   rubocop (= 0.36)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  similar_text
   simple_form
   spring
   therubyracer
