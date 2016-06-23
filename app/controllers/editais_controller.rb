@@ -60,10 +60,6 @@ class EditaisController < ApplicationController
 
   def publicar
     edital = Edital.find(params[:id])
-    # Atualiza o edital edital
-    edital.publicacao = Date.today
-    edital.situacao = 'pub'
-    edital.save
 
     tipo = tipo_certame[edital.tipo]
     unidade = edital.areas.first.unidade.nome
@@ -76,8 +72,13 @@ class EditaisController < ApplicationController
       flash[:warning] = "Edital já foi publicado!"
       redirect_to editais_path
     else
-      post_redireciona(titulo: titulo, corpo: corpo.html_safe, data: Date.today)
+      post_redireciona(titulo: titulo, corpo: corpo.html_safe, data: Time.now)
     end
+
+    # Atualiza o edital
+    edital.publicacao = Date.today
+    edital.situacao = 'pub'
+    edital.save
   end
 
   def post_redireciona(post_atrs)

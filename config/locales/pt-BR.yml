@@ -18,6 +18,7 @@ pt-BR:
       short: "%d/%m, %H:%M h"
       #long: "%A, %d de %B de %Y, %H:%M h"
       long: "%Hh%M do dia %d de %B de %Y"
+      post: "%d de %B de %Y, %Hh%M"
     am: ''
     pm: ''
 
