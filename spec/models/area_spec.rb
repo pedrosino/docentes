@@ -30,8 +30,8 @@ describe Area do
       expect(area).to be_valid
     end
 
-    it "Trait :enviada" do
-      area = FactoryGirl.create(:area, :enviada)
+    it "Trait :confirmada" do
+      area = FactoryGirl.create(:area, :confirmada)
       expect(area).to be_valid
     end
   end

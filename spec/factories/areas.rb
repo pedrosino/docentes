@@ -6,6 +6,7 @@ FactoryGirl.define do
     tipo_vaga { (vagas_substituto + vagas_efetivo).sample }
     nome_vaga { Faker::Name.name }
     unidade_id { FactoryGirl.create(:unidade).id }
+    prorrogar { false }
 
     trait :concurso do
       tipo 'concurso'
@@ -58,7 +59,7 @@ FactoryGirl.define do
       titulos_ok
     end
 
-    trait :enviada do
+    trait :confirmada do
       verificada
       after(:create) do |area|
         area.confirmada = true

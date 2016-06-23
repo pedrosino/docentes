@@ -61,7 +61,7 @@ User.create(email: 'louane@ufu.br', password: 'louaneufu', password_confirmation
   FactoryGirl.create(:area, :concurso, :didatica_ok, unidade_id: Unidade.all.sample.id)
   FactoryGirl.create(:area, :concurso, :titulos_ok, unidade_id: Unidade.all.sample.id)
   FactoryGirl.create(:area, :verificada, unidade_id: Unidade.all.sample.id)
-  FactoryGirl.create(:area, :enviada, unidade_id: Unidade.all.sample.id)
+  FactoryGirl.create(:area, :confirmada, unidade_id: Unidade.all.sample.id)
 end
 
 # Editais
