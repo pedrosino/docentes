@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all.sort_by(&:created_at).reverse
-    @editais = Edital.all.sort_by(&:publicacao).reverse
+    @editais = Edital.where('publicacao is not null').sort_by(&:publicacao).reverse
   end
 
   def new

@@ -64,7 +64,7 @@ class EditaisController < ApplicationController
     tipo = tipo_certame[edital.tipo]
     unidade = edital.areas.first.unidade.nome
     link = raw link_to('Edital ' + edital.numero, edital_path(edital))
-    titulo = "#{tipo} para docente n#{unidade[0] == 'F' ? 'a' : 'o'} #{unidade}"
+    titulo = "#{tipo} para docente n#{unidade.start_with?('F') ? 'a' : 'o'} #{unidade}"
     corpo = "#{"Área".pluralize(edital.areas.length)}: #{edital.areas.map(&:nome).to_sentence}<br />"
     corpo += "Veja mais informações: #{raw link}"
 
