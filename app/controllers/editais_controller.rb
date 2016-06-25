@@ -136,6 +136,21 @@ class EditaisController < ApplicationController
 
   def pdf
     @edital = Edital.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "Edital PROGEP #{@edital.numero}",
+               template: "editais/pdf.html.erb",
+               disposition: 'inline',
+               page_size: 'A4',
+               layout: 'pdf',
+               margin: { top: 30, bottom: 12, left: 30, right: 10 },
+               print_media_type: true,
+               show_as_html: params.key?('debug'),
+               header: { html: { template: 'editais/pdf_header.pdf.erb' } },
+               footer: { right: '[page] de [topage]' }
+      end
+    end
   end
 
   def edital_params

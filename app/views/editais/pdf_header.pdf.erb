@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <%= wicked_pdf_stylesheet_link_tag 'application', media: 'all' %>
+  </head>
+  <body>
+    <div class="edital-header">
+      <table class="cabecalho">
+        <tr>
+          <td>
+          </td>
+          <td class="linha-cabecalho">
+            SERVIÇO PÚBLICO FEDERAL<br />
+            MINISTÉRIO DA EDUCAÇÃO<br />
+            UNIVERSIDADE FEDERAL DE UBERLÂNDIA<br />
+            PRÓ-REITORIA DE GESTÃO DE PESSOAS<br />
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=3 class="numero-edital">EDITAL <%= @edital.numero %></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

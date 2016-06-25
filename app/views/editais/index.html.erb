@@ -52,7 +52,8 @@
               <%= link_to edit_edital_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-primary btn-sm", title: 'Editar' do %>
                 <%= glyphicon("pencil") %>
               <% end %>
-              <%= link_to icon("file-word-o"), edital_word_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-success btn-sm", title: 'Gerar arquivo Word' %>
+              <%#= link_to icon("file-word-o"), edital_word_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-success btn-sm", title: 'Gerar arquivo Word' %>
+              <%= link_to icon("file-word"), edital_pdf_path(edital, format: :pdf), class: "btn btn-success btn-sm" %>
               <%= link_to icon("file-pdf-o"), edital_pdf_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-warning btn-sm", target: "_blank", title: 'Gerar PDF' %>
               <% unless edital.publicacao.present? %>
                 <%= link_to publicar_edital_path(edital), data: { confirm: "Você tem certeza que deseja publicar o edital?", toggle: 'tooltip', placement: 'top' }, class: "btn btn-info btn-sm", title: 'Publicar' do %>
