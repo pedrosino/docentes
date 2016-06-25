@@ -35,6 +35,11 @@ gem 'htmltoword'
 
 gem 'docx_replace', git: 'https://github.com/pedrosino/docx_replace.git'
 
+gem 'prawn'
+## Acrescentar format :pdf na rota ##
+#gem 'prawn-rails'
+gem 'prawn_rails'
+
 gem 'cocoon'
 gem 'momentjs-rails', '~> 2.9', github: 'derekprior/momentjs-rails'
 gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true

@@ -138,6 +138,10 @@ class EditaisController < ApplicationController
     @edital = Edital.find(params[:id])
   end
 
+  def example
+    @edital = Edital.find(params[:id])
+  end
+
   def edital_params
     edital_params = params.require(:edital).permit(:numero, :tipo, :data, :comeca_inscricao, :termina_inscricao, :publicacao)
     # As inscrições terminam sempre às 23:59:59 do último dia.

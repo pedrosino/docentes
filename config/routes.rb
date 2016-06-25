@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'editais/:id/word' => 'editais#word', format: 'docx', as: 'edital_word'
   get 'editais/:id/pdf' => 'editais#pdf', as: 'edital_pdf'
   get 'editais/:id/publicar' => 'editais#publicar', as: 'publicar_edital'
+  get 'editais/:id/example' => 'editais#example', format: 'pdf', as: 'example_edital'
 
   resources :vagas, only: [:index, :new, :create, :edit, :update, :show, :destroy]
 
