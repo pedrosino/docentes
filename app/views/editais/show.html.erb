@@ -11,5 +11,6 @@
   <p>E-mail: <%= @edital.areas.first.unidade.email %></p>
   <p>Telefone: <%= @edital.areas.first.unidade.telefone %></p>
   <br />
-  Documentos:
+  Documentos:<br />
+  <%= link_to icon('file-pdf-o','Edital completo'), baixar_edital_path(@edital) %>
 </div>

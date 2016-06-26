@@ -1,6 +1,6 @@
 class EditaisController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
-  before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:show]
+  before_action :authenticate_user!, except: [:show, :baixar_pdf]
+  before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:show, :baixar_pdf]
 
   include ApplicationHelper
   include ActionView::Helpers::UrlHelper
@@ -81,16 +81,16 @@ class EditaisController < ApplicationController
     @edital.save
 
     render pdf: "Edital_PROGEP_#{@edital.numero}",
-               template: "editais/pdf.html.erb",
-               save_to_file: "#{Rails.root}/public/editais/Edital_PROGEP_#{@edital.numero.sub('/','_')}.pdf",
-               save_only: true,
-               page_size: 'A4',
-               layout: 'pdf',
-               margin: { top: 35, bottom: 12, left: 30, right: 10 },
-               print_media_type: true,
-               show_as_html: params.key?('debug'),
-               header: { html: { template: 'editais/pdf_header.pdf.erb' } },
-               footer: { right: '[page] de [topage]' }
+           template: 'editais/pdf.html.erb',
+           save_to_file: "#{Rails.root}/public/editais/Edital_PROGEP_#{@edital.numero.sub('/', '_')}.pdf",
+           save_only: true,
+           page_size: 'A4',
+           layout: 'pdf',
+           margin: { top: 35, bottom: 12, left: 30, right: 10 },
+           print_media_type: true,
+           show_as_html: params.key?('debug'),
+           header: { html: { template: 'editais/pdf_header.pdf.erb' } },
+           footer: { right: '[page] de [topage]' }
   end
 
   def post_redireciona(post_atrs)
@@ -102,6 +102,14 @@ class EditaisController < ApplicationController
       flash[:danger] = "Falha na publicação"
       render :edit
     end
+  end
+
+  def baixar_pdf
+    @edital = Edital.find(params[:id])
+    send_file(
+      "#{Rails.root}/public/editais/Edital_PROGEP_#{@edital.numero.sub('/', '_')}.pdf",
+      type: 'application/pdf'
+    )
   end
 
   def destroy
@@ -152,7 +160,7 @@ class EditaisController < ApplicationController
       format.html
       format.pdf do
         render pdf: "Edital PROGEP #{@edital.numero}",
-               template: "editais/pdf.html.erb",
+               template: 'editais/pdf.html.erb',
                disposition: 'inline',
                page_size: 'A4',
                layout: 'pdf',
