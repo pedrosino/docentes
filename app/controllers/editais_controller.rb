@@ -59,16 +59,16 @@ class EditaisController < ApplicationController
   end
 
   def publicar
-    edital = Edital.find(params[:id])
+    @edital = Edital.find(params[:id])
 
-    tipo = tipo_certame[edital.tipo]
-    unidade = edital.areas.first.unidade.nome
-    link = raw link_to('Edital ' + edital.numero, edital_path(edital))
+    tipo = tipo_certame[@edital.tipo]
+    unidade = @edital.areas.first.unidade.nome
+    link = raw link_to('Edital ' + @edital.numero, edital_path(@edital))
     titulo = "#{tipo} para docente n#{unidade.start_with?('F') ? 'a' : 'o'} #{unidade}"
-    corpo = "#{"Área".pluralize(edital.areas.length)}: #{edital.areas.map(&:nome).to_sentence}<br />"
+    corpo = "#{"Área".pluralize(@edital.areas.length)}: #{@edital.areas.map(&:nome).to_sentence}<br />"
     corpo += "Veja mais informações: #{raw link}"
 
-    if edital.publicacao.present?
+    if @edital.publicacao.present?
       flash[:warning] = "Edital já foi publicado!"
       redirect_to editais_path
     else
@@ -76,9 +76,21 @@ class EditaisController < ApplicationController
     end
 
     # Atualiza o edital
-    edital.publicacao = Date.today
-    edital.situacao = 'pub'
-    edital.save
+    @edital.publicacao = Date.today
+    @edital.situacao = 'pub'
+    @edital.save
+
+    render pdf: "Edital_PROGEP_#{@edital.numero}",
+               template: "editais/pdf.html.erb",
+               save_to_file: "#{Rails.root}/public/editais/Edital_PROGEP_#{@edital.numero.sub('/','_')}.pdf",
+               save_only: true,
+               page_size: 'A4',
+               layout: 'pdf',
+               margin: { top: 35, bottom: 12, left: 30, right: 10 },
+               print_media_type: true,
+               show_as_html: params.key?('debug'),
+               header: { html: { template: 'editais/pdf_header.pdf.erb' } },
+               footer: { right: '[page] de [topage]' }
   end
 
   def post_redireciona(post_atrs)
@@ -144,7 +156,7 @@ class EditaisController < ApplicationController
                disposition: 'inline',
                page_size: 'A4',
                layout: 'pdf',
-               margin: { top: 30, bottom: 12, left: 30, right: 10 },
+               margin: { top: 35, bottom: 12, left: 30, right: 10 },
                print_media_type: true,
                show_as_html: params.key?('debug'),
                header: { html: { template: 'editais/pdf_header.pdf.erb' } },
