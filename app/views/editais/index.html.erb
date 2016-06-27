@@ -4,13 +4,14 @@
     <div class="row menu">
       <div class="col-md-6">
         <h4>Editais</h4>
-
-        <%= link_to new_edital_path, class: "btn btn-success" do %>
-          <%= glyphicon("plus") %> Novo Edital
+        <% if current_user.pode_criar_edital? %>
+          <%= link_to new_edital_path, class: "btn btn-success" do %>
+            <%= glyphicon("plus") %> Novo Edital
+          <% end %>
         <% end %>
       </div>
       <div class="col-md-6">
-        <%= form_tag vagas_path, method: :get, remote: true, class: "form-inline", id: "vagas-form" do %>
+        <%= form_tag editais_path, method: :get, remote: true, class: "form-inline", id: "editais-form" do %>
           <div class="form-group">
             <%= label_tag("Buscar") %>
             <div id="search-field">
@@ -18,7 +19,7 @@
                 <span class="input-group-addon">
                   <%= icon('search') %>
                 </span>
-                <%= text_field_tag "search", params[:search], class: "form-control", placeholder: "Unidade ou área" %>
+                <%= text_field_tag "search", params[:search], class: "form-control", placeholder: "Área" %>
               </div>
             </div>
           </div>
@@ -27,45 +28,14 @@
     </div>
     <br />
 
-    <% if @editais != nil %>
-      <table class="table table-condensed index editais">
-        <thead>
-          <tr>
-            <th>Número</th>
-            <th>Tipo</th>
-            <th>Área(s)</th>
-            <th>Situação</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-        <% @editais.each do |edital| %>
-          <tr class="<%= classe_situacao_edital[edital.situacao] %>">
-            <td class="numero"><%= edital.numero %></td>
-            <td class="tipo"><%= tipo_certame[edital.tipo] %></td>
-            <td class="areas">
-              <%= edital.areas.map(&:nome).to_sentence if edital.areas %>
-            </td>
-            <td class="situacao"><%= icon("#{icones_situacao_edital[edital.situacao]}") %> <%= Edital::SITUACOES[edital.situacao] %></td>
-            <td>
-              <%= link_to edit_edital_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-primary btn-sm", title: 'Editar' do %>
-                <%= glyphicon("pencil") %>
-              <% end %>
-              <%= link_to icon("file-word-o"), edital_word_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-success btn-sm", title: 'Gerar arquivo Word' %>
-              <%= link_to icon("file-pdf-o"), edital_pdf_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-warning btn-sm", target: "_blank", title: 'Gerar PDF' %>
-              <% unless edital.publicacao.present? %>
-                <%= link_to publicar_edital_path(edital), data: { confirm: "Você tem certeza que deseja publicar o edital?", toggle: 'tooltip', placement: 'top' }, class: "btn btn-info btn-sm", title: 'Publicar' do %>
-                  <%= glyphicon("share") %>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
+    <% if @editais.length > 0 %>
+      <div class="row menu">
+        <div id="lista-editais">
+          <%= render 'index_table', editais: @editais %>
+        </div>
+      </div>
     <% else %>
-      Nada!
+      <div class="alert alert-warning">Nenhum edital encontrado</div>
     <% end %>
   </div>
 </div>

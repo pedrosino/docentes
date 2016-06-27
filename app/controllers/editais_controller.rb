@@ -9,6 +9,16 @@ class EditaisController < ApplicationController
 
   def index
     @editais = Edital.all.sort_by(&:data)
+    if params[:search].present?
+      @editais = @editais.select { |edital| edital.contem?(params[:search]) }
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.js do
+        render 'index'
+      end
+    end
   end
 
   def new
