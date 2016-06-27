@@ -24,6 +24,21 @@ FactoryGirl.define do
       prorrogar true
     end
 
+    trait :graduacao do
+      graduacao true
+      descricao_graduacao { Faker::Lorem.paragraph }
+    end
+
+    trait :mestrado do
+      mestrado true
+      descricao_mestrado { Faker::Lorem.paragraph }
+    end
+
+    trait :doutorado do
+      doutorado true
+      descricao_doutorado { Faker::Lorem.paragraph }
+    end
+
     trait :escrita_ok do
       after(:create) do |area|
         FactoryGirl.create(:criterio, :escrita, area_id: area.id, valor: 70)
@@ -55,6 +70,8 @@ FactoryGirl.define do
     end
 
     trait :verificada do
+      graduacao
+      doutorado
       escrita_ok
       didatica_ok
       titulos_ok
