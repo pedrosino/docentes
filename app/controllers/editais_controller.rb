@@ -1,6 +1,6 @@
 class EditaisController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :baixar_pdf]
-  before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:show, :baixar_pdf]
+  before_action :authenticate_user!, except: [:index, :show, :baixar_pdf]
+  before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:index, :show, :baixar_pdf]
 
   include ApplicationHelper
   include ActionView::Helpers::UrlHelper
@@ -9,6 +9,22 @@ class EditaisController < ApplicationController
 
   def index
     @editais = Edital.all.sort_by(&:data)
+    @admin = current_user && current_user.pode_criar_edital?
+
+    if params[:search].present?
+      @editais = @editais.select { |edital| edital.contem?(params[:search]) }
+    end
+
+    unless @admin
+      @editais = @editais.select { |edital| edital.publicacao != nil }
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.js do
+        render 'index'
+      end
+    end
   end
 
   def new

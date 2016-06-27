@@ -1,0 +1,52 @@
+<% if editais.length > 0 %>
+  <table class="table table-condensed index editais" id="editais-list">
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Unidade(s)</th>
+        <th>Tipo</th>
+        <th>Área(s)</th>
+        <th><%= admin ? "Situação" : "Publicação" %></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% editais.each do |edital| %>
+      <tr class="<%= admin ? classe_situacao_edital[edital.situacao] : "" %>">
+        <td class="numero"><%= edital.numero %></td>
+        <td class="unidades"><%= edital.unidades.to_sentence %></td>
+        <td class="tipo"><%= tipo_certame[edital.tipo] %></td>
+        <td class="areas">
+          <%= edital.areas.map(&:nome).to_sentence if edital.areas %>
+        </td>
+        <td class="<%= admin ? "situacao" : "publicacao" %>">
+          <% if admin %>
+            <%= icon("#{icones_situacao_edital[edital.situacao]}") %> <%= Edital::SITUACOES[edital.situacao] %>
+          <% else %>
+            <%=l edital.publicacao, format: :default %>
+          <% end %>
+        </td>
+        <td>
+          <% if admin %>
+            <%= link_to edit_edital_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-primary btn-sm", title: 'Editar' do %>
+              <%= glyphicon("pencil") %>
+            <% end %>
+            <%= link_to icon("file-word-o"), edital_word_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-success btn-sm", title: 'Gerar arquivo Word' %>
+            <%= link_to icon("file-pdf-o"), edital_pdf_path(edital), data: { toggle: 'tooltip', placement: 'top' }, class: "btn btn-warning btn-sm", target: "_blank", title: 'Gerar PDF' %>
+            <% unless edital.publicacao.present? %>
+              <%= link_to publicar_edital_path(edital), data: { confirm: "Você tem certeza que deseja publicar o edital?", toggle: 'tooltip', placement: 'top' }, class: "btn btn-info btn-sm", title: 'Publicar' do %>
+                <%= glyphicon("share") %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%= link_to icon('eye','Veja mais'), edital_path(edital) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info">Nenhum edital encontrado.</div>
+<% end %>

@@ -35,4 +35,12 @@ class Edital < ActiveRecord::Base
   def titulacao
     areas.map(&:titulacao_minima).min
   end
+
+  def unidades
+    areas.map(&:unidade).map(&:sigla)
+  end
+
+  def contem?(busca)
+    areas.map(&:nome).map(&:downcase).any? { |s| s.include?(busca.downcase) } || unidades.map(&:downcase).any? { |s| s.include?(busca.downcase) } || numero.include?(busca)
+  end
 end

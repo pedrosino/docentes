@@ -29,7 +29,7 @@
 
     <% if @vagas_abertas.length > 0 %>
       <div class="row menu">
-        <div id="lista-areas">
+        <div id="lista-vagas">
           <%= render 'index_table', vagas: @vagas_abertas %>
         </div>
       </div>
@@ -40,7 +40,7 @@
 
     <% if @vagas_ocupadas.length > 0 %>
       <div class="row menu">
-        <div id="lista-areas">
+        <div id="lista-vagas">
           <%= render 'index_table_ocupadas', vagas: @vagas_ocupadas %>
         </div>
       </div>
