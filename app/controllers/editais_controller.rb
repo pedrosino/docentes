@@ -9,11 +9,13 @@ class EditaisController < ApplicationController
 
   def index
     @editais = Edital.all.sort_by(&:data)
+    @admin = current_user && current_user.pode_criar_edital?
+
     if params[:search].present?
       @editais = @editais.select { |edital| edital.contem?(params[:search]) }
     end
 
-    unless current_user && current_user.pode_criar_edital?
+    unless @admin
       @editais = @editais.select { |edital| edital.publicacao != nil }
     end
 

@@ -1,14 +1,12 @@
-<% admin = current_user && current_user.pode_criar_edital? %>
-
 <div class="row menu">
-  <% if admin %>
+  <% if @admin %>
     <%= render 'layouts/menu_lateral' %>
   <% end %>
   <div class="colunas-menu">
     <div class="row menu">
       <div class="col-md-6">
         <h4>Editais</h4>
-        <% if admin %>
+        <% if @admin %>
           <%= link_to new_edital_path, class: "btn btn-success" do %>
             <%= glyphicon("plus") %> Novo Edital
           <% end %>
@@ -32,14 +30,10 @@
     </div>
     <br />
 
-    <% if @editais.length > 0 %>
-      <div class="row menu">
-        <div id="lista-editais">
-          <%= render 'index_table', editais: @editais %>
-        </div>
+    <div class="row menu">
+      <div id="lista-editais">
+        <%= render 'index_table', editais: @editais, admin: @admin %>
       </div>
-    <% else %>
-      <div class="alert alert-warning">Nenhum edital encontrado</div>
-    <% end %>
+    </div>
   </div>
 </div>
