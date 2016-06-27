@@ -3,7 +3,7 @@ require 'rails_helper'
 describe EditaisController do
   context "nao esta logado" do
     it "redireciona para login" do
-      get :index
+      get :new
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -33,9 +33,9 @@ describe EditaisController do
 
       let(:edital) { FactoryGirl.create :edital }
       it "edita um edital" do
-        post :update, id: edital.id, edital: { data: "01 de junho de 2016", publicacao: "2016-06-03" }
+        post :update, id: edital.id, edital: { data: "2016-06-01", publicacao: "2016-06-03" }
         edital.reload
-        expect(edital.data).to eq "01 de junho de 2016"
+        expect(edital.data.to_s).to eq "2016-06-01"
         expect(edital.publicacao.to_s).to eq "2016-06-03"
       end
 

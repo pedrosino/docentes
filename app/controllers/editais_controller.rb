@@ -16,7 +16,7 @@ class EditaisController < ApplicationController
     end
 
     unless @admin
-      @editais = @editais.select { |edital| edital.publicacao != nil }
+      @editais = @editais.select { |edital| !edital.publicacao.nil? }
     end
 
     respond_to do |format|
