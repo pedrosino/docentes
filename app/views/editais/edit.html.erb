@@ -5,7 +5,7 @@
 
     <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
     <%= f.input :numero, required: true, label: "Número" %>
-    <%= f.input :data %>
+    <%= f.input :data, as: :date_picker %>
     <%= f.input :comeca_inscricao, label: "Início das inscrições", as: :date_picker %>
     <%= f.input :termina_inscricao, label: "Término das inscrições", as: :date_picker %>
 

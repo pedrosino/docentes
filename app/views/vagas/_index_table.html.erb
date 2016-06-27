@@ -20,8 +20,8 @@
         <td class="nome"><%= vaga.nome %></td>
         <td class="codigo"><%= vaga.codigo %></td>
         <td class="tipo"><%= vaga.tipo %></td>
-        <td class="data"><%=l vaga.data_inicio, format: :default %></td>
-        <td class="data">
+        <td class="data-mostrar"><%=l vaga.data_inicio, format: :default %></td>
+        <td class="data-mostrar">
           <% if vaga.data_fim.present? %>
             <%=l vaga.data_fim, format: :default %>
           <% end %>
