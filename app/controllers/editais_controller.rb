@@ -85,6 +85,18 @@ class EditaisController < ApplicationController
     corpo = "#{"Área".pluralize(@edital.areas.length)}: #{@edital.areas.map(&:nome).to_sentence}<br />"
     corpo += "Veja mais informações: #{raw link}"
 
+    render pdf: "Edital_PROGEP_#{@edital.numero}",
+           template: 'editais/pdf.html.erb',
+           save_to_file: "#{Rails.root}/public/editais/Edital_PROGEP_#{@edital.numero.sub('/', '_')}.pdf",
+           save_only: true,
+           page_size: 'A4',
+           layout: 'pdf',
+           margin: { top: 35, bottom: 12, left: 30, right: 10 },
+           print_media_type: true,
+           show_as_html: params.key?('debug'),
+           header: { html: { template: 'editais/pdf_header.pdf.erb' } },
+           footer: { right: '[page] de [topage]' } and return
+
     if @edital.publicacao.present?
       flash[:warning] = "Edital já foi publicado!"
       redirect_to editais_path
@@ -96,29 +108,16 @@ class EditaisController < ApplicationController
     @edital.publicacao = Date.today
     @edital.situacao = 'pub'
     @edital.save
-
-    render pdf: "Edital_PROGEP_#{@edital.numero}",
-           template: 'editais/pdf.html.erb',
-           save_to_file: "#{Rails.root}/public/editais/Edital_PROGEP_#{@edital.numero.sub('/', '_')}.pdf",
-           save_only: true,
-           page_size: 'A4',
-           layout: 'pdf',
-           margin: { top: 35, bottom: 12, left: 30, right: 10 },
-           print_media_type: true,
-           show_as_html: params.key?('debug'),
-           header: { html: { template: 'editais/pdf_header.pdf.erb' } },
-           footer: { right: '[page] de [topage]' }
   end
 
   def post_redireciona(post_atrs)
     @post = Post.new(post_atrs)
     if @post.save
       flash[:success] = 'Edital publicado!'
-      redirect_to posts_path
     else
       flash[:danger] = "Falha na publicação"
-      render :edit
     end
+    redirect_to editais_path
   end
 
   def baixar_pdf

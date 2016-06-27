@@ -62,9 +62,17 @@ $(function() {
     $this.datetimepicker(datetimepickerOptions);
   });
 
-  $('[data-toggle="tooltip"]').tooltip();
-
   $('a[disabled=disabled]').click(function(event){
     event.preventDefault(); // Prevent link from following its href
+    if ($(this).prop('id') == 'publicar-edit') {
+      alert('Preencha a data do edital e clique em Salvar!');
+      return false;
+    }
+    if ($(this).prop('id') == 'publicar-index') {
+      alert('Preencha a data do edital!');
+      return false;
+    }
   });
+
+  $('[data-toggle="tooltip"]').tooltip();
 });

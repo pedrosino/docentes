@@ -258,3 +258,15 @@ table.table.table-condensed.index {
 div.carregando {
   opacity: 0.5;
 }
+
+.btn.disabled,
+.btn[disabled],
+.btn.disabled:hover,
+.btn[disabled]:hover,
+.btn.disabled:active,
+.btn[disabled]:active,
+.btn.disabled:visited,
+.btn[disabled]:visited {
+  background-color: #aaa;
+  border-color: #999;
+}
