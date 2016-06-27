@@ -3,7 +3,6 @@ FactoryGirl.define do
     nome { Faker::Lorem.sentence(2, true, 2) }
     campus { ['Educação Física', 'Glória', 'Monte Carmelo', 'Patos de Minas', 'Santa Mônica', 'Umuarama'].sample }
     vagas { Faker::Number.between(1, 5) }
-    tipo_vaga { (vagas_substituto + vagas_efetivo).sample }
     nome_vaga { Faker::Name.name }
     unidade_id { FactoryGirl.create(:unidade).id }
     prorrogar { false }
@@ -12,11 +11,13 @@ FactoryGirl.define do
       tipo 'concurso'
       regime { ['20', '40', 'DE'].sample }
       prova_didatica true
+      tipo_vaga { vagas_efetivo.sample }
     end
 
     trait :processo do
       tipo 'processo'
       regime { ['20', '40'].sample }
+      tipo_vaga { vagas_substituto.sample }
     end
 
     trait :prorrogada do
