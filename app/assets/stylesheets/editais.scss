@@ -239,9 +239,8 @@ table.index.editais {
     }
   }
 
-  table.no-break {
-    td {
-      page-break-inside: avoid;
-    }
+  /* Pode ser usado na tabela toda ou td */
+  .no-break {
+    page-break-inside: avoid;
   }
 }

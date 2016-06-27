@@ -1,0 +1,26 @@
+<table class="titulos">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Descrição</th>
+      <th>Pontuação</th>
+      <th>Pontuação máxima</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% item = 1 %>
+  <% titulos.each do |titulo| %>
+    <tr>
+      <td class="item no-break"><%= item %></td>
+      <td class="descricao no-break"><%= titulo.descricao %></td>
+      <td class="pontuacao no-break"><%= titulo.valor %> pontos<br /> por <%= titulo.unidade_medida %></td>
+      <td class="maximo no-break"><%= titulo.maximo %> pontos</td>
+    </tr>
+    <% item += 1 %>
+  <% end %>
+    <tr>
+      <th colspan=3>Total máximo</th>
+      <th><%= maximo %> pontos</th>
+    </tr>
+  </tbody>
+</table>
