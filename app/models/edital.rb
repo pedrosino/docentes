@@ -41,6 +41,6 @@ class Edital < ActiveRecord::Base
   end
 
   def contem?(busca)
-    areas.map(&:nome).map(&:downcase).any? { |s| s.include?(busca.downcase) } || unidades.map(&:downcase).any? { |s| s.include?(busca.downcase) }
+    areas.map(&:nome).map(&:downcase).any? { |s| s.include?(busca.downcase) } || unidades.map(&:downcase).any? { |s| s.include?(busca.downcase) } || numero.include?(busca)
   end
 end

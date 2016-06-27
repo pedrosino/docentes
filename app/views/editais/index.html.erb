@@ -1,10 +1,14 @@
+<% admin = current_user && current_user.pode_criar_edital? %>
+
 <div class="row menu">
-  <%= render 'layouts/menu_lateral' %>
+  <% if admin %>
+    <%= render 'layouts/menu_lateral' %>
+  <% end %>
   <div class="colunas-menu">
     <div class="row menu">
       <div class="col-md-6">
         <h4>Editais</h4>
-        <% if current_user.pode_criar_edital? %>
+        <% if admin %>
           <%= link_to new_edital_path, class: "btn btn-success" do %>
             <%= glyphicon("plus") %> Novo Edital
           <% end %>
