@@ -240,6 +240,8 @@ table.index.editais {
   }
 
   table.no-break {
-    page-break-inside: avoid;
+    td {
+      page-break-inside: avoid;
+    }
   }
 }

@@ -80,7 +80,7 @@
       </tbody>
     </table>
 
-    <table class="areas-edital">
+    <table class="areas-edital no-break">
       <thead>
         <tr>
           <% vagas_negros = @edital.areas.map(&:vagas_negros).sum %>
@@ -141,7 +141,7 @@
     <p><strong>4 - REMUNERAÇÕES DO CARGO</strong></p>
     <p><strong>4.1</strong> - Ao candidato aprovado e investido no cargo de Professor, conforme denominação a seguir, fica assegurada a remuneração estruturada conforme o Plano de Carreiras e Cargos de Magistério Federal com a seguinte composição: Vencimento Básico(VB) mais Retribuição por Titulação(RT) conforme mostra a tabela abaixo, nos termos do Anexo III da Lei 12.772/2012, e ainda o Auxílio Alimentação no valor de R$ 458,00.</p>
   </div>
-  <table class="salario">
+  <table class="salario no-break">
     <thead>
       <tr>
         <th>Classe</th>
@@ -257,7 +257,7 @@
     <p class="nivel-2"><strong>6.4.6.1</strong> - Somente será permitido o uso de aparelho auditivo àquele candidato que tiver declarado necessidade auditiva no ato da inscrição e enviado comprovação médica, de acordo com o estabelecido no <strong>item 5.8</strong>. O aparelho poderá ser usado somente nos momentos em que seja necessária a comunicação verbal entre o fiscal e o candidato.</p>
     <p class="nivel-1"><strong>6.4.7 - O candidato que for flagrado na prática de alguma das condutas vedadas pelo item 6.4.6 será automaticamente retirado do local de aplicação da prova e eliminado do concurso.</strong></p>
     <p class="nivel-1"><strong>6.4.8 - A prova escrita</strong> será avaliada dentro dos seguintes critérios:</p>
-    <table class="criterios">
+    <table class="criterios no-break">
       <thead>
         <tr>
           <th>Número</th>
@@ -299,7 +299,7 @@
       VII - apresentação de plano de aula com fundamentação teórica, coesão e informações essenciais ao desenvolvimento da aula.
     </div>
     <p class="nivel-1"><strong>6.5.3</strong> - Critérios de avaliação da prova didática:</p>
-    <table class="criterios">
+    <table class="criterios no-break">
       <thead>
         <tr>
           <th>Número</th>
@@ -354,7 +354,7 @@
   </div>
 
   <p><strong>Tabela 1: Atividades Didáticas e/ou Profissionais nos últimos 5 anos</strong></p>
-  <table class="titulos">
+  <table class="titulos no-break">
     <thead>
       <tr>
         <th>Item</th>
@@ -382,7 +382,7 @@
   </table>
 
   <p><strong>Tabela 2: Produção Científica e/ou Artística nos últimos 5 anos</strong></p>
-  <table class="titulos">
+  <table class="titulos no-break">
     <thead>
       <tr>
         <th>Item</th>
@@ -411,7 +411,7 @@
 
   <% if @edital.areas.first.prorrogar && !@edital.areas.first.mantem_qualificacao %>
     <p><strong>Tabela 3: Produção Científica e/ou Artística nos últimos 5 anos (exigência inferior a Doutorado)</strong></p>
-    <table class="titulos">
+    <table class="titulos no-break">
       <thead>
         <tr>
           <th>Item</th>
