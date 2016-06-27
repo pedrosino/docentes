@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622123000) do
+ActiveRecord::Schema.define(version: 20160627141522) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",               limit: 4
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20160622123000) do
 
   create_table "editais", force: :cascade do |t|
     t.string   "numero",            limit: 255
-    t.string   "data",              limit: 255
+    t.date     "data"
     t.date     "comeca_inscricao"
     t.date     "termina_inscricao"
     t.string   "tipo",              limit: 255
