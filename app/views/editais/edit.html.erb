@@ -5,7 +5,7 @@
 
     <%= f.input :tipo, required: true, as: :select, collection: [["Concurso Público","concurso"],["Processo Seletivo Simplificado","processo"]] %>
     <%= f.input :numero, required: true, label: "Número" %>
-    <%= f.input :data %>
+    <%= f.input :data, as: :date_picker %>
     <%= f.input :comeca_inscricao, label: "Início das inscrições", as: :date_picker %>
     <%= f.input :termina_inscricao, label: "Término das inscrições", as: :date_picker %>
 
@@ -32,7 +32,11 @@
     <%= link_to icon("arrow-left", "Voltar"), editais_path, class: "btn btn-warning" %>
     <button type="submit" class="btn btn-success"><%= glyphicon("ok") %> Salvar</button>
     <% unless @edital.publicacao.present? %>
-      <%= link_to publicar_edital_path(@edital), data: { confirm: "Tem certeza que deseja publicar o edital?" }, class: "btn btn-info", title: 'Publicar' do %>
+      <% if !@edital.data.present? %>
+        <% mensagem = "Defina a data do edital primeiro!" %>
+        <% disable = true %>
+      <% end %>
+      <%= link_to publicar_edital_path(@edital), id: "publicar-edit", disabled: disable, data: { confirm: "Tem certeza que deseja publicar o edital?" }, class: "btn btn-info", title: 'Publicar' do %>
         <%= glyphicon("share") %> Publicar
       <% end %>
     <% end %>

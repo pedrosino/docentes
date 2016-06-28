@@ -1,0 +1,29 @@
+<table class="criterios">
+  <thead>
+    <tr>
+      <th>Número</th>
+      <th>Critério</th>
+      <th>Descrição</th>
+      <th>Pontuação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% numero = 1 %>
+    <% criterios.each do |criterio| %>
+      <tr>
+        <td class="numero no-break"><%= numero %></td>
+        <td class="criterio no-break"><%= criterio.nome %></td>
+        <td class="descricao no-break"><%= criterio.descricao %></td>
+        <td class="valor no-break"><%= criterio.valor %></td>
+      </tr>
+
+      <% numero += 1 %>
+    <% end %>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Total</th>
+      <th>100</th>
+    </tr>
+  </tbody>
+</table>

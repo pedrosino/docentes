@@ -77,35 +77,15 @@ table.index.editais {
     margin-left: 1.75cm;
   }
 
-  .edital-header {
-    font-weight: bold;
-    text-align: center;
-
-    .cabecalho {
-      width: 100%;
-    }
-
-    p.linha-cabecalho {
-      font-size: 11pt;
-      line-height: 11pt;
-    }
-
-    .numero-edital {
-      font-size: 14pt;
-      line-height: 1.5;
-      border-bottom: 1px solid #666;
-      border-top: 1px solid #666;
-    }
-  }
-
   .to-the-right {
     margin-left: 7cm;
-    margin-top: 0.5cm;
-    font-size: 11pt;
+    font-size: 10pt;
     font-weight: bold;
     margin-bottom: 12pt;
   }
 }
+
+
 
 .areas-edital {
   width: 100%;
@@ -224,4 +204,48 @@ table.index.editais {
   td.maximo {
     width: 15%
   }
+}
+
+@media print {
+  .edital {
+    width: 100%;
+    border: none;
+    padding: 0;
+  }
+
+  .edital-header {
+    margin-left: auto;
+    margin-right: auto;
+    font-family: TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif;
+    font-weight: bold;
+    text-align: center;
+
+    .cabecalho {
+      width: 100%;
+    }
+
+    .linha-cabecalho {
+      padding-bottom: 10px;
+      font-size: 11pt;
+      line-height: 11pt;
+    }
+
+    .numero-edital {
+      font-size: 14pt;
+      line-height: 1.5;
+      border-bottom: 1px solid #666;
+      border-top: 1px solid #666;
+    }
+  }
+
+  /* Pode ser usado na tabela toda ou td */
+  .no-break {
+    page-break-inside: avoid;
+  }
+}
+
+.index-publico {
+  width: 90%;
+  margin-left: 5%;
+  padding: 10px;
 }

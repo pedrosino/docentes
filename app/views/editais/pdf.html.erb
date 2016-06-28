@@ -1,26 +1,7 @@
 <div class="edital">
-  <div class="edital-header">
-    <table class="cabecalho">
-      <tr>
-        <td>
-        </td>
-        <td>
-        <p class="linha-cabecalho">SERVIÇO PÚBLICO FEDERAL</p>
-        <p class="linha-cabecalho">MINISTÉRIO DA EDUCAÇÃO</p>
-        <p class="linha-cabecalho">UNIVERSIDADE FEDERAL DE UBERLÂNDIA</p>
-        <p class="linha-cabecalho">PRÓ-REITORIA DE GESTÃO DE PESSOAS</p>
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td colspan=3 class="numero-edital">EDITAL <%= @edital.numero %></td>
-      </tr>
-    </table>
-  </div>
-  <p class="to-the-right">CONCURSO PÚBLICO DE PROVAS E TÍTULOS PARA PREENCHIMENTO DE VAGA(S) DE PROFESSOR DA CARREIRA DE MAGISTÉRIO SUPERIOR INTEGRANTE DO PLANO DE CARREIRAS E CARGOS DE MAGISTÉRIO FEDERAL.</p>
+  <div class="to-the-right">CONCURSO PÚBLICO DE PROVAS E TÍTULOS PARA PREENCHIMENTO DE VAGA(S) DE PROFESSOR DA CARREIRA DE MAGISTÉRIO SUPERIOR INTEGRANTE DO PLANO DE CARREIRAS E CARGOS DE MAGISTÉRIO FEDERAL.</div>
 
-  <div class="preambulo">A Pró - Reitora de Gestão de Pessoas da Universidade Federal de Uberlândia, no uso de suas atribuições e considerando a delegação de competência que lhe foi outorgada por meio da  Portaria/R/UFU/nº.  1.224,  de 29/12/2015,  do  Reitor  da  Universidade  Federal  de Uberlândia, publicada no Diário Oficial da União em 11/01/2016; e tendo em vista o que estabelecem a Lei nº. 8.112, de 11/12/1990, a Lei 12.772 de 28/12/2012, a Lei 12.863 publicada no D.O.U. em 25/09/2013, bem como o Decreto 6.944 de 21/08/2009 publicado no D.O.U em 24/08/2009, o Decreto nº. 7.485 de 18/05/2011; alterado pelo Decreto nº. 8.259 de 29/05/2014 e a Portaria Interministerial MPOG/MEC nº. 111, de 03/04/2014; e também o Estatuto e o Regimento Geral da UFU, a Resolução nº 03/2015 do Conselho Diretor e demais legislações pertinentes, torna público que será realizado Concurso Público de Provas e Títulos, para o cargo de Professor da Carreira de Magistério Superior do Plano de Carreiras e Cargos de Magistério Federal da Universidade Federal de Uberlândia, mediante as normas contidas neste Edital.</div>
+  <div class="preambulo">A Pró - Reitora de Gestão de Pessoas da Universidade Federal de Uberlândia, no uso de suas atribuições e considerando a delegação de competência que lhe foi outorgada por meio da  Portaria/R/UFU/nº. 1.224, de 29/12/2015, do Reitor da  Universidade Federal de Uberlândia, publicada no Diário Oficial da União em 11/01/2016; e tendo em vista o que estabelecem a Lei nº. 8.112, de 11/12/1990, a Lei 12.772 de 28/12/2012, a Lei 12.863 publicada no D.O.U. em 25/09/2013, bem como o Decreto 6.944 de 21/08/2009 publicado no D.O.U em 24/08/2009, o Decreto nº. 7.485 de 18/05/2011; alterado pelo Decreto nº. 8.259 de 29/05/2014 e a Portaria Interministerial MPOG/MEC nº. 111, de 03/04/2014; e também o Estatuto e o Regimento Geral da UFU, a Resolução nº 03/2015 do Conselho Diretor e demais legislações pertinentes, torna público que será realizado Concurso Público de Provas e Títulos, para o cargo de Professor da Carreira de Magistério Superior do Plano de Carreiras e Cargos de Magistério Federal da Universidade Federal de Uberlândia, mediante as normas contidas neste Edital.</div>
   <br />
   <div class="item">
     <p><strong>1 - DAS DISPOSIÇÕES PRELIMINARES</strong></p>
@@ -49,7 +30,7 @@
 
   <div class="item">
     <p><strong>3 - DA ESPECIFICAÇÃO DO CONCURSO PÚBLICO</strong></p>
-    <table class="areas-edital">
+    <table class="areas-edital no-break">
       <thead>
         <tr>
           <th colspan=2 >Área</th>
@@ -99,7 +80,7 @@
       </tbody>
     </table>
 
-    <table class="areas-edital">
+    <table class="areas-edital no-break">
       <thead>
         <tr>
           <% vagas_negros = @edital.areas.map(&:vagas_negros).sum %>
@@ -160,7 +141,7 @@
     <p><strong>4 - REMUNERAÇÕES DO CARGO</strong></p>
     <p><strong>4.1</strong> - Ao candidato aprovado e investido no cargo de Professor, conforme denominação a seguir, fica assegurada a remuneração estruturada conforme o Plano de Carreiras e Cargos de Magistério Federal com a seguinte composição: Vencimento Básico(VB) mais Retribuição por Titulação(RT) conforme mostra a tabela abaixo, nos termos do Anexo III da Lei 12.772/2012, e ainda o Auxílio Alimentação no valor de R$ 458,00.</p>
   </div>
-  <table class="salario">
+  <table class="salario no-break">
     <thead>
       <tr>
         <th>Classe</th>
@@ -276,35 +257,7 @@
     <p class="nivel-2"><strong>6.4.6.1</strong> - Somente será permitido o uso de aparelho auditivo àquele candidato que tiver declarado necessidade auditiva no ato da inscrição e enviado comprovação médica, de acordo com o estabelecido no <strong>item 5.8</strong>. O aparelho poderá ser usado somente nos momentos em que seja necessária a comunicação verbal entre o fiscal e o candidato.</p>
     <p class="nivel-1"><strong>6.4.7 - O candidato que for flagrado na prática de alguma das condutas vedadas pelo item 6.4.6 será automaticamente retirado do local de aplicação da prova e eliminado do concurso.</strong></p>
     <p class="nivel-1"><strong>6.4.8 - A prova escrita</strong> será avaliada dentro dos seguintes critérios:</p>
-    <table class="criterios">
-      <thead>
-        <tr>
-          <th>Número</th>
-          <th>Critério</th>
-          <th>Descrição</th>
-          <th>Pontuação</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% numero = 1 %>
-        <% @edital.areas.first.criterios.select{ |c| c.tipo_prova == 'escrita' }.each do |criterio| %>
-          <tr>
-            <td class="numero"><%= numero %></td>
-            <td class="criterio"><%= criterio.nome %></td>
-            <td class="descricao"><%= criterio.descricao %></td>
-            <td class="valor"><%= criterio.valor %></td>
-          </tr>
-
-          <% numero += 1 %>
-        <% end %>
-        <tr>
-          <th></th>
-          <th></th>
-          <th>Total</th>
-          <th>100</th>
-        </tr>
-      </tbody>
-    </table>
+    <%= render 'tabela_criterios', criterios: @edital.areas.first.criterios.select{ |c| c.tipo_prova == 'escrita' } %>
     <p><strong>6.5</strong> - A prova didática será realizada como fase posterior à prova escrita e consistirá na apresentação oral, observada a ordem de realização fixada por sorteio, de um <strong>tema sorteado com, no mínimo, vinte e quatro horas e no máximo trinta e seis horas de antecedência, abrangendo assuntos do programa.</strong></p>
     <p class="nivel-1"><strong>6.5.1</strong> - A prova didática, cuja assistência é vedada aos demais candidatos, será realizada em <strong>sessão pública e terá duração mínima de quarenta e máxima de cinquenta minutos</strong>, podendo haver um acréscimo de até 30 (trinta) minutos para arguição do candidato pela Comissão Julgadora. As provas serão <strong>gravadas em áudio e vídeo</strong> que assegure boa qualidade e seu conteúdo não poderá ser consultado por terceiros, salvo autorização expressa do candidato detentor do direito de imagem, de acordo com o que dispõe a Lei nº 12.527/2013.</p>
     <p class="nivel-1"><strong>6.5.2</strong> - <mark>Os critérios de avaliação da prova didática deverão pautar-se pelos seguintes itens:</mark></p>
@@ -318,35 +271,7 @@
       VII - apresentação de plano de aula com fundamentação teórica, coesão e informações essenciais ao desenvolvimento da aula.
     </div>
     <p class="nivel-1"><strong>6.5.3</strong> - Critérios de avaliação da prova didática:</p>
-    <table class="criterios">
-      <thead>
-        <tr>
-          <th>Número</th>
-          <th>Critério</th>
-          <th>Descrição</th>
-          <th>Pontuação</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% numero = 1 %>
-        <% @edital.areas.first.criterios.select{ |c| c.tipo_prova == 'didatica' }.each do |criterio| %>
-          <tr>
-            <td><%= numero %></td>
-            <td><%= criterio.nome %></td>
-            <td><%= criterio.descricao %></td>
-            <td><%= criterio.valor %></td>
-          </tr>
-
-          <% numero += 1 %>
-        <% end %>
-        <tr>
-          <th></th>
-          <th></th>
-          <th>Total</th>
-          <th>100</th>
-        </tr>
-      </tbody>
-    </table>
+    <%= render 'tabela_criterios', criterios: @edital.areas.first.criterios.select{ |c| c.tipo_prova == 'didatica' } %>
     <p><strong>6.6 - A análise de títulos</strong> será realizada como fase posterior à prova escrita e somente apresentarão os títulos os candidatos aprovados nesta prova, após o esgotamento dos prazos recursais da prova escrita, <strong>de acordo com as datas e instruções, definidas em normas complementares.</strong></p>
     <p class="nivel-1"><strong>6.6.1 - A entrega dos títulos</strong> compreenderá uma via do Curriculum lattes, abrangendo títulos acadêmicos, atividades didáticas, atividades científicas, profissionais e/ou artísticas, acompanhado dos documentos comprobatórios, tais como certificados, diplomas, entre outros.</p>
     <p class="nivel-1"><strong>6.6.2</strong> - Na análise dos títulos acadêmicos será <strong>considerado apenas o título de maior grau e não se pontuará a titulação mínima exigida para o cargo</strong>, considerado requisito à investidura e não elemento para pontuação e que sejam na(s) área(s) do conhecimento definida(s) no item 3 deste edital: </p>
@@ -373,89 +298,14 @@
   </div>
 
   <p><strong>Tabela 1: Atividades Didáticas e/ou Profissionais nos últimos 5 anos</strong></p>
-  <table class="titulos">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Descrição</th>
-        <th>Pontuação</th>
-        <th>Pontuação máxima</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% item = 1 %>
-    <% @edital.areas.first.titulos.where(tipo: 'atividades').each do |titulo| %>
-      <tr>
-        <td class="item"><%= item %></td>
-        <td class="descricao"><%= titulo.descricao %></td>
-        <td class="pontuacao"><%= titulo.valor %> pontos<br /> por <%= titulo.unidade_medida %></td>
-        <td class="maximo"><%= titulo.maximo %> pontos</td>
-      </tr>
-      <% item += 1 %>
-    <% end %>
-      <tr>
-        <th colspan=3>Total máximo</th>
-        <th><%= @edital.areas.first.maximo_atividades %> pontos</th>
-      </tr>
-    </tbody>
-  </table>
+  <%= render 'tabela_titulos', titulos: @edital.areas.first.titulos.where(tipo: 'atividades'), maximo: @edital.areas.first.maximo_atividades %>
 
   <p><strong>Tabela 2: Produção Científica e/ou Artística nos últimos 5 anos</strong></p>
-  <table class="titulos">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Descrição</th>
-        <th>Pontuação</th>
-        <th>Pontuação máxima</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% item = 1 %>
-    <% @edital.areas.first.titulos.where(tipo: 'producao', prorrogacao: false).each do |titulo| %>
-      <tr>
-        <td class="item"><%= item %></td>
-        <td class="descricao"><%= titulo.descricao %></td>
-        <td class="pontuacao"><%= titulo.valor %> pontos<br />por <%= titulo.unidade_medida %></td>
-        <td class="maximo"><%= titulo.maximo %> pontos</td>
-      </tr>
-      <% item += 1 %>
-    <% end %>
-      <tr>
-        <th colspan=3>Total máximo</th>
-        <th><%= @edital.areas.first.maximo_producao %> pontos</th>
-      </tr>
-    </tbody>
-  </table>
+  <%= render 'tabela_titulos', titulos: @edital.areas.first.titulos.where(tipo: 'producao', prorrogacao: false), maximo: @edital.areas.first.maximo_producao %>
 
   <% if @edital.areas.first.prorrogar && !@edital.areas.first.mantem_qualificacao %>
     <p><strong>Tabela 3: Produção Científica e/ou Artística nos últimos 5 anos (exigência inferior a Doutorado)</strong></p>
-    <table class="titulos">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Pontuação</th>
-          <th>Pontuação máxima</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% item = 1 %>
-      <% @edital.areas.first.titulos.where(tipo: 'producao', prorrogacao: true).each do |titulo| %>
-        <tr>
-          <td class="item"><%= item %></td>
-          <td class="descricao"><%= titulo.descricao %></td>
-          <td class="pontuacao"><%= titulo.valor %> pontos<br />por <%= titulo.unidade_medida %></td>
-          <td class="maximo"><%= titulo.maximo %> pontos</td>
-        </tr>
-        <% item += 1 %>
-      <% end %>
-        <tr>
-          <th colspan=3>Total máximo</th>
-          <th>70 pontos</th>
-        </tr>
-      </tbody>
-    </table>
+    <%= render 'tabela_titulos', titulos: @edital.areas.first.titulos.where(tipo: 'producao', prorrogacao: true), maximo: 70 %>
   <% end %>
 
   <p><strong>Observação:</strong> Os trabalhos publicados em coautoria receberão a mesma pontuação dos trabalhos de autoria exclusiva do candidato.</p>
