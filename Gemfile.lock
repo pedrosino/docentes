@@ -201,6 +201,10 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
+    rtf (0.3.3)
+    rtf_rails (0.0.1)
+      rails (>= 3.0.0)
+      rtf (~> 0.3.3)
     rubocop (0.36.0)
       parser (>= 2.3.0.0, < 3.0)
       powerpack (~> 0.1)
@@ -281,6 +285,8 @@ DEPENDENCIES
   rails-jquery-autocomplete
   rake
   rspec-rails
+  rtf
+  rtf_rails
   rubocop (= 0.36)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

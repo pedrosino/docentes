@@ -36,6 +36,9 @@ gem 'htmltoword'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
+gem 'rtf'
+gem 'rtf_rails'
+
 gem 'docx_replace', git: 'https://github.com/pedrosino/docx_replace.git'
 
 gem 'cocoon'

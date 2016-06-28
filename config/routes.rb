@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'areas/:id/vaga' => 'areas#vaga', as: 'area_vaga'
 
   resources :editais, only: [:index, :new, :edit, :create, :update, :show, :destroy]
-  get 'editais/:id/word' => 'editais#word', format: 'docx', as: 'edital_word'
+  get 'editais/:id/word' => 'editais#word', format: 'rtf', as: 'edital_word'
   get 'editais/:id/pdf' => 'editais#pdf', as: 'edital_pdf'
   get 'editais/:id/publicar' => 'editais#publicar', as: 'publicar_edital'
   get 'editais/:id/baixar_pdf' => 'editais#baixar_pdf', as: 'baixar_edital'

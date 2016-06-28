@@ -148,33 +148,71 @@ class EditaisController < ApplicationController
 
   def word
     @edital = Edital.find(params[:id])
+
+    ##render 'edital.rtf.rtf_rb'
+
+    document = RTF::Document.new(RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman'))
+
+    styles = {}
+    styles['CS_CODE'] = RTF::CharacterStyle.new
+
+    styles['CS_CODE'].font_size = 16
+
+    document.paragraph() do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << "\#\#ATO EXTRATO DO EDITAL DE ABERTURA DE #{tipo_certame[@edital.tipo].upcase} Nº #{@edital.numero}"
+        n2.line_break
+        n2.line_break
+        n2 << "\#\#TEX A Pró – Reitora de Gestão de Pessoas da Universidade Federal de Uberlândia, no uso de suas atribuições e considerando a delegação de competência que lhe foi outorgada por meio da Portaria/R/UFU/nº. 1.224, de 29/12/2015, do Reitor da Universidade Federal de Uberlândia, publicada no Diário Oficial da União em 11/01/2016; e tendo em vista o que estabelecem a Lei nº. 8.112, de 11/12/1990, a Lei 12.772 de 28/12/2012, a Lei 12.863 publicada no D.O.U. em 25/09/2013, bem como o Decreto 6.944 de 21/08/2009 publicado no D.O.U em 24/08/2009, o Decreto nº. 7.485 de 18/05/2011; alterado pelo Decreto nº. 8.259 de 29/05/2014 e a Portaria Interministerial MPOG/MEC nº. 111, de 03/04/2014; e também o Estatuto e o Regimento Geral da UFU, a Resolução nº 03/2015 do Conselho Diretor e demais legislações pertinentes, torna público que será realizado Concurso Público de Provas e Títulos, para o cargo de Professor da Carreira de Magistério Superior do Plano de Carreiras e Cargos de Magistério Federal da Universidade Federal de Uberlândia, mediante as normas contidas neste edital."
+        n2.line_break
+        n2 << "DA ESPECIFICAÇÃO DO #{tipo_certame[@edital.tipo].upcase}"
+        n2.line_break
+        n2 << "tabela..."
+        n2.line_break
+        n2 << "REMUNERAÇÕES DO CARGO"
+        n2.line_break
+        n2 << "Composição: Vencimento Básico (VB) mais Retribuição por Titulação (RT) conforme mostra a tabela abaixo, nos termos do Anexo III da Lei 12.772/2012, e ainda o Auxílio Alimentação no valor de R$ 458,00."
+        n2.line_break
+        n2 << "tabela..."
+        n2.line_break
+        n2 << "DAS INSCRIÇÕES DOS CANDIDATOS"
+        n2.line_break
+        n2 << "A inscrição do candidato implicará o conhecimento e a tácita aceitação das normas e condições estabelecidas neste Edital, em relação às quais não poderá alegar desconhecimento, e o comprovante de inscrição deverá ser mantido com o candidato, pois poderá lhe ser solicitado pela DIRETORIA DE PROCESSOS SELETIVOS - DIRPS."
+        n2.line_break
+        n2.line_break
+        n2 << "\#\#ASS Marlene Marins de Camargos Borges"
+      end
+    end
+    debugger
+    #send_data document.to_rtf, filename: "Extrato Edital #{@edital.numero.sub('/', '-')}.rtf", type: "text/richtext"
+
     # respond_to do |format|
     #   format.docx do
     #     render docx: 'edital_word', filename: 'Edital.docx'
     #   end
     # end
 
-    respond_to do |format|
-      format.docx do
-        doc = DocxReplace::Doc.new("#{Rails.root}/lib/docx_templates/my_template.docx", "#{Rails.root}/tmp")
+    # respond_to do |format|
+    #   format.docx do
+    #     doc = DocxReplace::Doc.new("#{Rails.root}/lib/docx_templates/my_template.docx", "#{Rails.root}/tmp")
 
-        # Replace
-        doc.replace('$numero$', @edital.numero)
-        doc.replace('$data$', @edital.data)
-        doc.replace('$tipo$', @edital.tipo == 'concurso' ? 'CONCURSO PÚBLICO' : 'PROCESSO SELETIVO SIMPLIFICADO')
-        doc.replace('$area$', @edital.areas.first.nome)
-        doc.replace('$vagas$', @edital.areas.first.vagas)
-        doc.replace('$qualificacao$', @edital.areas.first.qualificacao)
-        doc.replace('$regime$', @edital.areas.first.regime)
+    #     # Replace
+    #     doc.replace('$numero$', @edital.numero)
+    #     doc.replace('$data$', @edital.data)
+    #     doc.replace('$tipo$', @edital.tipo == 'concurso' ? 'CONCURSO PÚBLICO' : 'PROCESSO SELETIVO SIMPLIFICADO')
+    #     doc.replace('$area$', @edital.areas.first.nome)
+    #     doc.replace('$vagas$', @edital.areas.first.vagas)
+    #     doc.replace('$qualificacao$', @edital.areas.first.qualificacao)
+    #     doc.replace('$regime$', @edital.areas.first.regime)
 
-        # Write the document back to a temporary file
-        tmp_file = Tempfile.new('word_template', "#{Rails.root}/tmp")
-        doc.commit(tmp_file.path)
+    #     # Write the document back to a temporary file
+    #     tmp_file = Tempfile.new('word_template', "#{Rails.root}/tmp")
+    #     doc.commit(tmp_file.path)
 
-        # Respond to the request by sending the temp file
-        send_file tmp_file.path, filename: "edital_#{@edital.id}_report.docx", disposition: 'attachment'
-      end
-    end
+    #     # Respond to the request by sending the temp file
+    #     send_file tmp_file.path, filename: "edital_#{@edital.id}_report.docx", disposition: 'attachment'
+    #   end
+    # end
   end
 
   def pdf
