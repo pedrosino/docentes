@@ -8,7 +8,7 @@ class EditaisController < ApplicationController
   respond_to :docx
 
   def index
-    @editais = Edital.all.sort_by(&:numero)
+    @editais = Edital.all.order(:numero)
     @admin = current_user && current_user.pode_criar_edital?
 
     if params[:search].present?
@@ -17,7 +17,7 @@ class EditaisController < ApplicationController
 
     unless @admin
       @editais = @editais.select { |edital| !edital.publicacao.nil? }
-      @editais.sort_by(&:publicacao)
+      @editais.sort_by!(&:publicacao).reverse!
     end
 
     respond_to do |format|
