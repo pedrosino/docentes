@@ -75,6 +75,24 @@ class EditaisController < ApplicationController
     @edital = Edital.find(params[:id])
   end
 
+  def salvar_pdf(edital)
+    pdf = render_to_string pdf: "Edital_PROGEP_#{edital.numero}",
+                           template: 'editais/pdf.html.erb',
+                           page_size: 'A4',
+                           layout: 'pdf',
+                           encoding: 'UTF-8',
+                           margin: { top: 35, bottom: 12, left: 30, right: 10 },
+                           print_media_type: true,
+                           show_as_html: params.key?('debug'),
+                           header: { html: { template: 'editais/pdf_header.pdf.erb' } },
+                           footer: { right: '[page] de [topage]' }
+
+    save_path = "#{Rails.root}/public/editais/Edital_PROGEP_#{edital.numero.sub('/', '_')}.pdf"
+    File.open(save_path, 'wb') do |file|
+      file << pdf
+    end
+  end
+
   def publicar
     @edital = Edital.find(params[:id])
 
@@ -85,29 +103,18 @@ class EditaisController < ApplicationController
     corpo = "#{"Área".pluralize(@edital.areas.length)}: #{@edital.areas.map(&:nome).to_sentence}<br />"
     corpo += "Veja mais informações: #{raw link}"
 
-    render pdf: "Edital_PROGEP_#{@edital.numero}",
-           template: 'editais/pdf.html.erb',
-           save_to_file: "#{Rails.root}/public/editais/Edital_PROGEP_#{@edital.numero.sub('/', '_')}.pdf",
-           save_only: true,
-           page_size: 'A4',
-           layout: 'pdf',
-           margin: { top: 35, bottom: 12, left: 30, right: 10 },
-           print_media_type: true,
-           show_as_html: params.key?('debug'),
-           header: { html: { template: 'editais/pdf_header.pdf.erb' } },
-           footer: { right: '[page] de [topage]' } and return
-
     if @edital.publicacao.present?
       flash[:warning] = "Edital já foi publicado!"
       redirect_to editais_path
     else
+      salvar_pdf(@edital)
       post_redireciona(titulo: titulo, corpo: corpo.html_safe, data: Time.now)
-    end
 
-    # Atualiza o edital
-    @edital.publicacao = Date.today
-    @edital.situacao = 'pub'
-    @edital.save
+      # Atualiza o edital
+      @edital.publicacao = Date.today
+      @edital.situacao = 'pub'
+      @edital.save
+    end
   end
 
   def post_redireciona(post_atrs)
@@ -117,7 +124,7 @@ class EditaisController < ApplicationController
     else
       flash[:danger] = "Falha na publicação"
     end
-    redirect_to editais_path
+    redirect_to posts_path
   end
 
   def baixar_pdf
@@ -172,21 +179,6 @@ class EditaisController < ApplicationController
 
   def pdf
     @edital = Edital.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "Edital PROGEP #{@edital.numero}",
-               template: 'editais/pdf.html.erb',
-               disposition: 'inline',
-               page_size: 'A4',
-               layout: 'pdf',
-               margin: { top: 35, bottom: 12, left: 30, right: 10 },
-               print_media_type: true,
-               show_as_html: params.key?('debug'),
-               header: { html: { template: 'editais/pdf_header.pdf.erb' } },
-               footer: { right: '[page] de [topage]' }
-      end
-    end
   end
 
   def edital_params

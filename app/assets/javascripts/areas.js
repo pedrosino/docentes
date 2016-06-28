@@ -490,7 +490,6 @@ onPage('areas edit, areas update', function(){
       });
       $clone.appendTo("table.titulos.producao-prorrogacao > tbody");
     });
-    //return false;
   });
 
   //------- Verifica alterações não salvas ----------
