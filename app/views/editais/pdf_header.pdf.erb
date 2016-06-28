@@ -8,7 +8,8 @@
     <div class="edital-header">
       <table class="cabecalho">
         <tr>
-          <td>
+          <td style="padding-left: 20px;">
+            <%= image_tag("#{Rails.root}/app/assets/images/brasaopp.png") %>
           </td>
           <td class="linha-cabecalho">
             SERVIÇO PÚBLICO FEDERAL<br />
@@ -16,14 +17,15 @@
             UNIVERSIDADE FEDERAL DE UBERLÂNDIA<br />
             PRÓ-REITORIA DE GESTÃO DE PESSOAS<br />
           </td>
-          <td>
+          <td style="padding-right: 20px;">
+            <%= image_tag("#{Rails.root}/app/assets/images/logoufu.png") %>
           </td>
         </tr>
         <tr>
           <td colspan=3 class="numero-edital">EDITAL <%= @edital.numero %></td>
         </tr>
         <tr>
-          <td colspan=3 style="visibility: hidden; line-height: 16px;">Oi</td>
+          <td colspan=3 style="visibility: hidden; line-height: 16px;">.</td>
         </tr>
       </table>
     </div>

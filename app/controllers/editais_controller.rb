@@ -81,7 +81,7 @@ class EditaisController < ApplicationController
                            page_size: 'A4',
                            layout: 'pdf',
                            encoding: 'UTF-8',
-                           margin: { top: 35, bottom: 12, left: 30, right: 10 },
+                           margin: { top: 35, bottom: 12, left: 25, right: 10 },
                            print_media_type: true,
                            show_as_html: params.key?('debug'),
                            header: { html: { template: 'editais/pdf_header.pdf.erb' } },
