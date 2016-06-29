@@ -151,6 +151,38 @@ class EditaisController < ApplicationController
 
     # render 'edital.rtf.rtf_rb'
 
+    # styles                           = {}
+    # styles['EMPHASISED']             = RTF::CharacterStyle.new
+    # styles['EMPHASISED'].bold        = true
+    # styles['EMPHASISED'].underline   = true
+    # styles['NORMAL']                 = RTF::ParagraphStyle.new
+    # styles['NORMAL'].space_after     = 300
+
+    # document = RTF::Document.new(RTF::Font.new(RTF::Font::ROMAN, 'Arial'))
+
+    # document.paragraph(styles['NORMAL']) do |p|
+    #    p << 'This document é a simple programmatically generated file that is '
+    #    p << 'used to demonstração table generation. A table fônica containing 3 rows '
+    #    p << 'anões three columns should be displayed below this text.'
+    # end
+
+    # table = document.table(3, 3, 2000, 4000, 2000)
+    # table.border_width = 5
+    # table[0][0] << 'Cell 0,0'
+    # table[0][1].top_border_width = 10
+    # table[0][1] << 'This is a little preamble text for '
+    # table[0][1].apply(styles['EMPHASISED']) << 'Cell 0,1'
+    # table[0][1].line_break
+    # table[0][1] << ' to help in examining how formatting is working.'
+    # table[0][2] << 'Cell 0,2'
+    # table[1][0] << 'Cell 1,0'
+    # table[1][1] << 'Cell 1,1'
+    # table[1][2] << 'Cell 1,2'
+    # table[2][0] << 'Cell 2,0'
+    # table[2][1] << 'Cell 2,1'
+    # table[2][2] << 'Cell 2,2'
+
+    #################################################################
     document = RTF::Document.new(RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman'))
 
     styles = {}
@@ -160,31 +192,101 @@ class EditaisController < ApplicationController
 
     document.paragraph do |n1|
       n1.apply(styles['CS_CODE']) do |n2|
-        n2 << "\#\#ATO EXTRATO DO EDITAL DE ABERTURA DE #{tipo_certame[@edital.tipo].upcase} Nº #{@edital.numero}"
+        n2 << "##ATO EXTRATO DO EDITAL DE ABERTURA DE #{tipo_certame[@edital.tipo].mb_chars.upcase} Nº #{@edital.numero}"
         n2.line_break
-        n2.line_break
-        n2 << "\#\#TEX A Pró-Reitora de Gestão de Pessoas da Universidade Federal de Uberlândia, no uso de suas atribuições e considerando a delegação de competência que lhe foi outorgada por meio da Portaria/R/UFU/nº. 1.224, de 29/12/2015, do Reitor da Universidade Federal de Uberlândia, publicada no Diário Oficial da União em 11/01/2016; e tendo em vista o que estabelecem a Lei nº. 8.112, de 11/12/1990, a Lei 12.772 de 28/12/2012, a Lei 12.863 publicada no D.O.U. em 25/09/2013, bem como o Decreto 6.944 de 21/08/2009 publicado no D.O.U em 24/08/2009, o Decreto nº. 7.485 de 18/05/2011; alterado pelo Decreto nº. 8.259 de 29/05/2014 e a Portaria Interministerial MPOG/MEC nº. 111, de 03/04/2014; e também o Estatuto e o Regimento Geral da UFU, a Resolução nº 03/2015 do Conselho Diretor e demais legislações pertinentes, torna público que será realizado Concurso Público de Provas e Títulos, para o cargo de Professor da Carreira de Magistério Superior do Plano de Carreiras e Cargos de Magistério Federal da Universidade Federal de Uberlândia, mediante as normas contidas neste edital."
-        n2.line_break
-        n2 << "DA ESPECIFICAÇÃO DO #{tipo_certame[@edital.tipo].upcase}"
-        n2.line_break
-        n2 << 'tabela...'
-        n2.line_break
-        n2 << "REMUNERAÇÕES DO CARGO"
-        n2.line_break
-        n2 << "Composição: Vencimento Básico (VB) mais Retribuição por Titulação (RT) conforme mostra a tabela abaixo, nos termos do Anexo III da Lei 12.772/2012, e ainda o Auxílio Alimentação no valor de R$ 458,00."
-        n2.line_break
-        n2 << 'tabela...'
-        n2.line_break
-        n2 << "DAS INSCRIÇÕES DOS CANDIDATOS"
-        n2.line_break
-        n2 << "A inscrição do candidato implicará o conhecimento e a tácita aceitação das normas e condições estabelecidas neste Edital, em relação às quais não poderá alegar desconhecimento, e o comprovante de inscrição deverá ser mantido com o candidato, pois poderá lhe ser solicitado pela DIRETORIA DE PROCESSOS SELETIVOS - DIRPS."
-        n2.line_break
-        n2.line_break
-        n2 << '\#\#ASS Marlene Marins de Camargos Borges'
       end
     end
 
-    send_data document.to_rtf.sub!(/u243\\'3f/, "'f3"), filename: "Extrato Edital #{@edital.numero.sub('/', '-')}.rtf", type: 'text/richtext'
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << "##TEX A Pró-Reitora de Gestão de Pessoas da Universidade Federal de Uberlândia, no uso de suas atribuições e considerando a delegação de competência que lhe foi outorgada por meio da Portaria/R/UFU/nº. 1.224, de 29/12/2015, do Reitor da Universidade Federal de Uberlândia, publicada no Diário Oficial da União em 11/01/2016; e tendo em vista o que estabelecem a Lei nº. 8.112, de 11/12/1990, a Lei 12.772 de 28/12/2012, a Lei 12.863 publicada no D.O.U. em 25/09/2013, bem como o Decreto 6.944 de 21/08/2009 publicado no D.O.U em 24/08/2009, o Decreto nº. 7.485 de 18/05/2011; alterado pelo Decreto nº. 8.259 de 29/05/2014 e a Portaria Interministerial MPOG/MEC nº. 111, de 03/04/2014; e também o Estatuto e o Regimento Geral da UFU, a Resolução nº 03/2015 do Conselho Diretor e demais legislações pertinentes, torna público que será realizado Concurso Público de Provas e Títulos, para o cargo de Professor da Carreira de Magistério Superior do Plano de Carreiras e Cargos de Magistério Federal da Universidade Federal de Uberlândia, mediante as normas contidas neste edital."
+      end
+    end
+
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << "DA ESPECIFICAÇÃO DO #{tipo_certame[@edital.tipo].mb_chars.upcase}"
+      end
+    end
+
+    #table = document.table(2, 4, 2177, 680, 3878, 1020)
+    # Largura em twips => 15 twips = 1px
+    # 1 cm = ~58 twips
+    # http://www.unitconversion.org/typography/centimeters-to-twips-conversion.html
+    linhas = @edital.areas.count
+    table = document.table(linhas, 4, 1900, 681, 3203, 1020)
+    table.border_width = 1
+    table[0][0].apply(styles['CS_CODE']) << "Área"
+    table[0][1].apply(styles['CS_CODE']) << "Nº de vagas"
+    table[0][2].apply(styles['CS_CODE']) << "Qualificação Mínima Exigida"
+    table[0][3].apply(styles['CS_CODE']) << "Regime de Trabalho"
+    table[1][0].apply(styles['CS_CODE']) << @edital.areas.first.nome.to_s
+    table[1][1].apply(styles['CS_CODE']) << @edital.areas.first.vagas.to_s
+    table[1][2].apply(styles['CS_CODE']) << @edital.areas.first.qualificacao.to_s
+    table[1][3].apply(styles['CS_CODE']) << @edital.areas.first.regime.to_s
+
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << "REMUNERAÇÕES DO CARGO"
+      end
+    end
+
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << "Composição: Vencimento Básico (VB) mais Retribuição por Titulação (RT) conforme tabela abaixo, nos termos do Anexo III da Lei 12.772/2012, e ainda o Auxílio Alimentação no valor de R$ 458,00."
+      end
+    end
+
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << 'tabela...'
+      end
+    end
+
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << "DAS INSCRIÇÕES DOS CANDIDATOS"
+      end
+    end
+
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2 << "A inscrição do candidato implicará o conhecimento e a tácita aceitação das normas e condições estabelecidas neste Edital, em relação às quais não poderá alegar desconhecimento, e o comprovante de inscrição deverá ser mantido com o candidato, pois poderá lhe ser solicitado pela DIRETORIA DE PROCESSOS SELETIVOS - DIRPS."
+      end
+    end
+
+    document.paragraph do |n1|
+      n1.apply(styles['CS_CODE']) do |n2|
+        n2.line_break
+        n2 << "##ASS Marlene Marins de Camargos Borges"
+      end
+    end
+    #################################################
+
+    ################################################
+    # document.paragraph do |p|
+    #   p.apply(styles['CS_CODE']) do |pp|
+    #     pp << "Olá tudo bem?"
+    #   end
+    # end
+
+    # document.paragraph do |q|
+    #   q.apply(styles['CS_CODE']) do |qq|
+    #     qq.table(1, 2) do |tr|
+    #       tr[0][0] << "oi"
+    #       tr[0][1] << "dois"
+    #     end
+    #   end
+    # end
+
+    # document.paragraph do |r|
+    #   r.apply(styles['CS_CODE']) do |rr|
+    #     rr << "passou?"
+    #   end
+    # end
+
+    # send_data document.to_rtf, filename: "Extrato Edital #{@edital.numero.sub('/', '-')}.rtf", type: 'text/richtext'
+    send_data unicode_translate(document.to_rtf), filename: "Extrato Edital #{@edital.numero.sub('/', '-')}.rtf", type: 'text/richtext'
 
     # respond_to do |format|
     #   format.docx do
