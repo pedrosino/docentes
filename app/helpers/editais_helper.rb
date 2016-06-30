@@ -31,6 +31,14 @@ module EditaisHelper
     }
   end
 
+  def para_unidade(nome)
+    if nome.starts_with?('I')
+      "o " + nome
+    else
+      "a " + nome
+    end
+  end
+
   def vencimento_basico(regime)
     {
       '20' => 2018.77,

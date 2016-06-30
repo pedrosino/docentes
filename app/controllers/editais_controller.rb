@@ -3,6 +3,7 @@ class EditaisController < ApplicationController
   before_action -> { redireciona_usuario(:pode_criar_edital?) }, except: [:index, :show, :baixar_pdf]
 
   include ApplicationHelper
+  include EditaisHelper
   include ActionView::Helpers::UrlHelper
 
   respond_to :docx
@@ -186,25 +187,25 @@ class EditaisController < ApplicationController
     document = RTF::Document.new(RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman'))
 
     styles = {}
-    styles['CS_CODE'] = RTF::CharacterStyle.new
+    styles['TAMANHO'] = RTF::CharacterStyle.new
 
-    styles['CS_CODE'].font_size = 16
+    styles['TAMANHO'].font_size = 16
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2 << "##ATO EXTRATO DO EDITAL DE ABERTURA DE #{tipo_certame[@edital.tipo].mb_chars.upcase} Nº #{@edital.numero}"
         n2.line_break
       end
     end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
-        n2 << "##TEX A Pró-Reitora de Gestão de Pessoas da Universidade Federal de Uberlândia, no uso de suas atribuições e considerando a delegação de competência que lhe foi outorgada por meio da Portaria/R/UFU/nº. 1.224, de 29/12/2015, do Reitor da Universidade Federal de Uberlândia, publicada no Diário Oficial da União em 11/01/2016; e tendo em vista o que estabelecem a Lei nº. 8.112, de 11/12/1990, a Lei 12.772 de 28/12/2012, a Lei 12.863 publicada no D.O.U. em 25/09/2013, bem como o Decreto 6.944 de 21/08/2009 publicado no D.O.U em 24/08/2009, o Decreto nº. 7.485 de 18/05/2011; alterado pelo Decreto nº. 8.259 de 29/05/2014 e a Portaria Interministerial MPOG/MEC nº. 111, de 03/04/2014; e também o Estatuto e o Regimento Geral da UFU, a Resolução nº 03/2015 do Conselho Diretor e demais legislações pertinentes, torna público que será realizado Concurso Público de Provas e Títulos, para o cargo de Professor da Carreira de Magistério Superior do Plano de Carreiras e Cargos de Magistério Federal da Universidade Federal de Uberlândia, mediante as normas contidas neste edital."
+      n1.apply(styles['TAMANHO']) do |n2|
+        n2 << "##TEX A Pró-Reitora de Gestão de Pessoas da Universidade Federal de Uberlândia, no uso de suas atribuições e considerando a delegação de competência que lhe foi outorgada por meio da Portaria/R/UFU/nº. 1.224, de 29/12/2015, do Reitor da Universidade Federal de Uberlândia, publicada no Diário Oficial da União em 11/01/2016; e tendo em vista o que estabelecem a Lei nº. 8.112, de 11/12/1990, a Lei 12.772 de 28/12/2012, a Lei 12.863 publicada no D.O.U. em 25/09/2013, bem como o Decreto 6.944 de 21/08/2009 publicado no D.O.U em 24/08/2009, o Decreto nº. 7.485 de 18/05/2011; alterado pelo Decreto nº. 8.259 de 29/05/2014 e a Portaria Interministerial MPOG/MEC nº. 111, de 03/04/2014; e também o Estatuto e o Regimento Geral da UFU, a Resolução nº 03/2015 do Conselho Diretor e demais legislações pertinentes, torna público que será realizado Concurso Público de Provas e Títulos, para o cargo de Professor da Carreira de Magistério Superior do Plano de Carreiras e Cargos de Magistério Federal da Universidade Federal de Uberlândia, para #{para_unidade(@edital.areas.first.unidade.nome)} (#{@edital.areas.first.unidade.sigla}), mediante as normas contidas neste edital."
       end
     end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2 << "DA ESPECIFICAÇÃO DO #{tipo_certame[@edital.tipo].mb_chars.upcase}"
       end
     end
@@ -213,50 +214,108 @@ class EditaisController < ApplicationController
     # Largura em twips => 15 twips = 1px
     # 1 cm = ~58 twips
     # http://www.unitconversion.org/typography/centimeters-to-twips-conversion.html
+    vagas_negros = @edital.areas.map(&:vagas_negros).sum
+    vagas_pcd = @edital.areas.map(&:vagas_pcd).sum
+    vagas_reservadas = vagas_negros + vagas_pcd
     linhas = @edital.areas.count
-    table = document.table(linhas, 4, 1900, 681, 3203, 1020)
+
+    colunas = 4
+    lista_vagas = []
+
+    if vagas_reservadas > 0
+      lista_vagas << "Vagas ampla concorrência"
+      colunas = colunas + 1
+      if vagas_negros > 0
+        lista_vagas << "Vagas reservadas aos negros"
+        colunas = colunas + 1
+      end
+      if vagas_pcd > 0
+        lista_vagas << "Vagas reservadas às pessoas com deficiência"
+        colunas = colunas + 1
+      end
+      lista_vagas << "Total de vagas"
+    else
+      lista_vagas << "Nº de vagas"
+    end
+
+    case colunas
+    when 4
+      table = document.table(linhas+1, colunas, 2835, 2835, 6804, 1701)
+    when 6
+      table = document.table(linhas+1, colunas, 2268, 1701, 1701, 1701, 5670, 1134)
+    when 7
+      table = document.table(linhas+1, colunas, 2268, 1134, 1134, 1701, 1134, 5670, 1134)
+    end
+
+    #table = document.table(linhas+1, colunas, 1900, 681, 3203, 1020) # => 12 cm
+    # Sempre com 25 cm de largura
+    #table = document.table(linhas+1, colunas, larguras)
     table.border_width = 1
-    table[0][0].apply(styles['CS_CODE']) << "Área"
-    table[0][1].apply(styles['CS_CODE']) << "Nº de vagas"
-    table[0][2].apply(styles['CS_CODE']) << "Qualificação Mínima Exigida"
-    table[0][3].apply(styles['CS_CODE']) << "Regime de Trabalho"
-    table[1][0].apply(styles['CS_CODE']) << @edital.areas.first.nome.to_s
-    table[1][1].apply(styles['CS_CODE']) << @edital.areas.first.vagas.to_s
-    table[1][2].apply(styles['CS_CODE']) << @edital.areas.first.qualificacao.to_s
-    table[1][3].apply(styles['CS_CODE']) << @edital.areas.first.regime.to_s
+    table[0][0].apply(styles['TAMANHO']) << "Área"
+    #table[0][1].apply(styles['TAMANHO']) << "Nº de vagas"
+    for j in 1..(colunas-3)
+      table[0][j].apply(styles['TAMANHO']) << lista_vagas[j-1]
+    end
+    table[0][colunas-2].apply(styles['TAMANHO']) << "Qualificação Mínima Exigida"
+    table[0][colunas-1].apply(styles['TAMANHO']) << "Regime de Trabalho"
+    for i in 1..linhas
+      area = @edital.areas[i-1]
+      area_string = @edital.areas.length > 1 ? "Área #{i}:" : ""
+      table[i][0].apply(styles['TAMANHO']) << area_string + " " + area.nome.to_s
+      if area.subarea.present?
+        table[i][0].line_break
+        table[i][0] << "Subárea: #{area.subarea}"
+      end
+      if area.curso.present?
+        table[i][0].line_break
+        table[i][0] << "Curso #{area.curso}"
+      end
+      if vagas_reservadas > 0
+        table[i][1].apply(styles['TAMANHO']) << sprintf('%02d', (area.vagas - area.vagas_negros - area.vagas_pcd))
+        if vagas_negros > 0
+          table[i][2].apply(styles['TAMANHO']) << (area.vagas_negros > 0 ? sprintf('%02d', area.vagas_negros) : '-')
+        end
+        if vagas_pcd > 0
+          table[i][3].apply(styles['TAMANHO']) << (area.vagas_pcd > 0 ? sprintf('%02d', area.vagas_pcd) : '-')
+        end
+      end
+      table[i][colunas-3].apply(styles['TAMANHO']) << sprintf('%02d', area.vagas)
+      table[i][colunas-2].apply(styles['TAMANHO']) << area.qualificacao
+      table[i][colunas-1].apply(styles['TAMANHO']) << regime_de_trabalho_longo(area.regime)
+    end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2 << "REMUNERAÇÕES DO CARGO"
       end
     end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2 << "Composição: Vencimento Básico (VB) mais Retribuição por Titulação (RT) conforme tabela abaixo, nos termos do Anexo III da Lei 12.772/2012, e ainda o Auxílio Alimentação no valor de R$ 458,00."
       end
     end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2 << 'tabela...'
       end
     end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2 << "DAS INSCRIÇÕES DOS CANDIDATOS"
       end
     end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2 << "A inscrição do candidato implicará o conhecimento e a tácita aceitação das normas e condições estabelecidas neste Edital, em relação às quais não poderá alegar desconhecimento, e o comprovante de inscrição deverá ser mantido com o candidato, pois poderá lhe ser solicitado pela DIRETORIA DE PROCESSOS SELETIVOS - DIRPS."
       end
     end
 
     document.paragraph do |n1|
-      n1.apply(styles['CS_CODE']) do |n2|
+      n1.apply(styles['TAMANHO']) do |n2|
         n2.line_break
         n2 << "##ASS Marlene Marins de Camargos Borges"
       end
@@ -265,13 +324,13 @@ class EditaisController < ApplicationController
 
     ################################################
     # document.paragraph do |p|
-    #   p.apply(styles['CS_CODE']) do |pp|
+    #   p.apply(styles['TAMANHO']) do |pp|
     #     pp << "Olá tudo bem?"
     #   end
     # end
 
     # document.paragraph do |q|
-    #   q.apply(styles['CS_CODE']) do |qq|
+    #   q.apply(styles['TAMANHO']) do |qq|
     #     qq.table(1, 2) do |tr|
     #       tr[0][0] << "oi"
     #       tr[0][1] << "dois"
@@ -280,7 +339,7 @@ class EditaisController < ApplicationController
     # end
 
     # document.paragraph do |r|
-    #   r.apply(styles['CS_CODE']) do |rr|
+    #   r.apply(styles['TAMANHO']) do |rr|
     #     rr << "passou?"
     #   end
     # end
