@@ -478,7 +478,7 @@ onPage('areas edit, areas update', function(){
         $(this).prop('id', $(this).prop('id').replace($numero, $numero+123));
         $(this).prop('name', $(this).prop('name').replace($numero, $numero+123));
         // Altera valor conforme necessário
-        if ($(this).is("input") && $(this).attr('type') == 'text') {
+        if ($(this).is("input") && $(this).attr('type') == 'text' && $(this).prop('name').indexOf('unidade_medida') === -1) {
           // Multiplica por 0.875
           $valor_antigo = parseFloat($(this).val().replace(',', '.'));
           $(this).val($valor_antigo * 0.875);
