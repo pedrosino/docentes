@@ -353,3 +353,38 @@
     <% end %>
   </div>
 </div>
+<script>
+// Ao mudar o tipo, devem ser atualizados os tipos de vaga e regimes de trabalho possíveis
+// http://stackoverflow.com/a/1801515/3059369
+$("#area_tipo").on('change', function() {
+  $tipo = $(this).val();
+  $tipo_vaga = $("#area_tipo_vaga");
+  $regime = $("#area_regime");
+  if ($tipo == 'concurso') {
+    var regimes = JSON.parse('<%=j regime_de_trabalho.to_json.html_safe %>');
+    $regime.empty();
+    $.each(regimes, function(value,key) {
+      $regime.append($("<option></option>").attr("value", value).text(key));
+    });
+
+    var tipos = JSON.parse('<%=j Hash[[["",""]] + vagas_efetivo.map{|value| [value, value]}].to_json.html_safe %>');
+    $tipo_vaga.empty();
+    $.each(tipos, function(value) {
+      $tipo_vaga.append($("<option></option>").attr("value", value).text(value));
+    });
+  }
+  if ($tipo == 'processo') {
+    var regimes = JSON.parse('<%=j regime_de_trabalho.except("DE").to_json.html_safe %>');
+    $regime.empty();
+    $.each(regimes, function(value,key) {
+      $regime.append($("<option></option>").attr("value", value).text(key));
+    });
+
+    var tipos = JSON.parse('<%=j Hash[[["",""]] + vagas_substituto.map{|value| [value, value]}].to_json.html_safe %>');
+    $tipo_vaga.empty();
+    $.each(tipos, function(value) {
+      $tipo_vaga.append($("<option></option>").attr("value", value).text(value));
+    });
+  }
+})
+</script>

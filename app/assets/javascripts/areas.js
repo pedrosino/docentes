@@ -377,6 +377,7 @@ onPage('areas edit, areas update', function(){
     mostra_prorrogacao();
   });
 
+  // Mensagem sobre regime de 40 horas em concurso público
   $("#area_regime").on('change', function() {
     $tipo = $("#area_tipo").val();
     $regime = $(this).val();

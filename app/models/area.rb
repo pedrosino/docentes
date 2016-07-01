@@ -31,6 +31,12 @@ class Area < ActiveRecord::Base
     end
   end
 
+  # Se o usuário muda o tipo de processo para concurso, a página
+  # desabilita o checkbox e não é possível mudar para true
+  before_validation do
+    self.prova_didatica = true if tipo == 'concurso'
+  end
+
   validates :vagas, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :nome, presence: true, if: -> { confirmada || proximo == 'escrita' }
   validates :tipo_vaga, presence: true, if: -> { confirmada || proximo == 'escrita' }

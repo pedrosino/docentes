@@ -35,8 +35,6 @@ class AreasController < ApplicationController
 
   def create
     @area = Area.new(area_params)
-    # No concurso público a prova didática (pedagógica) é obrigatória
-    @area.prova_didatica = true if @area.tipo == 'concurso'
 
     if @area.save
       flash[:success] = 'Criado com sucesso.'
