@@ -95,7 +95,7 @@ class AreasController < ApplicationController
       :data_prova, :prova_didatica, :prova_procedimental, :responsavel, :situacao, :min_procedimental, :max_procedimental,
       :coautoria, :confirmada, :vaga_id,
       criterios_attributes: [:id, :nome, :descricao, :tipo_prova, :valor, :_destroy],
-      titulos_attributes: [:id, :descricao, :valor, :maximo, :tipo, :unidade_medida, :prorrogacao, :_destroy])
+      titulos_attributes: [:id, :descricao, :comprovacao, :valor, :maximo, :tipo, :unidade_medida, :prorrogacao, :_destroy])
 
     area_params[:confirmada] = true if params[:commit] == 'Confirm'
 

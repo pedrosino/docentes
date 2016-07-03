@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627141522) do
+ActiveRecord::Schema.define(version: 20160703174437) do
 
   create_table "areas", force: :cascade do |t|
     t.integer  "unidade_id",               limit: 4
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20160627141522) do
     t.datetime "created_at",                                                           null: false
     t.datetime "updated_at",                                                           null: false
     t.boolean  "prorrogacao",                                          default: false
+    t.text     "comprovacao",    limit: 65535
   end
 
   create_table "unidades", force: :cascade do |t|
